@@ -1,0 +1,15 @@
+{
+  // Vercel project configuration for Rate Guardian API.
+  //
+  // This file defines a scheduled Cron job that invokes the `/api/recordHealth`
+  // endpoint every day at midnight UTC. The endpoint collects a daily summary
+  // of the Rate Guardian engine's data health and logs it to the `rate_alerts_health_log`
+  // table via the Supabase RPC function `record_rate_alerts_health_snapshot`.
+  
+  "crons": [
+    {
+      "path": "/api/recordHealth",
+      "schedule": "0 0 * * *"
+    }
+  ]
+}
