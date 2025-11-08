@@ -1,13 +1,14 @@
-import fetch from "node-fetch";
-import { createClient } from "@supabase/supabase-js";
+const fetch = require("node-fetch");
+const { createClient } = require("@supabase/supabase-js");
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   try {
     const supabase = createClient(
       process.env.SUPABASE_URL,
       process.env.SUPABASE_SERVICE_KEY
     );
 
+    // Example: Get first record from 'contacts' table
     const { data, error } = await supabase
       .from("contacts")
       .select("*")
@@ -15,6 +16,7 @@ export default async function handler(req, res) {
 
     if (error) throw error;
 
+    // Send data to GHL webhook if the URL is set
     if (process.env.GHL_WEBHOOK_URL) {
       await fetch(process.env.GHL_WEBHOOK_URL, {
         method: "POST",
@@ -29,7 +31,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({
       status: "✅ Rate Guardian Engine Connected",
-      rowsReturned: data?.length || 0,
+      rowsReturned: data ? data.length : 0,
       webhookSent: !!process.env.GHL_WEBHOOK_URL,
     });
   } catch (err) {
@@ -38,5 +40,4 @@ export default async function handler(req, res) {
       message: err.message,
     });
   }
-}
-
+};
