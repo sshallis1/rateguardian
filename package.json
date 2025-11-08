@@ -3,9 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "vercel-build": "mkdir -p build && echo '<html><body>Rate Guardian API</body></html>' > build/index.html"
   },
   "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-scripts": "5.0.1",
     "node-fetch": "^3.3.2"
   }
 }
