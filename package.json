@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "scripts": {
     "vercel-build": "echo 'Skipping build step for API-only project'",
-    "build": "echo 'Skipping build step for API-only project'",
+    "build": "echo 'Skipping build step for API-only project'"
   },
-  },"dependencies": {
+  "dependencies": {
     "node-fetch": "^3.3.2"
   }
 }
