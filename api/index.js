@@ -3,13 +3,11 @@ import { createClient } from "@supabase/supabase-js";
 
 export default async function handler(req, res) {
   try {
-    // --- Supabase connection ---
     const supabase = createClient(
       process.env.SUPABASE_URL,
       process.env.SUPABASE_SERVICE_KEY
     );
 
-    // --- Example: Get first record from 'contacts' table ---
     const { data, error } = await supabase
       .from("contacts")
       .select("*")
@@ -17,7 +15,6 @@ export default async function handler(req, res) {
 
     if (error) throw error;
 
-    // --- GHL Webhook push (if found) ---
     if (process.env.GHL_WEBHOOK_URL) {
       await fetch(process.env.GHL_WEBHOOK_URL, {
         method: "POST",
@@ -30,7 +27,6 @@ export default async function handler(req, res) {
       });
     }
 
-    // --- Response ---
     res.status(200).json({
       status: "✅ Rate Guardian Engine Connected",
       rowsReturned: data?.length || 0,
@@ -43,3 +39,4 @@ export default async function handler(req, res) {
     });
   }
 }
+
