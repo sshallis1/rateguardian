@@ -1,28 +1,26 @@
-const fetch = require("node-fetch");
-const { createClient } = require("@supabase/supabase-js");
-
 module.exports = async (req, res) => {
   try {
+    const fetchModule = await import('node-fetch');
+    const fetch = fetchModule.default || fetchModule;
+    const supa = await import('@supabase/supabase-js');
+    const { createClient } = supa;
     const supabase = createClient(
       process.env.SUPABASE_URL,
       process.env.SUPABASE_SERVICE_KEY
     );
-
-    // Example: Get first record from 'contacts' table
     const { data, error } = await supabase
-      .from("contacts")
-      .select("*")
+      .from('contacts')
+      .select('*')
       .limit(1);
 
     if (error) throw error;
 
-    // Send data to GHL webhook if the URL is set
     if (process.env.GHL_WEBHOOK_URL) {
       await fetch(process.env.GHL_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          source: "Rate Guardian Engine",
+          source: 'Rate Guardian Engine',
           sampleData: data,
           timestamp: new Date().toISOString(),
         }),
@@ -30,13 +28,13 @@ module.exports = async (req, res) => {
     }
 
     res.status(200).json({
-      status: "✅ Rate Guardian Engine Connected",
+      status: '✅ Rate Guardian Engine Connected',
       rowsReturned: data ? data.length : 0,
       webhookSent: !!process.env.GHL_WEBHOOK_URL,
     });
   } catch (err) {
     res.status(500).json({
-      status: "❌ Error",
+      status: '❌ Error',
       message: err.message,
     });
   }
