@@ -7,7 +7,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "vercel-build": "mkdir -p build && echo '<html><body>Rate Guardian API</body></html>' > build/index.html"
   },
   "dependencies": {
     "react": "^18.3.1",
