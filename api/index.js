@@ -1,26 +1,32 @@
-module.exports = async (req, res) => {
-  try {
-    const fetchModule = await import('node-fetch');
-    const fetch = fetchModule.default || fetchModule;
-    const supa = await import('@supabase/supabase-js');
-    const { createClient } = supa;
-    const supabase = createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_KEY
-    );
-    const { data, error } = await supabase
-      .from('contacts')
-      .select('*')
-      .limit(1);
+import fetch from "node-fetch";
+import { createClient } from "@supabase/supabase-js";
 
+export default async function handler(req, res) {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl) {
+    res.status(500).json({ status: "❌ Error", message: "supabaseUrl is required." });
+    return;
+  }
+  if (!supabaseKey) {
+    res.status(500).json({ status: "❌ Error", message: "supabaseKey is required." });
+    return;
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  try {
+    const { data, error } = await supabase.from("contacts").select("*").limit(1);
     if (error) throw error;
 
-    if (process.env.GHL_WEBHOOK_URL) {
-      await fetch(process.env.GHL_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+    const webhookUrl = process.env.GHL_WEBHOOK_URL;
+    if (webhookUrl) {
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          source: 'Rate Guardian Engine',
+          source: "Rate Guardian Engine",
           sampleData: data,
           timestamp: new Date().toISOString(),
         }),
@@ -28,14 +34,11 @@ module.exports = async (req, res) => {
     }
 
     res.status(200).json({
-      status: '✅ Rate Guardian Engine Connected',
-      rowsReturned: data ? data.length : 0,
-      webhookSent: !!process.env.GHL_WEBHOOK_URL,
+      status: "✅ Rate Guardian Engine Connected",
+      rowsReturned: data?.length || 0,
+      webhookSent: !!webhookUrl,
     });
   } catch (err) {
-    res.status(500).json({
-      status: '❌ Error',
-      message: err.message,
-    });
+    res.status(500).json({ status: "❌ Error", message: err.message });
   }
-};
+}
