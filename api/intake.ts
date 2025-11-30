@@ -1,9 +1,10 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
 
-import type { LeadPayload } from "@/types/payloads";
-import { normalizeLead } from "@/lib/normalizer";
-import type { Database } from "@/types/supabase";
+// FIXED RELATIVE IMPORTS
+import type { LeadPayload } from "../types/payloads";
+import { normalizeLead } from "../lib/normalizer";
+import type { Database } from "../types/supabase";
 
 // ─────────────────────────────────────────────────────────
 //  Initialize Supabase Client (Typed)
