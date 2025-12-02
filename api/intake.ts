@@ -44,7 +44,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     //  Insert or Update Lead in Supabase
     // ─────────────────────────────────────────────────────
     const { data, error } = await supabase
-      .from("leads")
+      .from("contacts")
       .upsert(normalized, { onConflict: "email" }) // 🚨 you can change onConflict to your PK
       .select();
 
