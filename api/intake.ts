@@ -43,10 +43,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // ─────────────────────────────────────────────────────
     //  Insert or Update Lead in Supabase
     // ─────────────────────────────────────────────────────
-    const { data, error } = await supabase
-      .from("contacts")
-      .upsert(normalized, { onConflict: "email" }) // 🚨 you can change onConflict to your PK
-      .select();
+// Map only the fields that exist on `contacts`
+const contactRow = {
+  email: normalized.email ?? null,
+  first_name: normalized.first_name ?? null,
+  last_name: normalized.last_name ?? null,
+  phone: normalized.phone ?? null,
+  source: (normalized as any).source ?? "intake_v7",
+};
+
+const { data, error } = await supabase
+  .from("contacts")
+  .upsert(contactRow, { onConflict: "email" }) // requires a UNIQUE index on email
+  .select();
 
     if (error) {
       console.error("Supabase write error:", error);
