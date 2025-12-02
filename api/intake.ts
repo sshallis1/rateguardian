@@ -1,23 +1,22 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
 
-// FIXED RELATIVE IMPORTS
-import type { LeadPayload } from "../types/payloads";
 import { normalizeLead } from "../lib/normalizer";
+import type { LeadPayload } from "../types/payloads";
 import type { Database } from "../types/supabase";
 
-// ─────────────────────────────────────────────────────────
-//  Initialize Supabase Client (Typed)
-// ─────────────────────────────────────────────────────────
+// ────────────────────────────────────────────────
+// Initialize Supabase (Typed)
+// ────────────────────────────────────────────────
 const supabase = createClient<Database>(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
   { auth: { persistSession: false } }
 );
 
-// ─────────────────────────────────────────────────────────
-//  /api/intake — V5-Native Intake Handler
-// ─────────────────────────────────────────────────────────
+// ────────────────────────────────────────────────
+//  /api/intake (V7 Hardened)
+// ────────────────────────────────────────────────
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     if (req.method !== "POST") {
@@ -28,45 +27,44 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: "Invalid or missing JSON body" });
     }
 
-    // ─────────────────────────────────────────────────────
-    //  Normalize Inbound Payload (legacy → V5 conversion)
-    // ─────────────────────────────────────────────────────
+    // Normalize inbound payload
     const normalized: LeadPayload = normalizeLead(req.body);
 
-    // Validate essential fields (you can expand this as needed)
     if (!normalized.email && !normalized.phone) {
       return res.status(400).json({
         error: "Lead must include at least an email or phone.",
       });
     }
 
-    // ─────────────────────────────────────────────────────
-    //  Insert or Update Lead in Supabase
-    // ─────────────────────────────────────────────────────
-// Map only the fields that exist on `contacts`
-const contactRow = {
-  email: normalized.email ?? null,
-  first_name: normalized.first_name ?? null,
-  last_name: normalized.last_name ?? null,
-  phone: normalized.phone ?? null,
-  source: (normalized as any).source ?? "intake_v7",
-};
+    // Compose name safely
+    const fullName =
+      normalized.full_name ||
+      [normalized.first_name, normalized.last_name].filter(Boolean).join(" ") ||
+      null;
 
-const { data, error } = await supabase
-  .from("contacts")
-  .upsert(contactRow, { onConflict: "email" }) // requires a UNIQUE index on email
-  .select();
+    // Only insert valid DB fields
+    const contactRow = {
+      email: normalized.email ?? null,
+      phone: normalized.phone ?? null,
+      name: fullName,
+      rg_source: "intake_v7",
+    };
+
+    const { data, error } = await supabase
+      .from("contacts")
+      .upsert(contactRow, { onConflict: "email" })
+      .select();
 
     if (error) {
       console.error("Supabase write error:", error);
-      return res.status(500).json({ error: "Database write failed", details: error });
+      return res.status(500).json({
+        error: "Database write failed",
+        details: error,
+      });
     }
 
-    // ─────────────────────────────────────────────────────
-    //  Success — return normalized lead for verification
-    // ─────────────────────────────────────────────────────
     return res.status(200).json({
-      message: "Lead submitted successfully (V5 normalized)",
+      message: "Lead submitted successfully (V7 normalized).",
       normalized,
       supabase_row: data,
     });
