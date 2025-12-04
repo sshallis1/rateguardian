@@ -1,5 +1,6 @@
 import * as crypto from "crypto";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { log } from "../lib/engine/logger";
 
 const WEBHOOK_SECRET = process.env.ROSIE_WEBHOOK_SECRET || "";
 
@@ -17,6 +18,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (!WEBHOOK_SECRET) {
+      log({ stage: "rosie-alert:config", message: "ROSIE_WEBHOOK_SECRET not configured" });
       return res.status(500).json({ error: "ROSIE_WEBHOOK_SECRET not configured" });
     }
 
@@ -24,13 +26,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const rawBody = typeof req.body === "string" ? req.body : JSON.stringify(req.body ?? {});
 
     if (!signature || !verifySignature(rawBody, signature)) {
+      log({
+        stage: "rosie-alert:signature:invalid",
+        message: "Invalid or missing signature",
+        meta: { hasSignature: Boolean(signature) },
+      });
       return res.status(401).json({ error: "Invalid or missing signature" });
     }
 
-    console.log("✅ Verified alert from relay:", req.body);
+    log({ stage: "rosie-alert:verified", message: "Verified alert", meta: { body: req.body } });
     return res.status(200).json({ status: "received", data: req.body });
   } catch (err: any) {
-    console.error("❌ Signature verification failed:", err);
+    log({ stage: "rosie-alert:error", message: err?.message || "Internal error", meta: { error: err } });
     return res.status(500).json({ error: err?.message || "Internal error" });
   }
 }
