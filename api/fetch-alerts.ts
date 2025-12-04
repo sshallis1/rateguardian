@@ -1,7 +1,7 @@
 import * as crypto from "crypto";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import type { Tables } from "../types/supabase";
-import { supabase, assertSupabaseConfig } from "../lib/supabase";
+import { supabase } from "../lib/supabase";
 import { log } from "../lib/engine/logger";
 
 const ROSIE_WEBHOOK_URL = process.env.ROSIE_WEBHOOK_URL || "";
@@ -53,10 +53,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     if (req.method !== "GET" && req.method !== "POST") {
       return res.status(405).json({ error: "Method Not Allowed" });
-    }
-
-    if (!assertSupabaseConfig("fetch-alerts")) {
-      return res.status(500).json({ error: "Supabase not configured" });
     }
 
     if (!ROSIE_WEBHOOK_URL || !ROSIE_WEBHOOK_SECRET) {

@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 import { normalizeLead } from "../lib/normalizer";
-import { supabase, assertSupabaseConfig } from "../lib/supabase";
+import { supabase } from "../lib/supabase";
 import type { LeadPayload } from "../types/payloads";
 
 // ────────────────────────────────────────────────
@@ -11,10 +11,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     if (req.method !== "POST") {
       return res.status(405).json({ error: "Method Not Allowed" });
-    }
-
-    if (!assertSupabaseConfig("intake")) {
-      return res.status(500).json({ error: "Supabase not configured" });
     }
 
     if (!req.body || typeof req.body !== "object") {

@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { runEngine } from "../lib/engine/runEngine";
 import { log } from "../lib/engine/logger";
-import { assertSupabaseConfig } from "../lib/supabase";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
@@ -19,10 +18,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const email = req.query?.email ? String(req.query.email).toLowerCase() : undefined;
 
     const limit = parsedLimit;
-
-    if (!assertSupabaseConfig("test-engine")) {
-      return res.status(500).json({ error: "Supabase not configured" });
-    }
 
     const result = await runEngine({ limit, contactId, email });
     log({ stage: "test-engine:complete", message: "Manual engine run complete", run_id: result.run_id, meta: result });

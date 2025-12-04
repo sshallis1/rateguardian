@@ -1,5 +1,5 @@
 import type { ContactRow } from "../../types/supabase";
-import { supabase, isSupabaseConfigured } from "../supabase";
+import { supabase } from "../supabase";
 import { fetchEligibleContacts } from "./fetchContacts";
 import { computeOpportunity } from "./computeOpportunity";
 import { createAlerts } from "./createAlerts";
@@ -56,10 +56,6 @@ export async function runEngine(options: EngineOptions = {}): Promise<EngineResu
   let lastError: string | undefined;
 
   try {
-    if (!isSupabaseConfigured()) {
-      throw new Error("Supabase not configured");
-    }
-
     const contacts = await fetchEligibleContacts(normalizedOptions);
     if (!contacts.length) {
       log({ stage: "engine:no-contacts", message: "No eligible contacts found", meta: normalizedOptions });

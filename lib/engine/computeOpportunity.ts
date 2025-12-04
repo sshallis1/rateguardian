@@ -1,5 +1,5 @@
 import type { Database, ContactRow } from "../../types/supabase";
-import { supabase, isSupabaseConfigured } from "../supabase";
+import { supabase } from "../supabase";
 import { log } from "./logger";
 
 export interface OpportunityResult {
@@ -28,11 +28,6 @@ function deriveTier(score: number, monthlySavings: number): string {
 }
 
 export async function computeOpportunity(contact: ContactRow): Promise<OpportunityResult | null> {
-  if (!isSupabaseConfigured()) {
-    log({ stage: "opportunity:config:missing", message: "Supabase not configured" });
-    return null;
-  }
-
   const marketRate = getCurrentMarketRate();
   const existingRateRaw = Number(contact.rg_existing_rate ?? marketRate + 0.5);
   const existingRate = Number.isFinite(existingRateRaw) ? existingRateRaw : marketRate + 0.5;

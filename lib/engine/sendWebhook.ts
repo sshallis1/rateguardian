@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import type { ContactRow } from "../../types/supabase";
 import type { OpportunityResult } from "./computeOpportunity";
-import { supabase, isSupabaseConfigured } from "../supabase";
+import { supabase } from "../supabase";
 import { log } from "./logger";
 
 const MAX_RETRIES = 3;
@@ -71,10 +71,6 @@ export async function sendWebhook(contact: ContactRow, opportunity: OpportunityR
   }
 
   log({ stage: "webhook:failed", message: "Failed to deliver webhook", contact_id: contact.id, meta: { lastError } });
-
-  if (!isSupabaseConfigured()) {
-    return false;
-  }
 
   try {
     await supabase.from("rg_webhook_dead_letter").insert({

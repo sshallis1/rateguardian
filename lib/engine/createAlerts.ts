@@ -1,5 +1,5 @@
 import * as crypto from "crypto";
-import { supabase, isSupabaseConfigured } from "../supabase";
+import { supabase } from "../supabase";
 import type { ContactRow } from "../../types/supabase";
 import type { OpportunityResult } from "./computeOpportunity";
 import { log } from "./logger";
@@ -13,11 +13,6 @@ export async function createAlerts(
   opportunity: OpportunityResult,
   runId: string
 ) {
-  if (!isSupabaseConfigured()) {
-    log({ stage: "alerts:config:missing", message: "Supabase not configured", contact_id: contact.id });
-    return false;
-  }
-
   const alertDate = todayDateString();
 
   try {
