@@ -56,6 +56,7 @@ export interface Database {
         };
         Insert: Partial<Database["public"]["Tables"]["contacts"]["Row"]>;
         Update: Partial<Database["public"]["Tables"]["contacts"]["Row"]>;
+        Relationships: [];
       };
       alerts: {
         Row: {
@@ -76,6 +77,7 @@ export interface Database {
         };
         Insert: Partial<Database["public"]["Tables"]["alerts"]["Row"]>;
         Update: Partial<Database["public"]["Tables"]["alerts"]["Row"]>;
+        Relationships: [];
       };
       rate_alerts: {
         Row: {
@@ -89,6 +91,7 @@ export interface Database {
         };
         Insert: Partial<Database["public"]["Tables"]["rate_alerts"]["Row"]>;
         Update: Partial<Database["public"]["Tables"]["rate_alerts"]["Row"]>;
+        Relationships: [];
       };
       rate_opportunities: {
         Row: {
@@ -108,6 +111,7 @@ export interface Database {
         };
         Insert: Partial<Database["public"]["Tables"]["rate_opportunities"]["Row"]>;
         Update: Partial<Database["public"]["Tables"]["rate_opportunities"]["Row"]>;
+        Relationships: [];
       };
       rg_run_ledger: {
         Row: {
@@ -122,6 +126,7 @@ export interface Database {
         };
         Insert: Partial<Database["public"]["Tables"]["rg_run_ledger"]["Row"]>;
         Update: Partial<Database["public"]["Tables"]["rg_run_ledger"]["Row"]>;
+        Relationships: [];
       };
       rg_webhook_dead_letter: {
         Row: {
@@ -134,6 +139,7 @@ export interface Database {
         };
         Insert: Partial<Database["public"]["Tables"]["rg_webhook_dead_letter"]["Row"]>;
         Update: Partial<Database["public"]["Tables"]["rg_webhook_dead_letter"]["Row"]>;
+        Relationships: [];
       };
     };
   };

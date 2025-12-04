@@ -1,4 +1,4 @@
-import crypto from 'crypto'
+import * as crypto from 'crypto'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 const WEBHOOK_SECRET = process.env.ROSIE_WEBHOOK_SECRET!

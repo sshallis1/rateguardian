@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import crypto from 'crypto'
+import * as crypto from 'crypto'
 
 // ENV: set these in Vercel → Project → Settings → Environment Variables
 const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)

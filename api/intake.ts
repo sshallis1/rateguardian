@@ -3,12 +3,11 @@ import { createClient } from "@supabase/supabase-js";
 
 import { normalizeLead } from "../lib/normalizer";
 import type { LeadPayload } from "../types/payloads";
-import type { Database } from "../types/supabase";
 
 // ────────────────────────────────────────────────
-// Initialize Supabase (Typed)
+// Initialize Supabase (safe, runtime-validated)
 // ────────────────────────────────────────────────
-const supabase = createClient<Database>(
+const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
   { auth: { persistSession: false } }

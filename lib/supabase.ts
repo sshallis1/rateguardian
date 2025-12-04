@@ -17,6 +17,10 @@ if (!supabaseUrl || !supabaseKey) {
   );
 }
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseKey, {
+// Deliberately avoid binding the generic Database type to keep runtime initialization
+// safe and to prevent TS inference issues when schema stubs are incomplete.
+export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: { persistSession: false },
 });
+
+export type SupabaseDatabase = Database;

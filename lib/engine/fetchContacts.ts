@@ -66,7 +66,7 @@ export async function fetchEligibleContacts(options: FetchOptions = {}) {
     throw error;
   }
 
-  const contacts: ContactRow[] = data ?? [];
+  const contacts = (data ?? []) as ContactRow[];
 
   log({
     stage: "fetchContacts:complete",
