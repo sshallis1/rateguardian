@@ -4,9 +4,20 @@ import { log } from "../lib/engine/logger";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    const limit = req.query.limit ? Number(req.query.limit) : undefined;
-    const contactId = req.query.contact_id as string | undefined;
-    const email = req.query.email as string | undefined;
+    if (req.method !== "GET" && req.method !== "POST") {
+      return res.status(405).json({ error: "Method Not Allowed" });
+    }
+
+    const limitRaw = req.query?.limit;
+    const parsedLimit = limitRaw !== undefined ? Number(limitRaw) : undefined;
+    if (parsedLimit !== undefined && (!Number.isFinite(parsedLimit) || parsedLimit <= 0)) {
+      return res.status(400).json({ error: "Invalid limit" });
+    }
+
+    const contactId = req.query?.contact_id ? String(req.query.contact_id) : undefined;
+    const email = req.query?.email ? String(req.query.email).toLowerCase() : undefined;
+
+    const limit = parsedLimit;
 
     const result = await runEngine({ limit, contactId, email });
     log({ stage: "test-engine:complete", message: "Manual engine run complete", run_id: result.run_id, meta: result });

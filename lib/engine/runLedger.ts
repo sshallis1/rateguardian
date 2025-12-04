@@ -1,5 +1,5 @@
 import * as crypto from "crypto";
-import { supabase } from "../supabase";
+import { supabase, isSupabaseConfigured } from "../supabase";
 import { log } from "./logger";
 
 export interface RunStats {
@@ -12,6 +12,10 @@ export async function startRun() {
   const runId = crypto.randomUUID();
   const started_at = new Date().toISOString();
   try {
+    if (!isSupabaseConfigured()) {
+      log({ stage: "runLedger:start:config", message: "Supabase not configured; skipping ledger insert", meta: { runId } });
+      return { runId, started_at };
+    }
     const { error } = await supabase.from("rg_run_ledger").insert({
       run_id: runId,
       started_at,
@@ -34,6 +38,10 @@ export async function completeRun(
 ) {
   const completed_at = new Date().toISOString();
   try {
+    if (!isSupabaseConfigured()) {
+      log({ stage: "runLedger:complete:config", message: "Supabase not configured; skipping ledger update", meta: { runId, stats, status, lastError } });
+      return;
+    }
     const { error } = await supabase
       .from("rg_run_ledger")
       .update({

@@ -4,6 +4,10 @@ import { log } from "../lib/engine/logger";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Method Not Allowed" });
+    }
+
     const result = await runEngine();
     log({ stage: "engine:api:complete", message: "Engine run finished", run_id: result.run_id, meta: result });
     return res.status(200).json(result);

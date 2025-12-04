@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import type { ContactRow } from "../../types/supabase";
 import type { OpportunityResult } from "./computeOpportunity";
-import { supabase } from "../supabase";
+import { supabase, isSupabaseConfigured } from "../supabase";
 import { log } from "./logger";
 
 const MAX_RETRIES = 3;
@@ -26,10 +26,10 @@ export async function sendWebhook(contact: ContactRow, opportunity: OpportunityR
 
   const payload = {
     contact_id: contact.id,
-    email: contact.email,
-    name: contact.name,
-    phone: contact.phone,
-    rg_source: contact.rg_source,
+    email: contact.email ?? undefined,
+    name: contact.name ?? undefined,
+    phone: contact.phone ?? undefined,
+    rg_source: contact.rg_source ?? undefined,
     rg_oppty_tier: opportunity.opptyTier,
     rg_oppty_score: opportunity.opptyScore,
     estimated_monthly_savings: opportunity.monthlySavings,
@@ -71,12 +71,22 @@ export async function sendWebhook(contact: ContactRow, opportunity: OpportunityR
   }
 
   log({ stage: "webhook:failed", message: "Failed to deliver webhook", contact_id: contact.id, meta: { lastError } });
-  await supabase.from("rg_webhook_dead_letter").insert({
-    contact_id: contact.id,
-    payload,
-    attempts: attempt,
-    last_error: String(lastError).slice(0, 1000),
-    created_at: new Date().toISOString(),
-  });
+
+  if (!isSupabaseConfigured()) {
+    return false;
+  }
+
+  try {
+    await supabase.from("rg_webhook_dead_letter").insert({
+      contact_id: contact.id,
+      payload,
+      attempts: attempt,
+      last_error: String(lastError).slice(0, 1000),
+      created_at: new Date().toISOString(),
+    });
+  } catch (error) {
+    log({ stage: "webhook:dead-letter:error", message: "Failed to persist webhook failure", contact_id: contact.id, meta: { error } });
+  }
+
   return false;
 }

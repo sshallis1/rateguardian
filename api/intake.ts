@@ -1,17 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { createClient } from "@supabase/supabase-js";
 
 import { normalizeLead } from "../lib/normalizer";
+import { supabase, assertSupabaseConfig } from "../lib/supabase";
 import type { LeadPayload } from "../types/payloads";
-
-// ────────────────────────────────────────────────
-// Initialize Supabase (safe, runtime-validated)
-// ────────────────────────────────────────────────
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  { auth: { persistSession: false } }
-);
 
 // ────────────────────────────────────────────────
 //  /api/intake (V7 Hardened)
@@ -20,6 +11,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     if (req.method !== "POST") {
       return res.status(405).json({ error: "Method Not Allowed" });
+    }
+
+    if (!assertSupabaseConfig("intake")) {
+      return res.status(500).json({ error: "Supabase not configured" });
     }
 
     if (!req.body || typeof req.body !== "object") {

@@ -1,5 +1,5 @@
 import type { Database, ContactRow } from "../../types/supabase";
-import { supabase } from "../supabase";
+import { supabase, isSupabaseConfigured } from "../supabase";
 import { log } from "./logger";
 
 export interface OpportunityResult {
@@ -28,9 +28,16 @@ function deriveTier(score: number, monthlySavings: number): string {
 }
 
 export async function computeOpportunity(contact: ContactRow): Promise<OpportunityResult | null> {
+  if (!isSupabaseConfigured()) {
+    log({ stage: "opportunity:config:missing", message: "Supabase not configured" });
+    return null;
+  }
+
   const marketRate = getCurrentMarketRate();
-  const existingRate = contact.rg_existing_rate ?? marketRate + 0.5;
-  const loanAmount = contact.rg_loan_amount ?? 350000;
+  const existingRateRaw = Number(contact.rg_existing_rate ?? marketRate + 0.5);
+  const existingRate = Number.isFinite(existingRateRaw) ? existingRateRaw : marketRate + 0.5;
+  const loanAmountRaw = Number(contact.rg_loan_amount ?? 350000);
+  const loanAmount = Number.isFinite(loanAmountRaw) && loanAmountRaw > 0 ? loanAmountRaw : 350000;
 
   const rateDelta = existingRate - marketRate;
   const rateDeltaBps = Math.round(rateDelta * 10000);
@@ -63,27 +70,32 @@ export async function computeOpportunity(contact: ContactRow): Promise<Opportuni
     updated_at: new Date().toISOString(),
   };
 
-  const { data, error } = await supabase
-    .from("rate_opportunities")
-    .upsert(payload, { onConflict: "contact_id" })
-    .select()
-    .maybeSingle();
+  try {
+    const { data, error } = await supabase
+      .from("rate_opportunities")
+      .upsert(payload, { onConflict: "contact_id" })
+      .select()
+      .maybeSingle<Database["public"]["Tables"]["rate_opportunities"]["Row"]>();
 
-  if (error) {
+    if (error) {
+      throw error;
+    }
+
+    log({ stage: "opportunity:computed", message: "Computed opportunity", contact_id: contact.id, meta: payload });
+    const opportunityId = data ? data.id : undefined;
+    return {
+      marketRate,
+      existingRate,
+      rateDeltaBps,
+      monthlySavings: payload.monthly_savings ?? 0,
+      totalSavings: payload.total_savings ?? 0,
+      breakevenMonths,
+      opptyScore,
+      opptyTier,
+      opportunityId,
+    };
+  } catch (error) {
     log({ stage: "opportunity:save:error", message: "Failed to upsert opportunity", contact_id: contact.id, meta: { error } });
     return null;
   }
-
-  log({ stage: "opportunity:computed", message: "Computed opportunity", contact_id: contact.id, meta: payload });
-  return {
-    marketRate,
-    existingRate,
-    rateDeltaBps,
-    monthlySavings: payload.monthly_savings ?? 0,
-    totalSavings: payload.total_savings ?? 0,
-    breakevenMonths,
-    opptyScore,
-    opptyTier,
-    opportunityId: data?.id,
-  };
 }
