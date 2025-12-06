@@ -26,7 +26,14 @@ export async function fetchEligibleContacts(options: FetchOptions = {}) {
 
   let query = supabase
     .from("contacts")
-    .select("*")
+    .select(
+      `
+      id, name, email, phone, created_at, rg_source, 
+      rg_flag_monitor, rg_trigger_flag, rg_last_run_at,
+      rg_existing_rate, rg_loan_amount, 
+      rg_oppty_tier, rg_oppty_score, rg_monthly_savings_est, rg_rate_delta_bps
+    `
+    )
     .limit(limit)
     .order("created_at", { ascending: false });
 
