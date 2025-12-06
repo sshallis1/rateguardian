@@ -7,7 +7,6 @@
     "build": "echo 'Skipping build: API-only project'"
   },
   "dependencies": {
-    "node-fetch": "^3.3.2",
     "@supabase/supabase-js": "^2.58.0"
   }
 }
