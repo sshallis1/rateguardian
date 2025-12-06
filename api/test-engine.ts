@@ -1,23 +1,15 @@
-// Minimal V8 routing health-check endpoint without external type deps
-interface Req {
-  method?: string;
-}
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-interface Res {
-  status: (code: number) => Res;
-  json: (body: any) => void;
-  send: (body: any) => void;
-}
-
-export default function handler(req: Req, res: Res) {
+// Minimal health-check endpoint to verify Vercel routing for the engine
+export default function handler(req: VercelRequest, res: VercelResponse) {
   const method = (req?.method || "").toUpperCase();
+
+  if (method && !["GET", "HEAD", "POST", "OPTIONS"].includes(method)) {
+    return res.status(405).json({ error: "Method Not Allowed" });
+  }
 
   if (method === "OPTIONS") {
     return res.status(200).send("ok");
-  }
-
-  if (method && method !== "GET" && method !== "HEAD" && method !== "POST") {
-    return res.status(405).json({ error: "Method Not Allowed" });
   }
 
   const payload = {
@@ -30,8 +22,8 @@ export default function handler(req: Req, res: Res) {
     JSON.stringify({
       stage: "test-engine:hit",
       message: "Health check invoked",
-      meta: { method, ...payload },
-      timestamp: new Date().toISOString(),
+      meta: { method: method || "UNKNOWN" },
+      timestamp: payload.timestamp,
     })
   );
 
