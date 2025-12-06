@@ -1,13 +1,15 @@
-# Rate Guardian Engine
+Rate Guardian Engine — Next.js Migration (V8 Workspace)
 
-This repository contains the shared engine logic and supporting libraries used by the Rate Guardian Next.js V8 App Router deployment.
+This codebase contains:
 
-- Engine orchestration and helpers live under `lib/engine` and power the Supabase-backed monitoring and alerting flows.
-- `lib/supabase.ts` safely bootstraps a Supabase client with a stub when environment variables are missing so builds continue until configuration is provided.
-- SQL schema definitions live under `sql/` for database migrations and reference.
+V8 hardened Rate Guardian Engine
 
-Legacy Vercel serverless functions (the old `/api` directory and `vercel.json`) have been removed; App Router handlers in `app/api/*/route.ts` are managed in the main Next.js application. Supporting legacy shims (e.g., `types/shims.d.ts`) and cron helpers tied to those handlers have also been deleted to avoid runtime mismatches.
+Next.js App Router migration
 
-## Development
+Supabase-driven contact + opportunity logic
 
-Set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in your environment before invoking modules that issue Supabase queries.
+API routing under app/api
+
+Removal of legacy CRA and Express handlers
+
+This branch removes all outdated /api/*.ts handlers and uses only the new Next.js server routes for engine runs, alerts, and intake.
