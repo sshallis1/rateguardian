@@ -53,7 +53,7 @@ export async function runEngine(options: EngineOptions = {}): Promise<EngineResu
     alertsSent: 0,
   };
   let status: "success" | "partial" | "failed" = "success";
-  let lastError: string | undefined;
+  let lastError: string | null = null;
 
   try {
     const contacts = await fetchEligibleContacts(normalizedOptions);
@@ -88,18 +88,20 @@ export async function runEngine(options: EngineOptions = {}): Promise<EngineResu
       } catch (contactErr: any) {
         status = status === "failed" ? "failed" : "partial";
         lastError = contactErr?.message || String(contactErr);
-        log({
-          stage: "engine:contact:error",
-          message: lastError,
-          contact_id: contact.id,
-          meta: { runId },
-        });
+        if (lastError) {
+          log({
+            stage: "engine:contact:error",
+            message: lastError,
+            contact_id: contact.id,
+            meta: { runId },
+          });
+        }
       }
     }
   } catch (err: any) {
     status = "failed";
     lastError = err?.message || String(err);
-    log({ stage: "engine:run:error", message: lastError, meta: { options: normalizedOptions } });
+    log({ stage: "engine:run:error", message: lastError ?? "Unknown error", meta: { options: normalizedOptions } });
   } finally {
     await completeRun(runId, stats, status, lastError);
   }
@@ -110,6 +112,6 @@ export async function runEngine(options: EngineOptions = {}): Promise<EngineResu
     opportunities_found: stats.opportunitiesFound,
     alerts_sent: stats.alertsSent,
     status,
-    last_error: lastError,
+    last_error: lastError ?? undefined,
   };
 }
