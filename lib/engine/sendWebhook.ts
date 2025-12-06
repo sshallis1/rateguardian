@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import type { ContactRow } from "../../types/supabase";
 import type { OpportunityResult } from "./computeOpportunity";
 import { supabase } from "../supabase";
