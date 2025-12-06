@@ -53,7 +53,7 @@ export async function runEngine(options: EngineOptions = {}): Promise<EngineResu
     alertsSent: 0,
   };
   let status: "success" | "partial" | "failed" = "success";
-  let lastError: string | null = null;
+  let lastError: string | undefined = undefined;
 
   try {
     const contacts = await fetchEligibleContacts(normalizedOptions);
@@ -112,6 +112,6 @@ export async function runEngine(options: EngineOptions = {}): Promise<EngineResu
     opportunities_found: stats.opportunitiesFound,
     alerts_sent: stats.alertsSent,
     status,
-    last_error: lastError ?? undefined,
+    last_error: lastError,
   };
 }
