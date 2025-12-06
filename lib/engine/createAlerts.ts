@@ -1,6 +1,6 @@
 import * as crypto from "crypto";
-import { supabase } from "../supabase";
-import type { ContactRow } from "../../types/supabase";
+import { supabase } from "@/lib/supabase";
+import type { ContactRow } from "@/types/supabase";
 import type { OpportunityResult } from "./computeOpportunity";
 import { log } from "./logger";
 

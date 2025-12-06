@@ -1,5 +1,5 @@
-import type { Database, ContactRow } from "../../types/supabase";
-import { supabase } from "../supabase";
+import type { Database, ContactRow } from "@/types/supabase";
+import { supabase } from "@/lib/supabase";
 import { log } from "./logger";
 
 export interface OpportunityResult {

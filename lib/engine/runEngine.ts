@@ -1,5 +1,5 @@
-import type { ContactRow } from "../../types/supabase";
-import { supabase } from "../supabase";
+import type { ContactRow } from "@/types/supabase";
+import { supabase } from "@/lib/supabase";
 import { fetchEligibleContacts } from "./fetchContacts";
 import { computeOpportunity } from "./computeOpportunity";
 import { createAlerts } from "./createAlerts";

@@ -1,5 +1,5 @@
 import * as crypto from "crypto";
-import { supabase } from "../supabase";
+import { supabase } from "@/lib/supabase";
 import { log } from "./logger";
 
 export interface RunStats {

@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Database } from "../types/supabase";
+import type { Database } from "@/types/supabase";
 
 /**
  * Safely initialize Supabase without throwing during import when env vars are absent.

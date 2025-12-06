@@ -1,5 +1,5 @@
-import { supabase } from "../supabase";
-import type { ContactRow } from "../../types/supabase";
+import { supabase } from "@/lib/supabase";
+import type { ContactRow } from "@/types/supabase";
 import { log } from "./logger";
 
 const DEFAULT_LOOKBACK_HOURS = 24;

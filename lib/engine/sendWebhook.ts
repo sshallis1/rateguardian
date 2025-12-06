@@ -1,6 +1,6 @@
-import type { ContactRow } from "../../types/supabase";
+import type { ContactRow } from "@/types/supabase";
 import type { OpportunityResult } from "./computeOpportunity";
-import { supabase } from "../supabase";
+import { supabase } from "@/lib/supabase";
 import { log } from "./logger";
 
 const MAX_RETRIES = 3;
