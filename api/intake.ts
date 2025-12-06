@@ -1,18 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { createClient } from "@supabase/supabase-js";
 
 import { normalizeLead } from "../lib/normalizer";
+import { supabase } from "../lib/supabase";
 import type { LeadPayload } from "../types/payloads";
-import type { Database } from "../types/supabase";
-
-// ────────────────────────────────────────────────
-// Initialize Supabase (Typed)
-// ────────────────────────────────────────────────
-const supabase = createClient<Database>(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  { auth: { persistSession: false } }
-);
 
 // ────────────────────────────────────────────────
 //  /api/intake (V7 Hardened)
