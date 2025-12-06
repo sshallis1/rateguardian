@@ -35,7 +35,8 @@ export async function computeOpportunity(contact: ContactRow): Promise<Opportuni
   const loanAmount = Number.isFinite(loanAmountRaw) && loanAmountRaw > 0 ? loanAmountRaw : 350000;
 
   const rateDelta = existingRate - marketRate;
-  const rateDeltaBps = Math.round(rateDelta * 10000);
+  // Basis points are percentage points * 100; previously multiplied by 10,000 causing 100x inflation.
+  const rateDeltaBps = Math.round(rateDelta * 100);
   if (!loanAmount || rateDeltaBps <= 25) {
     log({
       stage: "opportunity:skip",
