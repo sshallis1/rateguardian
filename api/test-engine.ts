@@ -1,5 +1,7 @@
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+
 // Minimal V8 routing health-check endpoint
-export default async function handler(req: any, res: any) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   const method = (req?.method || "").toUpperCase();
 
   if (method === "OPTIONS") {
@@ -21,6 +23,7 @@ export default async function handler(req: any, res: any) {
       stage: "test-engine:hit",
       message: "Health check invoked",
       meta: { method, ...payload },
+      timestamp: new Date().toISOString(),
     })
   );
 
