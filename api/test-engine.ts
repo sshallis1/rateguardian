@@ -1,20 +1,28 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+// Minimal V8 routing health-check endpoint without external type deps
+interface Req {
+  method?: string;
+}
 
-// Minimal V8 routing health-check endpoint
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+interface Res {
+  status: (code: number) => Res;
+  json: (body: any) => void;
+  send: (body: any) => void;
+}
+
+export default function handler(req: Req, res: Res) {
   const method = (req?.method || "").toUpperCase();
 
   if (method === "OPTIONS") {
     return res.status(200).send("ok");
   }
 
-  if (method !== "GET" && method !== "HEAD" && method !== "POST") {
+  if (method && method !== "GET" && method !== "HEAD" && method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
   const payload = {
     engine: "healthy-stub",
-    message: "V8 routing OK – test-engine reachable",
+    message: "V8 routing OK",
     timestamp: new Date().toISOString(),
   };
 
