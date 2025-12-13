@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "nodejs@18"
+    }
+  },
   "crons": [
     {
       "path": "/api/fetch-alerts",
@@ -8,11 +13,6 @@
       "path": "/api/record-health",
       "schedule": "0 0 * * *"
     }
-  ],
-  "functions": {
-    "api/**/*.{js,ts}": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  ]
 }
 
