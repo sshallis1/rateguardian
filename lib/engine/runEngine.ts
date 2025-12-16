@@ -52,7 +52,10 @@ export async function runEngine(options: EngineOptions = {}): Promise<EngineResu
     opportunitiesFound: 0,
     alertsSent: 0,
   };
-  let status: "success" | "partial" | "failed" = "success";
+  const resolveStatus = (current: EngineResult["status"]): EngineResult["status"] =>
+    current === "failed" ? "failed" : "partial";
+
+  let status: EngineResult["status"] = "success";
   let lastError: string | undefined;
 
   try {
@@ -86,7 +89,7 @@ export async function runEngine(options: EngineOptions = {}): Promise<EngineResu
           rg_eligible_rate_today: opportunity.marketRate,
         }, runId);
       } catch (contactErr: any) {
-        status = status === "failed" ? "failed" : "partial";
+        status = resolveStatus(status);
         lastError = contactErr?.message || String(contactErr);
         log({
           stage: "engine:contact:error",

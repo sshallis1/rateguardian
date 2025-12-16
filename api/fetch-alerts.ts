@@ -8,6 +8,41 @@ const ROSIE_WEBHOOK_URL = process.env.ROSIE_WEBHOOK_URL || "";
 const ROSIE_WEBHOOK_SECRET = process.env.ROSIE_WEBHOOK_SECRET || "";
 const MAX_RETRIES = 3;
 const MAX_BATCH = 20;
+const LOCK_JOB = "fetch-alerts";
+
+function getWindowKey(date = new Date()) {
+  const minutes = date.getUTCMinutes();
+  const bucketStartMinutes = Math.floor(minutes / 15) * 15;
+  const bucketDate = new Date(
+    Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      date.getUTCHours(),
+      bucketStartMinutes,
+      0,
+      0,
+    ),
+  );
+
+  return bucketDate.toISOString();
+}
+
+async function acquireLock(windowKey: string) {
+  const { error } = await supabase
+    .from("cron_locks")
+    .insert({ job: LOCK_JOB, window_key: windowKey } as any);
+
+  if (!error) {
+    return { ok: true as const };
+  }
+
+  if ((error as any)?.code === "23505") {
+    return { ok: false as const, reason: "already_ran" as const };
+  }
+
+  return { ok: false as const, reason: "db_error" as const, error };
+}
 
 function sign(body: string) {
   return crypto.createHmac("sha256", ROSIE_WEBHOOK_SECRET).update(body).digest("hex");
@@ -50,11 +85,11 @@ async function deliver(alert: Tables["alerts"]["Row"]) {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  try { 
-  const auth =
-  typeof req.headers.get === "function"
-    ? req.headers.get("authorization")
-    : (req.headers as any).authorization;
+  try {
+    const auth =
+      typeof req.headers.get === "function"
+        ? req.headers.get("authorization")
+        : (req.headers as any).authorization;
 
     if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
       return res.status(401).json({ error: "Unauthorized cron invocation" });
@@ -66,6 +101,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!ROSIE_WEBHOOK_URL || !ROSIE_WEBHOOK_SECRET) {
       return res.status(500).json({ error: "Missing ROSIE webhook configuration" });
+    }
+
+    const windowKey = getWindowKey();
+    const lockResult = await acquireLock(windowKey);
+
+    if (lockResult.ok) {
+      log({ stage: "fetch-alerts:lock:acquired", message: "Lock acquired", meta: { windowKey } });
+    } else if (lockResult.reason === "already_ran") {
+      log({ stage: "fetch-alerts:lock:skipped", message: "Lock already exists", meta: { windowKey } });
+      return res.status(200).json({ message: "Already ran this window" });
+    } else {
+      log({ stage: "fetch-alerts:lock:error", message: "Failed to acquire lock", meta: { windowKey, error: lockResult.error } });
+      return res.status(500).json({ error: "Failed to acquire cron lock" });
     }
 
     const { data: alerts, error } = await supabase
