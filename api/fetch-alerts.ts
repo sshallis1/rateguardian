@@ -51,9 +51,10 @@ async function deliver(alert: Tables["alerts"]["Row"]) {
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try { 
-    const auth = req.headers.get
-  ? req.headers.get("authorization")
-  : (req.headers as any).authorization;
+  const auth =
+  typeof req.headers.get === "function"
+    ? req.headers.get("authorization")
+    : (req.headers as any).authorization;
 
     if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
       return res.status(401).json({ error: "Unauthorized cron invocation" });
