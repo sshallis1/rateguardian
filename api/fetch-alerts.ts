@@ -29,7 +29,9 @@ function getWindowKey(date = new Date()) {
 }
 
 async function acquireLock(windowKey: string) {
-  const { error } = await supabase.from("cron_locks").insert({ job: LOCK_JOB, window_key: windowKey });
+  const { error } = await supabase
+    .from("cron_locks")
+    .insert({ job: LOCK_JOB, window_key: windowKey } as any);
 
   if (!error) {
     return { ok: true as const };
