@@ -1,41 +1,22 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node'
+if (body.tag === "rg_mvp_monitor") {
 
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ success: false, message: 'Method Not Allowed' })
-  }
+  const loanType = body.loanProduct
 
-  try {
-    const body = req.body
+  let branch = "DEFAULT"
 
-    // SIMPLE LOGIC TEST
-    if (body.test === "PING") {
-      return res.status(200).json({
-        success: true,
-        message: "PONG",
-        logicPath: "PING_ROUTE"
-      })
-    }
+  if (loanType === "30-Year Fixed") branch = "AGENCY_30"
+  else if (loanType === "15-Year Fixed") branch = "AGENCY_15"
+  else if (loanType === "Jumbo") branch = "JUMBO"
+  else if (loanType === "FHA") branch = "FHA"
+  else if (loanType === "VA") branch = "VA"
 
-    if (body.type === "engine") {
-      return res.status(200).json({
-        success: true,
-        message: "Engine path triggered",
-        logicPath: "ENGINE_ROUTE"
-      })
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: "Default route",
-      logicPath: "DEFAULT_ROUTE"
-    })
-
-  } catch (error) {
-    console.error("Webhook error:", error)
-    return res.status(500).json({ success: false })
-  }
+  return res.status(200).json({
+    success: true,
+    route: branch,
+    actions: [
+      "internal_notification",
+      "contact_followup",
+      "pipeline_update"
+    ]
+  })
 }
