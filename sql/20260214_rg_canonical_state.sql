@@ -1,4 +1,4 @@
--- Guardian OS Core Infrastructure v1
+-- Guardian OS Core Infrastructure v1 (Option B: state-based classifications)
 create extension if not exists pgcrypto;
 
 -- Legacy compatibility: retire prior denormalized profile table.
@@ -84,24 +84,26 @@ create table if not exists public.rg_thresholds (
 
 create table if not exists public.rg_classifications (
   id uuid primary key default gen_random_uuid(),
-  alert_id uuid not null references public.alerts(id) on delete cascade,
-  contact_id uuid not null references public.rg_contacts(id) on delete cascade,
-  property_id uuid not null references public.rg_properties(id) on delete cascade,
   loan_id uuid not null references public.rg_loans(id) on delete cascade,
-  threshold_version_id uuid not null references public.rg_threshold_versions(id),
+  threshold_version_id uuid not null references public.rg_threshold_versions(id) on delete restrict,
+  classification text not null,
+  rule_triggered text not null,
+  details jsonb null,
   hash_signature text not null,
-  opportunity boolean not null,
-  decision text not null,
-  reason text not null,
-  rule_id text not null,
-  threshold_snapshot jsonb not null,
-  evaluated_at timestamptz not null default now(),
-  meta jsonb null,
-  unique(hash_signature)
+  created_at timestamptz not null default now(),
+  alert_id uuid null references public.alerts(id) on delete set null
 );
 
+-- Option B idempotency: state-only uniqueness by hash signature.
+create unique index if not exists rg_classifications_hash_signature_idx
+  on public.rg_classifications(hash_signature);
+
+-- Enforce only one active threshold version.
 create unique index if not exists rg_threshold_versions_single_active_idx
-  on public.rg_threshold_versions((is_active)) where is_active;
+  on public.rg_threshold_versions((is_active))
+  where is_active;
+
 create index if not exists rg_properties_contact_idx on public.rg_properties(contact_id);
 create index if not exists rg_loans_property_idx on public.rg_loans(property_id);
+create index if not exists rg_classifications_loan_idx on public.rg_classifications(loan_id);
 create index if not exists rg_classifications_alert_idx on public.rg_classifications(alert_id);

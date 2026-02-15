@@ -1,11 +1,3 @@
-export type AlertRow = {
-  id: string;
-  contact_id: string | null;
-  current_rate: number | null;
-  market_rate: number | null;
-  loan_type: string | null;
-};
-
 export type LoanRow = {
   id: string;
   loan_fingerprint: string;
@@ -23,7 +15,6 @@ export type ThresholdVersion = {
 export type DbThresholds = Record<string, number | null | undefined>;
 
 export type ClassificationInput = {
-  alert: AlertRow;
   loan: LoanRow;
   thresholdVersion: ThresholdVersion;
   thresholds: DbThresholds;
@@ -32,9 +23,8 @@ export type ClassificationInput = {
 export type ClassificationResult = {
   opportunity: boolean;
   decision: string;
-  reason: string;
-  rule_id: string;
-  threshold_snapshot: Record<string, unknown>;
+  rule_triggered: string;
+  details: Record<string, unknown>;
 };
 
 const RULE_VERSION = 'guardian-os-core-v1';
@@ -73,26 +63,23 @@ function thresholdKeyForProduct(product: string): string {
 }
 
 export function classify(input: ClassificationInput): ClassificationResult {
-  const product = normalizeLoanProduct(input.loan.loan_product_normalized || input.loan.loan_type_raw || input.alert.loan_type);
+  const product = normalizeLoanProduct(input.loan.loan_product_normalized || input.loan.loan_type_raw);
   const thresholdKey = thresholdKeyForProduct(product);
   const thresholdBps = toNumber(input.thresholds[thresholdKey]) ?? 50;
 
-  const currentRate = toNumber(input.loan.current_rate) ?? toNumber(input.alert.current_rate) ?? 0;
-  const marketRate = toNumber(input.loan.market_rate) ?? toNumber(input.alert.market_rate) ?? 0;
+  const currentRate = toNumber(input.loan.current_rate) ?? 0;
+  const marketRate = toNumber(input.loan.market_rate) ?? 0;
   const deltaBps = Math.round((currentRate - marketRate) * 100);
 
   const opportunity = deltaBps >= thresholdBps;
   const decision = opportunity ? 'notify' : 'hold';
-  const reason = opportunity
-    ? `Rate delta ${deltaBps}bps exceeds threshold ${thresholdBps}bps (${product}).`
-    : `Rate delta ${deltaBps}bps is below threshold ${thresholdBps}bps (${product}).`;
+  const rule_triggered = `${RULE_VERSION}:${input.thresholdVersion.version_name}:${product}:${thresholdKey}`;
 
   return {
     opportunity,
     decision,
-    reason,
-    rule_id: `${RULE_VERSION}:${input.thresholdVersion.version_name}:${product}:${thresholdKey}`,
-    threshold_snapshot: {
+    rule_triggered,
+    details: {
       threshold_version_id: input.thresholdVersion.id,
       threshold_version_name: input.thresholdVersion.version_name,
       product,

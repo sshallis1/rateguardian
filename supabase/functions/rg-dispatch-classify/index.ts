@@ -33,13 +33,14 @@ serve(async () => {
 
     const { data: alerts, error: alertsError } = await supabase
       .from('alerts')
-      .select('id, contact_id, current_rate, market_rate, loan_type')
+      .select('id, contact_id')
       .not('contact_id', 'is', null)
       .order('inserted_at', { ascending: true })
       .limit(200);
     if (alertsError) throw alertsError;
 
     let processed = 0;
+    let skipped = 0;
 
     for (const alert of alerts ?? []) {
       const { data: contact } = await supabase
@@ -61,13 +62,6 @@ serve(async () => {
           .eq('property_id', property.id);
 
         for (const loan of loans ?? []) {
-          const result = RulesEngine.classify({
-            alert,
-            loan,
-            thresholdVersion,
-            thresholds,
-          });
-
           const hashSignature = await sha256([
             contact.ghl_contact_id,
             property.property_fingerprint,
@@ -75,25 +69,44 @@ serve(async () => {
             thresholdVersion.id,
           ].join('|'));
 
+          const { data: existing } = await supabase
+            .from('rg_classifications')
+            .select('id')
+            .eq('hash_signature', hashSignature)
+            .maybeSingle();
+
+          if (existing) {
+            skipped += 1;
+            continue;
+          }
+
+          const result = RulesEngine.classify({
+            loan,
+            thresholdVersion,
+            thresholds,
+          });
+
           const { error: insertError } = await supabase
             .from('rg_classifications')
-            .upsert({
+            .insert({
               alert_id: alert.id,
-              contact_id: contact.id,
-              property_id: property.id,
               loan_id: loan.id,
               threshold_version_id: thresholdVersion.id,
+              classification: result.opportunity ? 'opportunity' : 'monitor',
+              rule_triggered: result.rule_triggered,
+              details: {
+                ...result.details,
+                decision: result.decision,
+                opportunity: result.opportunity,
+                trace_alert_id: alert.id,
+              },
               hash_signature: hashSignature,
-              opportunity: result.opportunity,
-              decision: result.decision,
-              reason: result.reason,
-              rule_id: result.rule_id,
-              threshold_snapshot: result.threshold_snapshot,
-              meta: { source: 'rg-dispatch-classify', alert_id: alert.id },
-            }, { onConflict: 'hash_signature', ignoreDuplicates: true });
+            });
 
           if (!insertError) {
             processed += 1;
+          } else if (insertError.code === '23505') {
+            skipped += 1;
           } else {
             console.error(`[rg-dispatch-classify] alert_id=${alert.id} loan_id=${loan.id} failed`, insertError);
           }
@@ -101,7 +114,7 @@ serve(async () => {
       }
     }
 
-    return new Response(JSON.stringify({ ok: true, processed }), {
+    return new Response(JSON.stringify({ ok: true, processed, skipped }), {
       headers: { 'Content-Type': 'application/json' },
       status: 200,
     });
