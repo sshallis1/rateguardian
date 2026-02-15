@@ -4,10 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node api/index.js",
-    "build": "echo 'Skipping build: API-only project'"
+    "build": "echo 'Skipping build: API-only project'",
+    "test": "tsx --test tests/rg-core.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.58.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
   }
 }
-
