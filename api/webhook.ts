@@ -22,7 +22,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                   return res.status(405).json({ error: "Method Not Allowed" });
           }
 
-      const auth = req.headers.authorization;
+      const auth = req.headers?.get("authorization");
           if (!auth || auth !== `Bearer ${WEBHOOK_SECRET}`) {
                   return res.status(401).json({ error: "Unauthorized" });
           }
@@ -39,13 +39,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       // Persist all scraped rate categories to Supabase
       const { error } = await supabase
-            .from("market_rates")
+            .from("market_rates" as any)
             .insert({
                       source: "usbank",
                       scraped_at: new Date().toISOString(),
                       rate_30yr_conventional: marketRate,
                       raw: items,
-            });
+            } as any);
 
       if (error) {
               console.error("Supabase write error:", error);

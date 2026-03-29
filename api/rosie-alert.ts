@@ -22,7 +22,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: "ROSIE_WEBHOOK_SECRET not configured" });
     }
 
-    const signature = (req.headers?.["x-rosie-signature"] as string | undefined) ?? "";
+    const signature = req.headers?.get("x-rosie-signature") ?? "";
     const rawBody = typeof req.body === "string" ? req.body : JSON.stringify(req.body ?? {});
 
     if (!signature || !verifySignature(rawBody, signature)) {

@@ -4,6 +4,14 @@
     {
       "path": "/api/fetch-alerts",
       "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/rg/ops/heartbeat",
+      "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/rg/ops/health-check",
+      "schedule": "0 */12 * * *"
     }
   ]
 }

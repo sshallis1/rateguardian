@@ -93,7 +93,7 @@ export async function runEngine(options: EngineOptions = {}): Promise<EngineResu
         lastError = contactErr?.message || String(contactErr);
         log({
           stage: "engine:contact:error",
-          message: lastError,
+          message: lastError ?? "Unknown error",
           contact_id: contact.id,
           meta: { runId },
         });
@@ -102,7 +102,7 @@ export async function runEngine(options: EngineOptions = {}): Promise<EngineResu
   } catch (err: any) {
     status = "failed";
     lastError = err?.message || String(err);
-    log({ stage: "engine:run:error", message: lastError, meta: { options: normalizedOptions } });
+    log({ stage: "engine:run:error", message: lastError ?? "Unknown error", meta: { options: normalizedOptions } });
   } finally {
     await completeRun(runId, stats, status, lastError);
   }

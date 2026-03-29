@@ -1,16 +1,29 @@
 {
-  "name": "rateguardian",
+  "name": "shallis-site",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node api/index.js",
-    "build": "echo 'Skipping build: API-only project'",
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "test": "tsx --test tests/rg-core.test.ts"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.58.0"
+    "@supabase/supabase-js": "^2.100.1",
+    "ai": "^6.0.134",
+    "next": "^16.1.7",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "tsx": "^4.21.0"
+    "@tailwindcss/postcss": "^4.2.1",
+    "@types/node": "^20.19.37",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }
