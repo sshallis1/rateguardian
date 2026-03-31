@@ -17,9 +17,11 @@ const FLOOD_COOLDOWN_MS = 60 * 60 * 1000; // 1 hour
 
 export async function POST(req: NextRequest) {
   try {
-    const { contactId, source, context } = await req.json();
+    const body = await req.json();
+    const contactId = body.contactId || body.id;
+    const { source, context } = body;
     if (!contactId) {
-      return NextResponse.json({ error: "contactId required" }, { status: 400 });
+      return NextResponse.json({ error: "contactId or id required" }, { status: 400 });
     }
 
     const contact = await getContact(contactId);

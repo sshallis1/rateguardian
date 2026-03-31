@@ -34,9 +34,10 @@ export async function POST(req: NextRequest) {
   const startTime = Date.now();
 
   try {
-    const { contactId } = await req.json();
+    const body = await req.json();
+    const contactId = body.contactId || body.id;
     if (!contactId) {
-      return NextResponse.json({ error: "contactId required" }, { status: 400 });
+      return NextResponse.json({ error: "contactId or id required" }, { status: 400 });
     }
 
     // Fetch full contact
