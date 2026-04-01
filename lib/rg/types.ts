@@ -83,6 +83,9 @@ export const RG_FIELDS = {
   DISPOSITION: "RG_Disposition",
   DISPOSITION_AT: "RG_Disposition_At",
   DISPOSITION_NOTES: "RG_Notes_Internal",
+  // Long-term nurture fields (went with competitor, monitor for opportunity)
+  COMPETITOR_LENDER: "RG_Lender_Name",
+  COMPETITOR_RATE: "RG_Rate_Original",
 } as const;
 
 // Disposition values — what Sean selects after a phone call
@@ -91,6 +94,9 @@ export const DISPOSITIONS = {
   BOOKED: "Spoke - Booked",
   NOT_INTERESTED: "Spoke - Not Interested",
   CALLBACK: "Spoke - Call Back Later",
+  LOST_OPPORTUNITY: "Lost Opportunity",
+  DNC: "DNC",
+  LONG_TERM_NURTURE: "Long-Term Follow Up",
 } as const;
 
 // Valid values for engine fields — sourced from GHL Master Registry

@@ -30,7 +30,10 @@ type FollowUpAction =
   | "exit_booked"
   | "exit_opted_out"
   | "disposition"
-  | "callback_later";
+  | "callback_later"
+  | "lost_opportunity"
+  | "dnc"
+  | "long_term_nurture";
 
 const SEQUENCE_TAGS = [
   "RG_Path_Buying",
@@ -40,11 +43,20 @@ const SEQUENCE_TAGS = [
 
 export async function POST(req: NextRequest) {
   try {
-    const { contactId, action = "gate_check", disposition, notes } = await req.json() as {
+    const {
+      contactId,
+      action = "gate_check",
+      disposition,
+      notes,
+      competitorLender,
+      competitorRate,
+    } = await req.json() as {
       contactId: string;
       action?: FollowUpAction;
       disposition?: string;
       notes?: string;
+      competitorLender?: string;
+      competitorRate?: string;
     };
 
     if (!contactId) {
@@ -154,6 +166,91 @@ export async function POST(req: NextRequest) {
       await updateCustomFields(contactId, fieldUpdates);
       await addTags(contactId, ["RG_Disposition_Callback"]);
       return NextResponse.json({ action: "callback_later", contactId, message: "Logged. Sequences unchanged." });
+    }
+
+    // ── LOST OPPORTUNITY: Went with competitor, deal is dead ──
+    // Stops all sequences. Pipeline → Lost. No monitoring.
+
+    if (action === "lost_opportunity") {
+      const now = new Date().toISOString();
+      await removeTags(contactId, [...SEQUENCE_TAGS, "RG_In_Follow_Up"]);
+      await addTags(contactId, ["RG_Lost_Opportunity"]);
+      const fieldUpdates: Array<{ key: string; value: string }> = [
+        { key: RG_FIELDS.DISPOSITION, value: DISPOSITIONS.LOST_OPPORTUNITY },
+        { key: RG_FIELDS.DISPOSITION_AT, value: now },
+        { key: RG_FIELDS.FOLLOW_UP_EXIT, value: "lost_opportunity" },
+        { key: RG_FIELDS.FOLLOW_UP_EXIT_AT, value: now },
+      ];
+      if (notes) {
+        fieldUpdates.push({
+          key: RG_FIELDS.DISPOSITION_NOTES,
+          value: `[${now}] ${DISPOSITIONS.LOST_OPPORTUNITY}: ${notes}`,
+        });
+      }
+      await updateCustomFields(contactId, fieldUpdates);
+      return NextResponse.json({ action: "lost_opportunity", contactId });
+    }
+
+    // ── DNC: Do Not Contact — hard stop, full compliance ──
+    // Stops everything. Respects all future gate checks.
+
+    if (action === "dnc") {
+      const now = new Date().toISOString();
+      await removeTags(contactId, [...SEQUENCE_TAGS, "RG_In_Follow_Up"]);
+      await addTags(contactId, ["RG_Opted_Out", "dnc"]);
+      const fieldUpdates: Array<{ key: string; value: string }> = [
+        { key: RG_FIELDS.DISPOSITION, value: DISPOSITIONS.DNC },
+        { key: RG_FIELDS.DISPOSITION_AT, value: now },
+        { key: RG_FIELDS.FOLLOW_UP_EXIT, value: "dnc" },
+        { key: RG_FIELDS.FOLLOW_UP_EXIT_AT, value: now },
+      ];
+      if (notes) {
+        fieldUpdates.push({
+          key: RG_FIELDS.DISPOSITION_NOTES,
+          value: `[${now}] ${DISPOSITIONS.DNC}: ${notes}`,
+        });
+      }
+      await updateCustomFields(contactId, fieldUpdates);
+      return NextResponse.json({ action: "dnc", contactId, message: "DNC applied. All sequences stopped." });
+    }
+
+    // ── LONG-TERM NURTURE: Went with competitor but Rate Guardian keeps watching ──
+    // Stops outbound blitz BUT keeps rate_guardian_monitoring active.
+    // Captures competitor lender + rate so Rosie can alert when we can beat it.
+
+    if (action === "long_term_nurture") {
+      const now = new Date().toISOString();
+      // Stop the blitz sequences but NOT monitoring
+      await removeTags(contactId, [...SEQUENCE_TAGS, "RG_In_Follow_Up"]);
+      await addTags(contactId, ["RG_Long_Term_Nurture", "RG_Monitoring_Active"]);
+
+      const fieldUpdates: Array<{ key: string; value: string }> = [
+        { key: RG_FIELDS.DISPOSITION, value: DISPOSITIONS.LONG_TERM_NURTURE },
+        { key: RG_FIELDS.DISPOSITION_AT, value: now },
+        { key: RG_FIELDS.FOLLOW_UP_EXIT, value: "long_term_nurture" },
+        { key: RG_FIELDS.FOLLOW_UP_EXIT_AT, value: now },
+      ];
+      // Capture competitor info — this is what Rosie monitors against
+      if (competitorLender) {
+        fieldUpdates.push({ key: RG_FIELDS.COMPETITOR_LENDER, value: competitorLender });
+      }
+      if (competitorRate) {
+        fieldUpdates.push({ key: RG_FIELDS.COMPETITOR_RATE, value: competitorRate });
+      }
+      if (notes) {
+        fieldUpdates.push({
+          key: RG_FIELDS.DISPOSITION_NOTES,
+          value: `[${now}] ${DISPOSITIONS.LONG_TERM_NURTURE}: ${competitorLender || "unknown lender"} @ ${competitorRate || "unknown rate"}. ${notes}`,
+        });
+      }
+      await updateCustomFields(contactId, fieldUpdates);
+      return NextResponse.json({
+        action: "long_term_nurture",
+        contactId,
+        competitorLender: competitorLender || null,
+        competitorRate: competitorRate || null,
+        message: "Blitz stopped. Rate Guardian monitoring continues — will alert when we can beat their rate.",
+      });
     }
 
     // ── GATE CHECK (default action) ──
