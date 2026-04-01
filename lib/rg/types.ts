@@ -79,6 +79,18 @@ export const RG_FIELDS = {
   FOLLOW_UP_EXIT: "RG_Follow_Up_Exit",
   FOLLOW_UP_EXIT_AT: "RG_Follow_Up_Exit_At",
   FOLLOW_UP_STARTED_AT: "RG_Follow_Up_Started_At",
+  // Disposition fields (manual call outcomes)
+  DISPOSITION: "RG_Disposition",
+  DISPOSITION_AT: "RG_Disposition_At",
+  DISPOSITION_NOTES: "RG_Notes_Internal",
+} as const;
+
+// Disposition values — what Sean selects after a phone call
+export const DISPOSITIONS = {
+  ENGAGED: "Spoke - Engaged",
+  BOOKED: "Spoke - Booked",
+  NOT_INTERESTED: "Spoke - Not Interested",
+  CALLBACK: "Spoke - Call Back Later",
 } as const;
 
 // Valid values for engine fields — sourced from GHL Master Registry
