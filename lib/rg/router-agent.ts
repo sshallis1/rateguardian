@@ -114,7 +114,21 @@ Additional based on segment:
 - High Income (Non-Doctor) → email_drip_consumer + podcast_subscription
 - Investors → email_drip_consumer (investor variant)
 - Brokers/Partners → email_drip_broker + quarterly_phone_followup
-- Past clients (Funded) → rate_guardian_monitoring + quarterly_phone_followup (gentle touch only)
+- Past clients (Funded) → rate_guardian_monitoring + quarterly_reengage (90-day cycle)
+
+### 90-Day Re-Engagement Sequence (quarterly_reengage)
+Applies to: Past Clients, Center of Influence, Long-Term Nurture, any previously contacted database lead.
+Cadence: Every 90 days. 3 touches per cycle: SMS → Email → Voicemail.
+Purpose: Check in, surface new opportunities, re-engage dormant relationships.
+
+If RG_Disposition = "Long-Term Follow Up" → always include quarterly_reengage + rate_guardian_monitoring.
+If RG_Lead_Source = "Funded_Client" or "Funded_Referral" or "Center_Of_Influence" → always include quarterly_reengage.
+
+### Voicemail Flavor Rules
+Two voicemail variants exist. Choose based on lead source:
+- PHYSICIAN flavor: Used when RG_Persona_Type = "Physician" OR RG_Lead_Source = "LeverageRX"
+- GENERIC flavor: Used for ALL other leads (manual entry, partner referrals, website, networking, etc.)
+Include the voicemail_flavor in your tags: "RG_VM_Physician" or "RG_VM_Generic" so GHL selects the right recordings.
 
 ### Safety Rules
 - NEVER route a contact with RG_Rosie_Status = "In Progress" (engine still working)

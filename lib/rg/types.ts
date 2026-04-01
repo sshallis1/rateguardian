@@ -54,6 +54,7 @@ export type SequenceType =
   | "social_follow"
   | "rate_guardian_monitoring"
   | "quarterly_phone_followup"
+  | "quarterly_reengage"
   | "newsletter_weekly";
 
 // RG Engine field registry — must match GHL custom fields exactly

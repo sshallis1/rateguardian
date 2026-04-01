@@ -9,12 +9,14 @@ import {
   getContact,
   triggerWorkflow,
   updateCustomField,
+  hasTag,
 } from "@/lib/rg/ghl-client";
 import { RG_FIELDS, ROSIE_STATUS } from "@/lib/rg/types";
 import { resolveCustomFields } from "@/lib/rg/field-map";
 
 const MAX_BATCH = 50;
 const RE_EVAL_DAYS = 7;
+const REENGAGE_DAYS = 90; // Long-term nurture, past clients, COIs
 const MASTER_DISPATCHER_WF_ID = process.env.GHL_WF_MASTER_DISPATCHER || "";
 
 // Verify cron secret to prevent unauthorized triggers
@@ -34,6 +36,7 @@ export async function POST(req: NextRequest) {
   const results = {
     scanned: 0,
     triggered: 0,
+    reengaged: 0,
     skipped_in_progress: 0,
     skipped_not_due: 0,
     errors: [] as string[],
@@ -78,7 +81,35 @@ export async function POST(req: NextRequest) {
             continue;
           }
 
-          // Only re-evaluate Completed contacts past the threshold
+          // 90-day re-engagement: long-term nurture, past clients, COIs
+          // These contacts exited active sequences but stay in the database for periodic outreach.
+          const isNurtureContact =
+            hasTag(contact, "RG_Long_Term_Nurture") ||
+            hasTag(contact, "RG_Lost_Opportunity") ||
+            fields[RG_FIELDS.LEAD_SOURCE] === "Funded_Client" ||
+            fields[RG_FIELDS.LEAD_SOURCE] === "Funded_Referral" ||
+            fields[RG_FIELDS.LEAD_SOURCE] === "Center_Of_Influence";
+
+          const dispositionAt = fields[RG_FIELDS.DISPOSITION_AT];
+          const reengageThreshold = now - REENGAGE_DAYS * 24 * 60 * 60 * 1000;
+
+          if (isNurtureContact && status === ROSIE_STATUS.COMPLETED) {
+            // Use disposition timestamp (last interaction) or last evaluated, whichever is newer
+            const lastTouch = dispositionAt
+              ? Math.max(new Date(dispositionAt).getTime(), new Date(lastEvaluated || 0).getTime())
+              : new Date(lastEvaluated || 0).getTime();
+
+            if (!isNaN(lastTouch) && lastTouch < reengageThreshold) {
+              // Due for 90-day re-engagement — trigger dispatcher to re-route
+              await triggerWorkflow(MASTER_DISPATCHER_WF_ID, contact.id);
+              await updateCustomField(contact.id, RG_FIELDS.LAST_RUN_AT, new Date().toISOString());
+              results.reengaged++;
+              processed++;
+              continue;
+            }
+          }
+
+          // Only re-evaluate Completed contacts past the 7-day threshold
           if (status !== ROSIE_STATUS.COMPLETED) continue;
           if (!lastEvaluated) continue;
 
@@ -138,6 +169,7 @@ export async function GET() {
     config: {
       batchSize: MAX_BATCH,
       reEvalDays: RE_EVAL_DAYS,
+      reengageDays: REENGAGE_DAYS,
       dispatcherConfigured: !!MASTER_DISPATCHER_WF_ID,
     },
   });
