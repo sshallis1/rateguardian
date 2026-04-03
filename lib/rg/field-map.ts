@@ -86,8 +86,11 @@ export const GHL_FIELD_REVERSE: Record<string, string> = Object.fromEntries(
 // Resolve GHL custom fields from ID-based format to named format
 // Accepts both array format (from GHL API) and Record format (from our types)
 export function resolveCustomFields(
-  customFields: Array<{ id?: string; key?: string; value: unknown }> | Record<string, string>
+  customFields: Array<{ id?: string; key?: string; value: unknown }> | Record<string, string> | undefined | null
 ): Record<string, string> {
+  // Guard: contacts with no custom fields
+  if (!customFields) return {};
+
   // If already a plain object (Record), resolve keys through the field map
   if (!Array.isArray(customFields)) {
     const resolved: Record<string, string> = {};
