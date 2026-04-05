@@ -252,6 +252,27 @@ export async function sendEmail(
   return res.json();
 }
 
+// Search contacts by tag (returns contacts with customFields — no need for individual getContact)
+export async function searchContactsByTag(tag: string, page = 1, pageLimit = 20) {
+  const res = await throttledFetch(
+    `${GHL_API_BASE}/contacts/search`,
+    {
+      method: "POST",
+      headers: getHeaders(),
+      body: JSON.stringify({
+        locationId: getLocationId(),
+        filters: [{ field: "tags", operator: "contains", value: tag }],
+        page,
+        pageLimit,
+      }),
+    }
+  );
+  if (!res.ok) {
+    throw new Error(`GHL searchContactsByTag failed: ${res.status} ${await res.text()}`);
+  }
+  return res.json();
+}
+
 // Check if contact has a specific tag
 export function hasTag(contact: GHLContact, tag: string): boolean {
   return contact.tags?.some((t) => t.toLowerCase() === tag.toLowerCase()) ?? false;

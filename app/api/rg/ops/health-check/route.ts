@@ -4,7 +4,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import {
-  listContacts,
+  searchContactsByTag,
   getContact,
   addTags,
   updateCustomField,
@@ -57,11 +57,12 @@ export async function POST(req: NextRequest) {
   };
 
   try {
-    let cursor: string | undefined;
+    let page = 1;
     let hasMore = true;
 
+    // Only scan RG contacts (tagged), not the entire database
     while (hasMore) {
-      const batch = await listContacts(20, cursor);
+      const batch = await searchContactsByTag("rg_new_lead_submitted", page, 20);
       const contacts = batch.contacts || [];
 
       if (contacts.length === 0) break;
@@ -123,7 +124,7 @@ export async function POST(req: NextRequest) {
         }
       }
 
-      cursor = contacts[contacts.length - 1]?.id;
+      page++;
       hasMore = contacts.length >= 20;
     }
 

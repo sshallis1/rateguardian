@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import {
-  listContacts,
+  searchContactsByTag,
   getContact,
   triggerWorkflow,
   updateCustomField,
@@ -66,12 +66,12 @@ export async function POST(req: NextRequest) {
 
     const now = Date.now();
     const reEvalThreshold = now - RE_EVAL_DAYS * 24 * 60 * 60 * 1000;
-    let cursor: string | undefined;
+    let page = 1;
     let processed = 0;
 
-    // Paginate through contacts until batch limit
+    // Only scan RG contacts (tagged), not the entire database
     while (processed < MAX_BATCH) {
-      const batch = await listContacts(20, cursor);
+      const batch = await searchContactsByTag("rg_new_lead_submitted", page, 20);
       const contacts = batch.contacts || [];
 
       if (contacts.length === 0) break;
@@ -145,8 +145,7 @@ export async function POST(req: NextRequest) {
         }
       }
 
-      // Get next page cursor
-      cursor = contacts[contacts.length - 1]?.id;
+      page++;
       if (contacts.length < 20) break; // Last page
     }
 
