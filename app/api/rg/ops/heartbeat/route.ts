@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
 
     // Paginate through contacts until batch limit
     while (processed < MAX_BATCH) {
-      const batch = await listContacts(100, cursor);
+      const batch = await listContacts(20, cursor);
       const contacts = batch.contacts || [];
 
       if (contacts.length === 0) break;
@@ -145,7 +145,7 @@ export async function POST(req: NextRequest) {
 
       // Get next page cursor
       cursor = contacts[contacts.length - 1]?.id;
-      if (contacts.length < 100) break; // Last page
+      if (contacts.length < 20) break; // Last page
     }
 
     // Log heartbeat run timestamp

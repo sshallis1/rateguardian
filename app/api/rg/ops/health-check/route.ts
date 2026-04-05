@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
     let hasMore = true;
 
     while (hasMore) {
-      const batch = await listContacts(100, cursor);
+      const batch = await listContacts(20, cursor);
       const contacts = batch.contacts || [];
 
       if (contacts.length === 0) break;
@@ -122,7 +122,7 @@ export async function POST(req: NextRequest) {
       }
 
       cursor = contacts[contacts.length - 1]?.id;
-      hasMore = contacts.length >= 100;
+      hasMore = contacts.length >= 20;
     }
 
     const healthLog = {

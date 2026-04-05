@@ -11,6 +11,27 @@ import { GHL_FIELD_REVERSE } from "./field-map";
 // GHL v2 API (Private Integration token)
 const GHL_API_BASE = "https://services.leadconnectorhq.com";
 
+// Rate limiter: 200ms between calls, retry on 429 with backoff
+const THROTTLE_MS = 200;
+let lastCallTime = 0;
+
+async function throttledFetch(url: string, init?: RequestInit): Promise<Response> {
+  const elapsed = Date.now() - lastCallTime;
+  if (elapsed < THROTTLE_MS) {
+    await new Promise(r => setTimeout(r, THROTTLE_MS - elapsed));
+  }
+  lastCallTime = Date.now();
+
+  const res = await fetch(url, init);
+  if (res.status === 429) {
+    // Back off 2s on rate limit, retry once
+    await new Promise(r => setTimeout(r, 2000));
+    lastCallTime = Date.now();
+    return fetch(url, init);
+  }
+  return res;
+}
+
 function getHeaders() {
   const apiKey = process.env.GHL_API_KEY;
   if (!apiKey) throw new Error("GHL_API_KEY not configured");
@@ -29,7 +50,7 @@ function getLocationId() {
 
 // Fetch a contact by ID
 export async function getContact(contactId: string): Promise<GHLContact> {
-  const res = await fetch(`${GHL_API_BASE}/contacts/${contactId}`, {
+  const res = await throttledFetch(`${GHL_API_BASE}/contacts/${contactId}`, {
     headers: getHeaders(),
   });
   if (!res.ok) {
@@ -44,7 +65,7 @@ export async function updateContactFields(
   contactId: string,
   decision: RoutingDecision
 ) {
-  const res = await fetch(`${GHL_API_BASE}/contacts/${contactId}`, {
+  const res = await throttledFetch(`${GHL_API_BASE}/contacts/${contactId}`, {
     method: "PUT",
     headers: getHeaders(),
     body: JSON.stringify({
@@ -63,7 +84,7 @@ export async function updateContactFields(
 
 // Add tags to a contact
 export async function addTags(contactId: string, tags: string[]) {
-  const res = await fetch(`${GHL_API_BASE}/contacts/${contactId}/tags`, {
+  const res = await throttledFetch(`${GHL_API_BASE}/contacts/${contactId}/tags`, {
     method: "POST",
     headers: getHeaders(),
     body: JSON.stringify({ tags }),
@@ -76,7 +97,7 @@ export async function addTags(contactId: string, tags: string[]) {
 
 // Remove tags from a contact
 export async function removeTags(contactId: string, tags: string[]) {
-  const res = await fetch(`${GHL_API_BASE}/contacts/${contactId}/tags`, {
+  const res = await throttledFetch(`${GHL_API_BASE}/contacts/${contactId}/tags`, {
     method: "DELETE",
     headers: getHeaders(),
     body: JSON.stringify({ tags }),
@@ -93,7 +114,7 @@ export async function moveToPipelineStage(
   pipelineId: string,
   stageId: string
 ) {
-  const res = await fetch(
+  const res = await throttledFetch(
     `${GHL_API_BASE}/opportunities/upsert`,
     {
       method: "POST",
@@ -116,7 +137,7 @@ export async function moveToPipelineStage(
 
 // Trigger a specific workflow for a contact
 export async function triggerWorkflow(workflowId: string, contactId: string) {
-  const res = await fetch(
+  const res = await throttledFetch(
     `${GHL_API_BASE}/contacts/${contactId}/workflow/${workflowId}`,
     {
       method: "POST",
@@ -131,7 +152,7 @@ export async function triggerWorkflow(workflowId: string, contactId: string) {
 
 // List all workflows (for audit)
 export async function listWorkflows() {
-  const res = await fetch(
+  const res = await throttledFetch(
     `${GHL_API_BASE}/workflows/?locationId=${getLocationId()}`,
     { headers: getHeaders() }
   );
@@ -143,7 +164,7 @@ export async function listWorkflows() {
 
 // Search contacts by custom field or tag
 export async function searchContacts(query: string) {
-  const res = await fetch(
+  const res = await throttledFetch(
     `${GHL_API_BASE}/contacts/search/duplicate?locationId=${getLocationId()}&${query}`,
     { headers: getHeaders() }
   );
@@ -166,7 +187,7 @@ export async function updateCustomField(
   fieldName: string,
   value: string
 ) {
-  const res = await fetch(`${GHL_API_BASE}/contacts/${contactId}`, {
+  const res = await throttledFetch(`${GHL_API_BASE}/contacts/${contactId}`, {
     method: "PUT",
     headers: getHeaders(),
     body: JSON.stringify({
@@ -184,7 +205,7 @@ export async function updateCustomFields(
   contactId: string,
   fields: Array<{ key: string; value: string }>
 ) {
-  const res = await fetch(`${GHL_API_BASE}/contacts/${contactId}`, {
+  const res = await throttledFetch(`${GHL_API_BASE}/contacts/${contactId}`, {
     method: "PUT",
     headers: getHeaders(),
     body: JSON.stringify({
@@ -201,7 +222,7 @@ export async function updateCustomFields(
 export async function listContacts(limit = 20, startAfterId?: string) {
   let url = `${GHL_API_BASE}/contacts/?locationId=${getLocationId()}&limit=${limit}`;
   if (startAfterId) url += `&startAfterId=${startAfterId}`;
-  const res = await fetch(url, { headers: getHeaders() });
+  const res = await throttledFetch(url, { headers: getHeaders() });
   if (!res.ok) {
     throw new Error(`GHL listContacts failed: ${res.status} ${await res.text()}`);
   }
@@ -215,7 +236,7 @@ export async function sendEmail(
   subject: string,
   body: string
 ) {
-  const res = await fetch(
+  const res = await throttledFetch(
     `${GHL_API_BASE}/contacts/${contactId}/notes`,
     {
       method: "POST",
