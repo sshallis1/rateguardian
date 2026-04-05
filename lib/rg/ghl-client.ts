@@ -6,6 +6,7 @@ import {
   type RoutingDecision,
   RG_FIELDS,
 } from "./types";
+import { GHL_FIELD_REVERSE } from "./field-map";
 
 // GHL v2 API (Private Integration token)
 const GHL_API_BASE = "https://services.leadconnectorhq.com";
@@ -48,9 +49,9 @@ export async function updateContactFields(
     headers: getHeaders(),
     body: JSON.stringify({
       customFields: [
-        { key: RG_FIELDS.ROUTING_DECISION, value: JSON.stringify(decision.sequence) },
-        { key: RG_FIELDS.ROUTING_SEGMENT, value: decision.segment },
-        { key: RG_FIELDS.ROUTING_PRIORITY, value: decision.priority },
+        { id: "BU8A35a09Ui4d0Me60tP", field_value: JSON.stringify(decision.sequence) },
+        { id: "4hJx8G5OCkOrtgvzcrUJ", field_value: decision.segment },
+        { id: "iD8M1nsShFyCz28QtX3t", field_value: decision.priority },
       ],
     }),
   });
@@ -152,17 +153,24 @@ export async function searchContacts(query: string) {
   return res.json();
 }
 
+// Resolve a field name to GHL ID format for writes
+function toGHLField(fieldName: string, value: string): { id: string; field_value: string } {
+  const id = GHL_FIELD_REVERSE[fieldName];
+  if (!id) throw new Error(`Unknown GHL field: ${fieldName} — add it to field-map.ts`);
+  return { id, field_value: value };
+}
+
 // Update a single custom field on a contact
 export async function updateCustomField(
   contactId: string,
-  fieldKey: string,
+  fieldName: string,
   value: string
 ) {
   const res = await fetch(`${GHL_API_BASE}/contacts/${contactId}`, {
     method: "PUT",
     headers: getHeaders(),
     body: JSON.stringify({
-      customFields: [{ key: fieldKey, value }],
+      customFields: [toGHLField(fieldName, value)],
     }),
   });
   if (!res.ok) {
@@ -179,7 +187,9 @@ export async function updateCustomFields(
   const res = await fetch(`${GHL_API_BASE}/contacts/${contactId}`, {
     method: "PUT",
     headers: getHeaders(),
-    body: JSON.stringify({ customFields: fields }),
+    body: JSON.stringify({
+      customFields: fields.map(f => toGHLField(f.key, f.value)),
+    }),
   });
   if (!res.ok) {
     throw new Error(`GHL updateCustomFields failed: ${res.status} ${await res.text()}`);

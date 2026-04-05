@@ -76,6 +76,21 @@ export const GHL_FIELD_MAP: Record<string, string> = {
   "Ks9oT258NNl7IsEE32Hi": "RG_Notes_Short",
   "FbU6lFUhlqIpsJXo0Dzp": "RG_Trigger_Flag",
   "eBo9pEsHnjRK5R0WieJE": "RG_App_Date",
+
+  // Routing Decision (created 2026-04-05)
+  "BU8A35a09Ui4d0Me60tP": "RG_Routing_Decision",
+  "4hJx8G5OCkOrtgvzcrUJ": "RG_Routing_Segment",
+  "iD8M1nsShFyCz28QtX3t": "RG_Routing_Priority",
+
+  // Ops & Timestamps (created 2026-04-05)
+  "N1IOVYP4Z2Pfv4uYq46m": "RG_Disposition_At",
+  "rudufWoZRnLCMjCPndQ3": "RG_Follow_Up_Exit",
+  "uZMmjWgtXC8tDqhcyWnI": "RG_Follow_Up_Exit_At",
+  "o1QHkLYIbqbU56fcDf2b": "RG_Follow_Up_Started_At",
+  "ySrSxaNRKkO2wB0pzja8": "RG_HealthCheck_Last_Run",
+  "yWr12hx7eymXsyLoONxD": "RG_Heartbeat_Last_Run",
+  "gFwbMOcVESb4CVnvxhm0": "RG_Last_Notified_At",
+  "2pNYVbP34LastXjBEPPz": "RG_Last_Routed_At",
 };
 
 // Reverse map: name -> ID (for writing back to GHL)
