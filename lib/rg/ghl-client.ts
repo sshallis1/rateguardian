@@ -7,8 +7,8 @@ import {
   RG_FIELDS,
 } from "./types";
 
-// GHL v1 API (sub-account JWT token) — v2 requires OAuth
-const GHL_API_BASE = "https://rest.gohighlevel.com/v1";
+// GHL v2 API (Private Integration token)
+const GHL_API_BASE = "https://services.leadconnectorhq.com";
 
 function getHeaders() {
   const apiKey = process.env.GHL_API_KEY;
@@ -16,6 +16,7 @@ function getHeaders() {
   return {
     Authorization: `Bearer ${apiKey}`,
     "Content-Type": "application/json",
+    Version: "2021-07-28",
   };
 }
 
