@@ -13,6 +13,8 @@ import {
 import { RG_FIELDS, ROSIE_STATUS } from "@/lib/rg/types";
 import { resolveCustomFields } from "@/lib/rg/field-map";
 
+export const maxDuration = 120; // Pro plan: allow 2 min for throttled scans
+
 const STUCK_THRESHOLD_MS = 2 * 60 * 60 * 1000; // 2 hours
 const STALE_THRESHOLD_MS = 14 * 24 * 60 * 60 * 1000; // 14 days
 

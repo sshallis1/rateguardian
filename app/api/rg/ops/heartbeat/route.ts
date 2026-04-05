@@ -15,6 +15,8 @@ import { RG_FIELDS, ROSIE_STATUS } from "@/lib/rg/types";
 import { resolveCustomFields } from "@/lib/rg/field-map";
 import { isHolidayMode } from "@/lib/rg/holiday-mode";
 
+export const maxDuration = 120; // Pro plan: allow 2 min for throttled scans
+
 const MAX_BATCH = 50;
 const RE_EVAL_DAYS = 7;
 const REENGAGE_DAYS = 90; // Long-term nurture, past clients, COIs
