@@ -3,6 +3,7 @@
 
 import { NextResponse } from "next/server";
 import { listWorkflows } from "@/lib/rg/ghl-client";
+import { isHolidayMode } from "@/lib/rg/holiday-mode";
 
 export async function GET() {
   try {
@@ -16,6 +17,7 @@ export async function GET() {
     return NextResponse.json({
       service: "Rate Guardian Engine",
       status: "operational",
+      holidayMode: isHolidayMode(),
       workflows: rgWorkflows.map((w: { id: string; name: string; status: string }) => ({
         id: w.id,
         name: w.name,

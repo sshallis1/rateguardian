@@ -10,6 +10,7 @@ import {
   addTags,
 } from "@/lib/rg/ghl-client";
 import type { GHLWebhookPayload } from "@/lib/rg/types";
+import { isHolidayMode, HOLD_TAG } from "@/lib/rg/holiday-mode";
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,8 +27,18 @@ export async function POST(req: NextRequest) {
     // Fetch full contact data (webhook payload may be partial)
     const contact = await getContact(payload.contact.id);
 
-    // Run the Claude routing agent
+    // Run the Claude routing agent — always runs, even in holiday mode
     const decision = await routeLead(contact);
+
+    // Holiday mode: still write routing decision + tags, but hold outbound
+    const holidayActive = isHolidayMode();
+    if (holidayActive) {
+      decision.tags.push(HOLD_TAG);
+      // Strip active outreach sequences — keep monitoring + newsletter only
+      decision.sequence = decision.sequence.filter(
+        (s) => s === "rate_guardian_monitoring" || s === "newsletter_weekly"
+      );
+    }
 
     // Write routing decision back to GHL
     await updateContactFields(contact.id, decision);
@@ -41,6 +52,7 @@ export async function POST(req: NextRequest) {
       pipelineStage: decision.pipelineStage,
       sequences: decision.sequence,
       reasoning: decision.reasoning,
+      holidayMode: holidayActive,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";

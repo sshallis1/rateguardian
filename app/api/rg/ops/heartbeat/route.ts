@@ -13,6 +13,7 @@ import {
 } from "@/lib/rg/ghl-client";
 import { RG_FIELDS, ROSIE_STATUS } from "@/lib/rg/types";
 import { resolveCustomFields } from "@/lib/rg/field-map";
+import { isHolidayMode } from "@/lib/rg/holiday-mode";
 
 const MAX_BATCH = 50;
 const RE_EVAL_DAYS = 7;
@@ -39,10 +40,21 @@ export async function POST(req: NextRequest) {
     reengaged: 0,
     skipped_in_progress: 0,
     skipped_not_due: 0,
+    skipped_holiday: false,
     errors: [] as string[],
   };
 
   try {
+    // Holiday mode: skip re-engagement triggers (leads still accumulate for drain)
+    if (isHolidayMode()) {
+      console.log("[RG Heartbeat] Skipped — holiday mode active");
+      return NextResponse.json({
+        action: "heartbeat_skipped",
+        reason: "holiday_mode",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
     if (!MASTER_DISPATCHER_WF_ID) {
       return NextResponse.json({
         action: "error",
