@@ -1,206 +1,487 @@
+import Link from "next/link";
+import { ArrowRight, Clock, Shield, TrendingDown } from "lucide-react";
+import { SpokeNav } from "@/components/brand/SpokeNav";
+import { TrustBar } from "@/components/brand/TrustBar";
+import { GuardianCard } from "@/components/brand/GuardianCard";
+import { GearVisualization } from "@/components/brand/GearVisualization";
+import { SavingsScore } from "@/components/brand/SavingsScore";
+import { Footer } from "@/components/brand/Footer";
+import { Container } from "@/components/ui/container";
+import { Badge } from "@/components/ui/badge";
+import { BRAND, GUARDIANS } from "@/lib/brand";
+
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-gray-900 font-sans">
-      {/* Nav */}
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur border-b border-gray-100 z-50">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <span className="text-xl font-bold text-blue-700 tracking-tight">The Shallis Group</span>
-          <div className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
-            <a href="#about" className="hover:text-blue-700 transition-colors">About</a>
-            <a href="#services" className="hover:text-blue-700 transition-colors">Services</a>
-            <a href="#media" className="hover:text-blue-700 transition-colors">Media</a>
-            <a href="#contact" className="hover:text-blue-700 transition-colors">Contact</a>
-          </div>
-        </div>
-      </nav>
+    <main className="min-h-screen bg-[color:var(--brand-cream)] text-neutral-900">
+      <SpokeNav />
 
-      {/* Hero */}
-      <section className="pt-32 pb-24 px-6 bg-gradient-to-br from-blue-700 to-blue-900 text-white text-center">
-        <p className="text-blue-300 uppercase tracking-widest text-sm mb-3">Mortgage · Real Estate · Coaching</p>
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-4 leading-tight">Sean Shallis</h1>
-        <p className="text-xl text-blue-100 max-w-2xl mx-auto mb-8">
-          30+ years of real estate expertise. Best-selling author. Loan originator. Founder of the 10X Real Estate Warrior Nation.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="#contact" className="bg-white text-blue-700 font-semibold px-8 py-3 rounded-full hover:bg-blue-50 transition-colors">
-            Work With Sean
-          </a>
-          <a href="#about" className="border border-white/60 text-white font-semibold px-8 py-3 rounded-full hover:bg-white/10 transition-colors">
-            Learn More
-          </a>
-        </div>
+      {/* ========= HERO ========= */}
+      <section className="relative overflow-hidden">
+        {/* Subtle background pattern */}
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 10%, rgba(14, 107, 109, 0.08), transparent 40%), radial-gradient(circle at 80% 60%, rgba(200, 165, 80, 0.08), transparent 40%)",
+          }}
+          aria-hidden
+        />
+
+        <Container className="relative py-16 md:py-24 lg:py-28">
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
+            {/* Text */}
+            <div className="lg:col-span-7">
+              <Badge variant="teal" className="mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[color:var(--brand-teal)] animate-pulse" />
+                Rate Guardian is Live
+              </Badge>
+
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight mb-6">
+                Rosie Watches Your Rate.
+                <br />
+                <span className="text-gradient-brand">So You Don't Have To.</span>
+              </h1>
+
+              <p className="text-xl md:text-2xl text-neutral-700 leading-relaxed mb-4 max-w-2xl">
+                Your personal Rate Guardian — monitoring your mortgage{" "}
+                <strong className="font-semibold text-neutral-900">
+                  multiple times a day
+                </strong>
+                , so you never overpay and never get stuck with the wrong
+                strategy at the wrong time.
+              </p>
+
+              {/* The 3 Cs */}
+              <div className="flex flex-wrap gap-2 mb-8">
+                {BRAND.threeCs.map((c) => (
+                  <div
+                    key={c.word}
+                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 border border-neutral-200 backdrop-blur-sm"
+                  >
+                    <span className="font-mono font-bold text-[color:var(--brand-teal)]">
+                      {c.letter}
+                    </span>
+                    <span className="text-sm font-semibold text-neutral-800">
+                      {c.word}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-3 mb-6">
+                <Link
+                  href="/rate-guardian/ask-rosie"
+                  className="inline-flex items-center gap-2 h-14 px-8 rounded-full bg-[color:var(--brand-teal)] text-white font-semibold text-base hover:bg-[color:var(--brand-teal-dark)] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                >
+                  Check My Rate — Free
+                  <ArrowRight size={18} />
+                </Link>
+                <Link
+                  href="#how-it-works"
+                  className="inline-flex items-center gap-2 h-14 px-8 rounded-full border-2 border-neutral-300 text-neutral-900 font-semibold text-base hover:border-neutral-900 transition-colors"
+                >
+                  How Rosie Works
+                </Link>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-neutral-500">
+                <span className="flex items-center gap-2">
+                  <Clock size={14} />
+                  90-second check
+                </span>
+                <span className="flex items-center gap-2">
+                  <Shield size={14} />
+                  No credit impact
+                </span>
+                <span className="flex items-center gap-2">
+                  <TrendingDown size={14} />
+                  100% free monitoring
+                </span>
+              </div>
+            </div>
+
+            {/* Visual */}
+            <div className="lg:col-span-5">
+              <div className="relative">
+                <GearVisualization className="w-full max-w-lg mx-auto" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-4 flex items-center gap-3 px-4 py-2 rounded-full bg-white shadow-lg border border-neutral-200">
+                  <div className="w-2 h-2 rounded-full bg-[color:var(--status-success)] animate-pulse" />
+                  <span className="text-xs font-mono font-semibold">
+                    Monitoring · Active
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
       </section>
 
-      {/* Stats */}
-      <section className="bg-gray-50 border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {[
-            { value: "30+", label: "Years of Experience" },
-            { value: "1,000+", label: "Clients Served" },
-            { value: "Featured", label: "Wall Street Journal" },
-            { value: "#1", label: "10X Real Estate Warrior Nation" },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <p className="text-3xl font-extrabold text-blue-700">{stat.value}</p>
-              <p className="text-sm text-gray-500 mt-1">{stat.label}</p>
+      <TrustBar />
+
+      {/* ========= CREDIT KARMA MOMENT — Savings Score ========= */}
+      <section className="py-20 md:py-28 bg-white">
+        <Container>
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="text-[color:var(--brand-teal)] uppercase tracking-widest text-xs font-bold mb-3">
+                Your Free Mortgage Checkup
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
+                What's Your Savings Score?
+              </h2>
+              <p className="text-lg text-neutral-600 leading-relaxed mb-6">
+                Like a credit score — but for your mortgage. In 90 seconds,
+                Rosie compares your current rate, fees, and loan structure
+                against today's market and 30 years of wisdom, then gives you
+                one simple number from 0 to 100.
+              </p>
+              <ul className="space-y-3 mb-8">
+                <Checkmark>
+                  <strong>75-100</strong> — Huge opportunity. You're leaving
+                  real money on the table.
+                </Checkmark>
+                <Checkmark>
+                  <strong>40-74</strong> — Worth a look. Small tweaks can still
+                  save thousands.
+                </Checkmark>
+                <Checkmark>
+                  <strong>0-39</strong> — You're in good shape. Rosie will keep
+                  watching anyway.
+                </Checkmark>
+              </ul>
+              <Link
+                href="/rate-guardian/ask-rosie"
+                className="inline-flex items-center gap-2 h-12 px-6 rounded-full bg-[color:var(--brand-teal)] text-white font-semibold text-sm hover:bg-[color:var(--brand-teal-dark)] transition-colors"
+              >
+                Get My Savings Score
+                <ArrowRight size={16} />
+              </Link>
             </div>
-          ))}
-        </div>
+
+            <div className="flex justify-center">
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-br from-[color:var(--brand-teal)]/10 to-[color:var(--brand-gold)]/10 rounded-full blur-3xl" />
+                <div className="relative">
+                  <SavingsScore
+                    score={82}
+                    monthlySavings={247}
+                    subtitle="Example — your actual score appears after the rate check"
+                    size="lg"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
       </section>
 
-      {/* About */}
-      <section id="about" className="py-24 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <p className="text-blue-700 uppercase tracking-widest text-sm font-semibold mb-3">About Sean</p>
-            <h2 className="text-4xl font-extrabold mb-6">Recovering Realtor.<br />Top-Producing Loan Officer.</h2>
-            <p className="text-gray-600 text-lg leading-relaxed mb-4">
-              Sean Shallis is a mortgage loan originator at U.S. Bank in Chatham, NJ, and the founder of The Shallis Group at eXp Realty. With over three decades in real estate and mortgage lending, Sean brings unmatched market knowledge to every client.
-            </p>
-            <p className="text-gray-600 text-lg leading-relaxed mb-4">
-              He holds advanced training in sales, marketing, statistical analysis, and Neuro-Linguistic Programming (NLP), as well as specialized training with the US Army&apos;s Elite Rangers.
-            </p>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              Sean has been featured in <strong>The Wall Street Journal</strong> and <strong>The New York Times</strong> and is widely recognized as one of New Jersey&apos;s most trusted real estate and mortgage experts.
+      {/* ========= HOW IT WORKS — 3 STEPS ========= */}
+      <section
+        id="how-it-works"
+        className="py-20 md:py-28 bg-[color:var(--brand-cream)]"
+      >
+        <Container>
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="text-[color:var(--brand-teal)] uppercase tracking-widest text-xs font-bold mb-3">
+              How Rosie Works
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
+              Three Steps. Zero Babysitting.
+            </h2>
+            <p className="text-lg text-neutral-600">
+              Once Rosie is watching your rate, you stop thinking about it.
+              That's the whole point.
             </p>
           </div>
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl p-10 text-center">
-            <div className="w-32 h-32 bg-blue-700 rounded-full mx-auto mb-6 flex items-center justify-center text-white text-5xl font-bold">
-              SS
-            </div>
-            <p className="text-lg font-semibold text-gray-800">Sean Shallis</p>
-            <p className="text-blue-700 font-medium">Mortgage Loan Originator · eXp Realty</p>
-            <p className="text-gray-500 text-sm mt-1">Chatham, NJ</p>
-            <div className="mt-6 flex flex-col gap-2 text-sm text-gray-600">
-              <span>📰 Wall Street Journal Featured</span>
-              <span>📰 New York Times Featured</span>
-              <span>📘 Best-Selling Author</span>
-              <span>🎙️ Podcast Host</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services */}
-      <section id="services" className="py-24 px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <p className="text-blue-700 uppercase tracking-widest text-sm font-semibold mb-3 text-center">What Sean Offers</p>
-          <h2 className="text-4xl font-extrabold text-center mb-16">Services</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                icon: "🏡",
-                title: "Real Estate",
-                desc: "Buying or selling in Montclair, Chatham, and Northern NJ — Sean's team at eXp Realty delivers results with deep local market knowledge.",
+                n: "01",
+                title: "Free Rate Check",
+                body:
+                  "Tell Rosie about your mortgage in 90 seconds. No credit impact, no forms, no games. Get your Savings Score instantly.",
               },
               {
-                icon: "💰",
-                title: "Mortgage Lending",
-                desc: "As a U.S. Bank loan originator, Sean helps clients navigate home financing with clarity, speed, and personalized strategy.",
+                n: "02",
+                title: "Rosie Stands Watch",
+                body:
+                  "Rosie monitors rates and lender credits multiple times per day — listening for opportunities and red flags. She never sleeps.",
               },
               {
-                icon: "📈",
-                title: "Coaching & Consulting",
-                desc: "Through Ri2 Consulting and the 10X Real Estate Warrior Nation, Sean coaches agents and loan officers to grow sustainable, high-performance businesses.",
+                n: "03",
+                title: "Sean Closes It",
+                body:
+                  "When the window opens, Rosie alerts you. Sean picks up the phone. Backed by the 5th largest bank in the world.",
               },
             ].map((s) => (
-              <div key={s.title} className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <div className="text-4xl mb-4">{s.icon}</div>
+              <div
+                key={s.n}
+                className="bg-white rounded-2xl p-8 border border-neutral-200 hover:border-[color:var(--brand-teal)] hover:-translate-y-1 transition-all shadow-sm hover:shadow-md"
+              >
+                <div className="text-5xl font-mono font-bold text-[color:var(--brand-teal)] mb-4">
+                  {s.n}
+                </div>
                 <h3 className="text-xl font-bold mb-3">{s.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{s.desc}</p>
+                <p className="text-neutral-600 leading-relaxed">{s.body}</p>
               </div>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
 
-      {/* Media */}
-      <section id="media" className="py-24 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-blue-700 uppercase tracking-widest text-sm font-semibold mb-3">As Seen In</p>
-          <h2 className="text-4xl font-extrabold mb-12">Media &amp; Publications</h2>
-          <div className="flex flex-wrap justify-center gap-8 text-gray-400 font-bold text-xl">
-            {["The Wall Street Journal", "The New York Times", "HousingWire", "The Success Network"].map((pub) => (
-              <span key={pub} className="border border-gray-200 rounded-xl px-6 py-4 hover:border-blue-300 hover:text-blue-700 transition-colors cursor-default">
-                {pub}
-              </span>
-            ))}
-          </div>
-          <div className="mt-16 bg-blue-700 rounded-3xl p-10 text-white text-left max-w-3xl mx-auto">
-            <p className="text-2xl font-bold mb-3">&ldquo;The Perfect 10X Strategy&rdquo;</p>
-            <p className="text-blue-100 text-lg mb-6">
-              Sean&apos;s best-selling framework for real estate professionals — available on Audible and Amazon. Learn how to break down your numbers, find growth opportunities, and build a business that lasts.
+      {/* ========= ARM PARADIGM FLIP ========= */}
+      <section className="py-20 md:py-28 bg-[color:var(--surface-dark)] text-white relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 30% 40%, rgba(14, 168, 171, 0.3), transparent 50%), radial-gradient(circle at 70% 60%, rgba(200, 165, 80, 0.2), transparent 50%)",
+          }}
+          aria-hidden
+        />
+        <Container className="relative">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <Badge variant="gold" className="mb-6 bg-[color:var(--brand-gold)]/20 border-[color:var(--brand-gold)]/40">
+              The Contrarian Play
+            </Badge>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+              Why Smart Buyers Choose{" "}
+              <span className="text-gradient-gold">ARMs Now</span>
+            </h2>
+            <p className="text-xl text-neutral-300 leading-relaxed">
+              Most people default to a 30-year fixed because they're afraid of
+              what they can't watch. But when Rosie is monitoring your rate
+              multiple times a day — and Sean can refinance you in 30 days —
+              the lower ARM rate becomes the{" "}
+              <em className="text-white font-medium">
+                wealth-building path, not the risky one
+              </em>
+              .
             </p>
-            <a
-              href="https://www.amazon.com/10X-Real-Estate-Warrior-Nation/dp/B08K59X33C"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-white text-blue-700 font-semibold px-6 py-3 rounded-full hover:bg-blue-50 transition-colors"
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8">
+              <div className="text-xs uppercase tracking-widest text-neutral-500 font-bold mb-3">
+                Traditional Advice
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-neutral-400">
+                30-Year Fixed
+              </h3>
+              <p className="text-neutral-400 leading-relaxed mb-4">
+                "Lock it in. Peace of mind. Never think about it again."
+              </p>
+              <div className="pt-4 border-t border-white/10">
+                <div className="text-xs text-neutral-500 mb-1">Reality</div>
+                <div className="text-sm text-neutral-300">
+                  You overpay every month — for decades — because no one is
+                  watching for a better window.
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border-2 border-[color:var(--brand-gold)]/40 bg-gradient-to-br from-[color:var(--brand-gold)]/10 to-transparent p-8 relative">
+              <div className="absolute -top-3 left-6">
+                <Badge variant="gold">The Rate Guardian Play</Badge>
+              </div>
+              <div className="text-xs uppercase tracking-widest text-[color:var(--brand-gold)] font-bold mb-3 mt-2">
+                The Smart Move
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-white">
+                Short-Term ARM + Rosie
+              </h3>
+              <p className="text-neutral-200 leading-relaxed mb-4">
+                Take the <strong>lower rate</strong> — save $400-700/month
+                immediately. Rosie watches. Sean refinances you before the
+                reset, every time.
+              </p>
+              <div className="pt-4 border-t border-[color:var(--brand-gold)]/20">
+                <div className="text-xs text-[color:var(--brand-gold)] mb-1">
+                  Why it works
+                </div>
+                <div className="text-sm text-neutral-100">
+                  Monitoring turns the "risky" ARM into the smart play. You get
+                  the savings AND the safety net.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-center text-sm text-neutral-500 max-w-2xl mx-auto mt-8 italic">
+            That's the difference between having a loan officer and having a
+            Rate Guardian.
+          </p>
+        </Container>
+      </section>
+
+      {/* ========= FIVE INGREDIENT MOAT ========= */}
+      <section className="py-20 md:py-28 bg-[color:var(--surface-dark)] text-white border-t border-white/5">
+        <Container>
+          <div className="max-w-2xl mb-14">
+            <div className="text-[color:var(--brand-teal-light)] uppercase tracking-widest text-xs font-bold mb-3">
+              Why Rate Guardian Works
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+              Five ingredients.
+              <br />
+              <span className="text-neutral-400">
+                No competitor has all five.
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
+            {BRAND.moat.map((m, i) => (
+              <div
+                key={m.title}
+                className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 hover:bg-white/[0.04] transition-colors"
+              >
+                <div className="font-mono text-[color:var(--brand-teal-light)] text-xs font-bold mb-3">
+                  0{i + 1}
+                </div>
+                <h3 className="font-bold text-base mb-2 leading-tight">
+                  {m.title}
+                </h3>
+                <p className="text-sm text-neutral-400 leading-relaxed">
+                  {m.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ========= GUARDIAN FAMILY SPOKES ========= */}
+      <section className="py-20 md:py-28 bg-[color:var(--surface-dark)] text-white border-t border-white/5">
+        <Container>
+          <div className="max-w-2xl mb-14">
+            <div className="text-[color:var(--brand-gold)] uppercase tracking-widest text-xs font-bold mb-3">
+              The Guardian Family
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
+              One AI relationship.
+              <br />
+              Every financial blind spot.
+            </h2>
+            <p className="text-lg text-neutral-400">
+              Rate Guardian is the first. The rest are coming — each watching a
+              life domain most people can't see through.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {/* Live spoke spotlight */}
+            <GuardianCard guardian={GUARDIANS[0]} variant="spotlight" />
+
+            {/* Upcoming spokes as cards */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {GUARDIANS.slice(1).map((g) => (
+                <GuardianCard key={g.id} guardian={g} variant="card" />
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ========= ABOUT SEAN ========= */}
+      <section className="py-20 md:py-28 bg-white">
+        <Container>
+          <div className="grid md:grid-cols-12 gap-12 items-center">
+            <div className="md:col-span-5">
+              <div className="relative aspect-square max-w-sm mx-auto rounded-3xl bg-gradient-to-br from-[color:var(--brand-teal)] to-[color:var(--brand-navy)] flex items-center justify-center text-white">
+                <div className="text-center">
+                  <div className="text-7xl font-bold mb-2">SS</div>
+                  <div className="text-sm uppercase tracking-widest opacity-80">
+                    Sean Shallis
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="md:col-span-7">
+              <div className="text-[color:var(--brand-teal)] uppercase tracking-widest text-xs font-bold mb-3">
+                The Mind Behind Rosie
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
+                Three decades of financial wisdom.
+                <br />
+                <span className="text-neutral-500">
+                  Now powered by AI that never sleeps.
+                </span>
+              </h2>
+              <div className="space-y-4 text-lg text-neutral-700 leading-relaxed mb-8">
+                <p>
+                  Sean Shallis is a Private Wealth Mortgage Strategist at U.S.
+                  Bank — the 5th largest bank in the world. He specializes in
+                  physician lending, high-balance jumbo financing, and
+                  construction-to-permanent loans for families building real
+                  wealth.
+                </p>
+                <p>
+                  He's guided <strong>$1 billion+</strong> in transactions,
+                  been featured in the <em>Wall Street Journal</em>, the{" "}
+                  <em>New York Times</em>, <em>Bloomberg</em>, and{" "}
+                  <em>CNBC</em>, and authored the Amazon bestseller{" "}
+                  <em>10X House Selling Secrets</em>.
+                </p>
+                <p>
+                  Rosie is the result of 30 years of watching clients overpay
+                  because nobody was guarding the rate. Now — somebody is.
+                </p>
+              </div>
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-2 text-[color:var(--brand-teal)] font-semibold hover:underline"
+              >
+                Read Sean's Full Story
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ========= CLOSING CTA ========= */}
+      <section className="py-20 md:py-24 bg-[color:var(--brand-teal)] text-white">
+        <Container>
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
+              Let Rosie Watch Your Rate.
+            </h2>
+            <p className="text-lg text-white/80 mb-8">
+              Free forever. No credit impact. 90 seconds to get your Savings
+              Score.
+            </p>
+            <Link
+              href="/rate-guardian/ask-rosie"
+              className="inline-flex items-center gap-2 h-14 px-8 rounded-full bg-white text-[color:var(--brand-teal)] font-semibold text-base hover:bg-neutral-100 transition-all shadow-xl hover:-translate-y-0.5"
             >
-              Listen on Audible →
-            </a>
+              Check My Rate Now
+              <ArrowRight size={18} />
+            </Link>
           </div>
-        </div>
+        </Container>
       </section>
 
-      {/* Contact */}
-      <section id="contact" className="py-24 px-6 bg-gray-50">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-blue-700 uppercase tracking-widest text-sm font-semibold mb-3">Get In Touch</p>
-          <h2 className="text-4xl font-extrabold mb-4">Let&apos;s Connect</h2>
-          <p className="text-gray-600 text-lg mb-10">Ready to buy, sell, or grow your real estate business? Reach out to Sean today.</p>
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-left space-y-4">
-            <div className="flex items-center gap-4">
-              <span className="text-2xl">📍</span>
-              <div>
-                <p className="font-semibold">Location</p>
-                <p className="text-gray-500">Chatham, NJ &amp; Montclair, NJ</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-2xl">🏦</span>
-              <div>
-                <p className="font-semibold">Mortgage</p>
-                <p className="text-gray-500">U.S. Bank — Loan Originator</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-2xl">🏡</span>
-              <div>
-                <p className="font-semibold">Real Estate</p>
-                <p className="text-gray-500">The Shallis Group at eXp Realty</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-2xl">💼</span>
-              <div>
-                <p className="font-semibold">LinkedIn</p>
-                <a
-                  href="https://www.linkedin.com/in/seantshallis/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-700 hover:underline"
-                >
-                  linkedin.com/in/seantshallis
-                </a>
-              </div>
-            </div>
-          </div>
-          <a
-            href="https://mortgage.usbank.com/nj-chatham-sean-shallis"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-8 inline-block bg-blue-700 text-white font-semibold px-10 py-4 rounded-full hover:bg-blue-800 transition-colors text-lg"
-          >
-            Contact Sean at U.S. Bank →
-          </a>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 text-center py-8 text-sm">
-        <p>© {new Date().getFullYear()} The Shallis Group · eXp Realty · All rights reserved.</p>
-      </footer>
+      <Footer />
     </main>
+  );
+}
+
+function Checkmark({ children }: { children: React.ReactNode }) {
+  return (
+    <li className="flex items-start gap-3">
+      <div className="mt-1 w-5 h-5 rounded-full bg-[color:var(--brand-teal)]/15 flex items-center justify-center flex-shrink-0">
+        <svg
+          className="w-3 h-3 text-[color:var(--brand-teal)]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={3}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <span className="text-neutral-700">{children}</span>
+    </li>
   );
 }
