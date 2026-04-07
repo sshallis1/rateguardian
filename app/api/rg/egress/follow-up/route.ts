@@ -20,7 +20,7 @@ import {
   updateCustomFields,
   hasTag,
 } from "@/lib/rg/ghl-client";
-import { RG_FIELDS, ROSIE_STATUS, DISPOSITIONS } from "@/lib/rg/types";
+import { RG_FIELDS, ROSIE_STATUS, DISPOSITIONS, MANUAL_OWNED_TAG } from "@/lib/rg/types";
 import { resolveCustomFields } from "@/lib/rg/field-map";
 
 // Actions this endpoint handles
@@ -33,7 +33,9 @@ type FollowUpAction =
   | "callback_later"
   | "lost_opportunity"
   | "dnc"
-  | "long_term_nurture";
+  | "long_term_nurture"
+  | "manual_owned"
+  | "release_manual";
 
 const SEQUENCE_TAGS = [
   "RG_Path_Buying",
@@ -123,7 +125,7 @@ export async function POST(req: NextRequest) {
       if (value === DISPOSITIONS.BOOKED) {
         await removeTags(contactId, SEQUENCE_TAGS);
         await removeTags(contactId, ["RG_In_Follow_Up"]);
-        await addTags(contactId, ["RG_Booked", "RG_Disposition_Booked"]);
+        await addTags(contactId, ["RG_Booked", "RG_Disposition_Booked", MANUAL_OWNED_TAG]);
         await updateCustomField(contactId, RG_FIELDS.FOLLOW_UP_EXIT, "booked");
         await updateCustomField(contactId, RG_FIELDS.FOLLOW_UP_EXIT_AT, now);
         return NextResponse.json({ action: "disposition", outcome: "booked", contactId });
@@ -138,10 +140,10 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ action: "disposition", outcome: "not_interested", contactId });
       }
 
-      // ENGAGED (default) — stop blitz, keep monitoring
+      // ENGAGED (default) — stop blitz, mark manually owned, keep monitoring
       await removeTags(contactId, SEQUENCE_TAGS);
       await removeTags(contactId, ["RG_In_Follow_Up"]);
-      await addTags(contactId, ["RG_Engaged", "RG_Disposition_Engaged"]);
+      await addTags(contactId, ["RG_Engaged", "RG_Disposition_Engaged", MANUAL_OWNED_TAG]);
       await updateCustomField(contactId, RG_FIELDS.FOLLOW_UP_EXIT, "engaged");
       await updateCustomField(contactId, RG_FIELDS.FOLLOW_UP_EXIT_AT, now);
       return NextResponse.json({ action: "disposition", outcome: "engaged", contactId });
@@ -164,8 +166,15 @@ export async function POST(req: NextRequest) {
         });
       }
       await updateCustomFields(contactId, fieldUpdates);
-      await addTags(contactId, ["RG_Disposition_Callback"]);
-      return NextResponse.json({ action: "callback_later", contactId, message: "Logged. Sequences unchanged." });
+      // Callback Later means Sean owns the next move — kill automation
+      await removeTags(contactId, SEQUENCE_TAGS);
+      await removeTags(contactId, ["RG_In_Follow_Up"]);
+      await addTags(contactId, ["RG_Disposition_Callback", MANUAL_OWNED_TAG]);
+      return NextResponse.json({
+        action: "callback_later",
+        contactId,
+        message: "Logged. All automation paused — Sean owns the follow-up.",
+      });
     }
 
     // ── LOST OPPORTUNITY: Went with competitor, deal is dead ──
@@ -253,8 +262,59 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // ── MANUAL OWNED: Master kill-switch ──
+    // Sean is handling this contact directly. ALL outbound automation stops.
+    // Call this from a GHL Quick Action button or from the RG_Manual_Contact tag workflow.
+    // Rate Guardian rate-monitoring (backend) is unaffected.
+
+    if (action === "manual_owned") {
+      const now = new Date().toISOString();
+      await removeTags(contactId, [...SEQUENCE_TAGS, "RG_In_Follow_Up"]);
+      await addTags(contactId, [MANUAL_OWNED_TAG, "RG_Disposition_Manual_Owned"]);
+      const fieldUpdates: Array<{ key: string; value: string }> = [
+        { key: RG_FIELDS.DISPOSITION, value: DISPOSITIONS.MANUAL_OWNED },
+        { key: RG_FIELDS.DISPOSITION_AT, value: now },
+        { key: RG_FIELDS.FOLLOW_UP_EXIT, value: "manual_owned" },
+        { key: RG_FIELDS.FOLLOW_UP_EXIT_AT, value: now },
+      ];
+      if (notes) {
+        fieldUpdates.push({
+          key: RG_FIELDS.DISPOSITION_NOTES,
+          value: `[${now}] ${DISPOSITIONS.MANUAL_OWNED}: ${notes}`,
+        });
+      }
+      await updateCustomFields(contactId, fieldUpdates);
+      return NextResponse.json({
+        action: "manual_owned",
+        contactId,
+        message: "Contact is now manually owned. All outbound automation stopped. Rate monitoring continues.",
+      });
+    }
+
+    // ── RELEASE MANUAL: Hand contact back to automation ──
+    // Removes the kill-switch tag. Contact can be re-routed via webhook.
+
+    if (action === "release_manual") {
+      await removeTags(contactId, [MANUAL_OWNED_TAG, "RG_Disposition_Manual_Owned"]);
+      await updateCustomField(contactId, RG_FIELDS.FOLLOW_UP_EXIT, "");
+      return NextResponse.json({
+        action: "release_manual",
+        contactId,
+        message: "Manual ownership released. Contact eligible for automation again.",
+      });
+    }
+
     // ── GATE CHECK (default action) ──
     // Validates contact is eligible to enter follow-up sequence
+
+    // HARD GATE: Manual ownership trumps everything
+    if (hasTag(contact, MANUAL_OWNED_TAG)) {
+      return NextResponse.json({
+        action: "blocked",
+        reason: "Contact is manually owned — Sean is handling directly",
+        contactId,
+      });
+    }
 
     const rosieStatus = fields[RG_FIELDS.ROSIE_STATUS];
 

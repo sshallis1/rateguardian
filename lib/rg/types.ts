@@ -98,7 +98,19 @@ export const DISPOSITIONS = {
   LOST_OPPORTUNITY: "Lost Opportunity",
   DNC: "DNC",
   LONG_TERM_NURTURE: "Long-Term Follow Up",
+  MANUAL_OWNED: "Manual Ownership - Sean Handling",
 } as const;
+
+// Master kill-switch tag. ANY contact with this tag is owned by Sean directly.
+// Every outbound GHL workflow (call, SMS, email, voicemail, drip, newsletter)
+// MUST start with: IF tag includes RG_Manual_Owned → EXIT WORKFLOW.
+// Rate Guardian backend monitoring is the ONLY exception (it's not outbound comms).
+export const MANUAL_OWNED_TAG = "RG_Manual_Owned";
+
+// Operator timezone — Sean's working hours are evaluated in this zone
+export const OPERATOR_TZ = "America/New_York";
+export const CALL_WINDOW_START_HOUR = 8;  // 8am inclusive
+export const CALL_WINDOW_END_HOUR = 20;   // 8pm exclusive
 
 // Valid values for engine fields — sourced from GHL Master Registry
 export const ROSIE_STATUS = {
