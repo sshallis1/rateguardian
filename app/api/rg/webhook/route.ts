@@ -7,10 +7,13 @@ import { routeLead } from "@/lib/rg/router-agent";
 import {
   getContact,
   updateContactFields,
+  updateContactTimezone,
   addTags,
 } from "@/lib/rg/ghl-client";
 import type { GHLWebhookPayload } from "@/lib/rg/types";
 import { isHolidayMode, HOLD_TAG } from "@/lib/rg/holiday-mode";
+import { resolveTimezone } from "@/lib/rg/timezone";
+import { resolveCustomFields } from "@/lib/rg/field-map";
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,6 +29,27 @@ export async function POST(req: NextRequest) {
 
     // Fetch full contact data (webhook payload may be partial)
     const contact = await getContact(payload.contact.id);
+
+    // Resolve + set native GHL timezone from lead state (city refines multi-zone states).
+    // GHL "Wait until business hours" steps use this natively. Non-blocking: failure
+    // falls back to OPERATOR_TZ in the call-window-check endpoint.
+    try {
+      const fields = resolveCustomFields(contact.customFields);
+      const state =
+        fields["RG_Target_Property_State"] ||
+        (contact as { state?: string }).state ||
+        null;
+      const city =
+        fields["RG_Target_City"] ||
+        (contact as { city?: string }).city ||
+        null;
+      const tz = resolveTimezone(state, city);
+      if (!(contact as { timezone?: string }).timezone || (contact as { timezone?: string }).timezone !== tz) {
+        await updateContactTimezone(contact.id, tz);
+      }
+    } catch (tzErr) {
+      console.warn("[RG Webhook] timezone resolve failed:", tzErr);
+    }
 
     // Run the Claude routing agent — always runs, even in holiday mode
     const decision = await routeLead(contact);

@@ -48,10 +48,17 @@ function dayOfWeekInTz(date: Date, tz: string): number {
   return map[fmt.format(date)] ?? 0;
 }
 
-function isInWindow(date: Date, tz: string): boolean {
+// Operator window (America/New_York): Mon–Sat 8a–8p, Sun 10a–7p.
+// Contact-local window: Mon–Sat 8a–8p, NO Sunday sends.
+// Matches engaged-nurture/quiet-hours-logic.md (2026-04-07 spec).
+function isInWindow(date: Date, tz: string, isOperator: boolean): boolean {
   const dow = dayOfWeekInTz(date, tz);
-  if (dow === 0 || dow === 6) return false; // weekends off
   const hr = hourInTz(date, tz);
+  if (dow === 0) {
+    // Sunday
+    if (isOperator) return hr >= 10 && hr < 19; // 10a–7p ET only
+    return false; // no contact-local Sunday sends
+  }
   return hr >= CALL_WINDOW_START_HOUR && hr < CALL_WINDOW_END_HOUR;
 }
 
@@ -62,7 +69,7 @@ function nextDualWindowOpen(start: Date, contactTz: string): Date {
   const MAX_STEPS = (7 * 24 * 60) / 15;
   let cursor = new Date(start.getTime());
   for (let i = 0; i < MAX_STEPS; i++) {
-    if (isInWindow(cursor, OPERATOR_TZ) && isInWindow(cursor, contactTz)) {
+    if (isInWindow(cursor, OPERATOR_TZ, true) && isInWindow(cursor, contactTz, false)) {
       return cursor;
     }
     cursor = new Date(cursor.getTime() + STEP_MS);
@@ -122,8 +129,8 @@ export async function POST(req: NextRequest) {
     }
 
     const now = new Date();
-    const operatorOk = isInWindow(now, OPERATOR_TZ);
-    const contactOk = isInWindow(now, tz);
+    const operatorOk = isInWindow(now, OPERATOR_TZ, true);
+    const contactOk = isInWindow(now, tz, false);
 
     if (operatorOk && contactOk) {
       return NextResponse.json({

@@ -82,6 +82,21 @@ export async function updateContactFields(
   return res.json();
 }
 
+// Set the native GHL contact timezone field. GHL workflows with
+// "Wait until business hours" honor this automatically. Use resolveTimezone()
+// from lib/rg/timezone.ts to get the IANA value from the lead's state/city.
+export async function updateContactTimezone(contactId: string, iana: string) {
+  const res = await throttledFetch(`${GHL_API_BASE}/contacts/${contactId}`, {
+    method: "PUT",
+    headers: getHeaders(),
+    body: JSON.stringify({ timezone: iana }),
+  });
+  if (!res.ok) {
+    throw new Error(`GHL updateContactTimezone failed: ${res.status} ${await res.text()}`);
+  }
+  return res.json();
+}
+
 // Add tags to a contact
 export async function addTags(contactId: string, tags: string[]) {
   const res = await throttledFetch(`${GHL_API_BASE}/contacts/${contactId}/tags`, {
