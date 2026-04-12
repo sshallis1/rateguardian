@@ -17,18 +17,38 @@ import { resolveCustomFields } from "@/lib/rg/field-map";
 
 export async function POST(req: NextRequest) {
   try {
-    const payload: GHLWebhookPayload = await req.json();
+    const payload = await req.json();
 
-    // Verify the webhook is from our GHL location
-    if (payload.locationId !== process.env.GHL_LOCATION_ID) {
+    // Extract locationId — GHL sends it at different levels depending on trigger type
+    const locationId =
+      payload.locationId ||
+      payload.location?.id ||
+      payload.location_id ||
+      payload.contact?.locationId ||
+      payload.customData?.locationId ||
+      null;
+
+    // Debug: log raw payload keys for troubleshooting new trigger types
+    if (!locationId || locationId !== process.env.GHL_LOCATION_ID) {
+      console.error("[RG Webhook] Location mismatch", {
+        expected: process.env.GHL_LOCATION_ID,
+        received: locationId,
+        payloadKeys: Object.keys(payload),
+        contactKeys: payload.contact ? Object.keys(payload.contact) : [],
+      });
+    }
+
+    if (locationId !== process.env.GHL_LOCATION_ID) {
       return NextResponse.json(
         { error: "Invalid location" },
         { status: 403 }
       );
     }
 
+    const typedPayload = payload as GHLWebhookPayload;
+
     // Fetch full contact data (webhook payload may be partial)
-    const contact = await getContact(payload.contact.id);
+    const contact = await getContact(typedPayload.contact.id);
 
     // Resolve + set native GHL timezone from lead state (city refines multi-zone states).
     // GHL "Wait until business hours" steps use this natively. Non-blocking: failure
