@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { Send, Loader2, Shield, Clock, Heart } from "lucide-react";
+import { Send, Loader2, Shield, Clock, Heart, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -15,9 +15,111 @@ const QUICK_REPLIES = [
   { label: "Just monitor my rate", value: "I'd like Rosie to monitor my rate and alert me if I'm overpaying." },
 ];
 
+function LeadCapture() {
+  const [form, setForm] = React.useState({ firstName: "", lastName: "", email: "", phone: "" });
+  const [submitting, setSubmitting] = React.useState(false);
+  const [submitted, setSubmitted] = React.useState(false);
+
+  async function handleCapture(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.email.trim() || submitting) return;
+    setSubmitting(true);
+    try {
+      await fetch("/api/rg/intake/askrosie", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      setSubmitted(true);
+    } catch {
+      // Silent — don't block the UX for a tagging failure
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  if (submitted) {
+    return (
+      <div className="flex gap-3 animate-fade-in">
+        <div className="w-8 h-8 rounded-full bg-[color:var(--brand-teal)] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+          R
+        </div>
+        <div className="bg-white rounded-2xl rounded-tl-sm border border-neutral-200 px-5 py-4 shadow-sm max-w-[85%]">
+          <p className="flex items-center gap-2 text-[color:var(--brand-teal)] font-semibold">
+            <CheckCircle size={16} /> You're on Rosie's radar.
+          </p>
+          <p className="text-neutral-600 text-sm mt-1">
+            Sean will reach out personally. In the meantime, Rosie is already watching rates for you.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex gap-3 animate-fade-in">
+      <div className="w-8 h-8 rounded-full bg-[color:var(--brand-teal)] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+        R
+      </div>
+      <div className="bg-white rounded-2xl rounded-tl-sm border border-neutral-200 px-5 py-4 shadow-sm max-w-[90%] w-full sm:max-w-md">
+        <p className="text-neutral-800 text-sm font-medium mb-3">
+          Want Sean to reach out? Drop your info and Rosie will start watching your rate today.
+        </p>
+        <form onSubmit={handleCapture} className="space-y-2">
+          <div className="grid grid-cols-2 gap-2">
+            <input
+              type="text"
+              placeholder="First name"
+              value={form.firstName}
+              onChange={(e) => setForm(f => ({ ...f, firstName: e.target.value }))}
+              className="px-3 py-2 rounded-lg border border-neutral-300 text-sm focus:border-[color:var(--brand-teal)] focus:outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Last name"
+              value={form.lastName}
+              onChange={(e) => setForm(f => ({ ...f, lastName: e.target.value }))}
+              className="px-3 py-2 rounded-lg border border-neutral-300 text-sm focus:border-[color:var(--brand-teal)] focus:outline-none"
+            />
+          </div>
+          <input
+            type="email"
+            placeholder="Email *"
+            required
+            value={form.email}
+            onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))}
+            className="w-full px-3 py-2 rounded-lg border border-neutral-300 text-sm focus:border-[color:var(--brand-teal)] focus:outline-none"
+          />
+          <input
+            type="tel"
+            placeholder="Phone"
+            value={form.phone}
+            onChange={(e) => setForm(f => ({ ...f, phone: e.target.value }))}
+            className="w-full px-3 py-2 rounded-lg border border-neutral-300 text-sm focus:border-[color:var(--brand-teal)] focus:outline-none"
+          />
+          <Button
+            type="submit"
+            disabled={submitting || !form.email.trim()}
+            className="w-full !rounded-lg"
+          >
+            {submitting ? (
+              <Loader2 size={14} className="animate-spin mr-2" />
+            ) : null}
+            Start Watching My Rate
+          </Button>
+        </form>
+        <p className="text-xs text-neutral-400 mt-2 text-center">
+          Free forever. Your info goes only to Sean.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export function AskRosieChat() {
   const [started, setStarted] = React.useState(false);
   const [input, setInput] = React.useState("");
+  const [showCapture, setShowCapture] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
   const { messages, sendMessage, status, error } = useChat({
@@ -25,6 +127,14 @@ export function AskRosieChat() {
   });
 
   const isStreaming = status === "streaming" || status === "submitted";
+
+  // Show lead capture after 4+ messages exchanged (natural conversation point)
+  React.useEffect(() => {
+    const userMessages = messages.filter(m => m.role === "user").length;
+    if (userMessages >= 3 && !showCapture) {
+      setShowCapture(true);
+    }
+  }, [messages, showCapture]);
 
   // Auto-scroll to latest message
   React.useEffect(() => {
@@ -181,6 +291,9 @@ export function AskRosieChat() {
               </div>
             </div>
           )}
+
+          {/* Lead capture CTA — appears after natural conversation */}
+          {showCapture && !isStreaming && <LeadCapture />}
 
           {error && (
             <div className="flex gap-3">

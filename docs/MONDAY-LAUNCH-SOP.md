@@ -130,11 +130,11 @@ In GHL → **Contacts** → filter by tag `rg_source_leveragerx` → sort by loa
 ## What's Still Pending (Not Blocking Launch)
 
 - [ ] Record voicemail scripts (physician + generic)
-- [ ] Write Ask Rosie follow-up emails (4 emails in drip)
-- [ ] Wire `rg_landing_askrosie` tag from Ask Rosie chat page
-- [ ] Create `RG_Career_Status` custom field (Practicing/Resident/Attending/Fellow)
+- [x] Write Ask Rosie follow-up emails (4 emails in drip) — drafted in `docs/ask-rosie-followup-emails.md`, needs Sean review before GHL entry
+- [x] Wire `rg_landing_askrosie` tag from Ask Rosie chat page — API endpoint + lead capture CTA built (2026-04-12)
+- [x] Create `RG_Career_Status` custom field — already exists in GHL (field ID JEhk31LacrC0j4oNWrqK)
 - [ ] Re-auth Google Workspace MCP for automated Gmail triggers
-- [ ] Automate `rg_leveragerx_active` tag in `/check-leveragerx` command (eliminate manual step)
+- [x] Automate `rg_leveragerx_active` tag in `/check-leveragerx` command — tag now included automatically (2026-04-12)
 
 ---
 
