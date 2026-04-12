@@ -45,10 +45,29 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const typedPayload = payload as GHLWebhookPayload;
+    // Extract contactId — GHL sends it in various shapes depending on trigger
+    const contactId =
+      payload.contact?.id ||
+      payload.contactId ||
+      payload.contact_id ||
+      payload.id ||
+      null;
+
+    if (!contactId) {
+      console.error("[RG Webhook] No contactId found", {
+        payloadKeys: Object.keys(payload),
+        contactKeys: payload.contact ? Object.keys(payload.contact) : [],
+        customDataKeys: payload.customData ? Object.keys(payload.customData) : [],
+        rawPayload: JSON.stringify(payload).slice(0, 2000),
+      });
+      return NextResponse.json(
+        { error: "No contactId in payload", payloadKeys: Object.keys(payload) },
+        { status: 200 }
+      );
+    }
 
     // Fetch full contact data (webhook payload may be partial)
-    const contact = await getContact(typedPayload.contact.id);
+    const contact = await getContact(contactId);
 
     // Resolve + set native GHL timezone from lead state (city refines multi-zone states).
     // GHL "Wait until business hours" steps use this natively. Non-blocking: failure
