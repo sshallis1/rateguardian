@@ -6,6 +6,7 @@ export const GHL_FIELD_MAP: Record<string, string> = {
   // Rate Guardian Profile
   "rTKUiJN4M4BL1BDuU8Ju": "RG_Persona_Type",
   "mP7G7Z9FTgSerGRMMfoQ": "RG_Occupation_Category",
+  "JEhk31LacrC0j4oNWrqK": "RG_Career_Status",
   "KTz1NDS7TieF7WrViG8w": "RG_Lead_Source",
   "6LBWcNH19vj4RNM4A5T1": "RG_Where_In_Process",
   "CRciq7XLebkSpF2ZADI7": "RG_Lead_Status",
