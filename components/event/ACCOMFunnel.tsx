@@ -124,9 +124,9 @@ export function ACCOMFunnel() {
             <button
               key={p.id}
               onClick={() => selectPath(p.id)}
-              className="group flex items-center gap-4 w-full text-left rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-[color:var(--brand-teal)]/40 transition-all p-5"
+              className="group flex items-center gap-4 w-full text-left rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] hover:border-[#14a8ab]/50 transition-all p-5"
             >
-              <div className="w-12 h-12 rounded-xl bg-[color:var(--brand-teal)]/10 flex items-center justify-center text-[color:var(--brand-teal-light)] group-hover:bg-[color:var(--brand-teal)]/20 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-[#14a8ab]/15 flex items-center justify-center text-[color:var(--brand-teal-light)] group-hover:bg-[#14a8ab]/25 transition-colors">
                 <p.icon size={22} />
               </div>
               <div className="flex-1">
@@ -157,7 +157,7 @@ export function ACCOMFunnel() {
         </button>
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
           <div className="flex items-center gap-3 mb-5 pb-4 border-b border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-[color:var(--brand-teal)]/10 flex items-center justify-center text-[color:var(--brand-teal-light)]">
+            <div className="w-10 h-10 rounded-xl bg-[#14a8ab]/15 flex items-center justify-center text-[color:var(--brand-teal-light)]">
               <selected.icon size={20} />
             </div>
             <div>

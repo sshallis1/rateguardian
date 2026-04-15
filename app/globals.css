@@ -160,6 +160,12 @@ code, kbd, pre, .font-mono {
 .animate-slow-spin { animation: slow-spin 60s linear infinite; }
 .animate-bounce-subtle { animation: bounce-subtle 2s ease-in-out infinite; }
 
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-scroll-left { animation: scroll-left 40s linear infinite; }
+
 /* Utility: glassmorphism nav */
 .glass {
   background: rgba(255, 255, 255, 0.72);
