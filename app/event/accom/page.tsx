@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ACCOMFunnel } from "@/components/event/ACCOMFunnel";
+import { RosieStory } from "@/components/event/RosieStory";
 import { TestimonialStreamer } from "@/components/event/TestimonialStreamer";
 import { BRAND } from "@/lib/brand";
 import { Shield, Star, Award, Zap } from "lucide-react";
@@ -117,8 +118,11 @@ export default function ACCOMPage() {
         </div>
       </section>
 
+      {/* Rosie Origin Story */}
+      <RosieStory />
+
       {/* Funnel */}
-      <section className="pb-12">
+      <section id="accom-funnel" className="py-12">
         <ACCOMFunnel />
       </section>
 
