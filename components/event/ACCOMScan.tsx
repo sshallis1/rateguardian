@@ -119,6 +119,19 @@ export function ACCOMScan() {
             </a>
           </div>
 
+          {/* USB personal page */}
+          <a
+            href="https://mortgage.usbank.com/nj-chatham-sean-shallis"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-center hover:bg-white/[0.06] transition-colors"
+          >
+            <p className="text-xs text-blue-200/40 mb-1">Meet Sean at</p>
+            <p className="text-sm font-semibold text-white">
+              U.S. Bank Home Mortgage
+            </p>
+          </a>
+
           <p className="text-xs text-blue-200/30 mt-8">
             Sean Shallis &middot; Private Wealth Mortgage Strategist &middot;
             U.S. Bank &middot; NMLS #2362814
@@ -261,6 +274,39 @@ export function ACCOMScan() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Physician program highlights */}
+        <div className="mt-6 pt-6 border-t border-white/10">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#D71E28]/60 mb-4">
+            U.S. Bank Physician Loan Programs
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { stat: "100%", label: "Financing Available" },
+              { stat: "$0", label: "PMI Required" },
+              { stat: "$3M", label: "Loan Amounts" },
+              { stat: "6 mo", label: "Residency Eligible" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="rounded-lg bg-white/[0.04] border border-white/[0.06] p-3 text-center"
+              >
+                <div className="text-lg font-bold text-white">{item.stat}</div>
+                <div className="text-[10px] text-blue-200/40">{item.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Enterprise note */}
+        <div className="mt-6 rounded-lg bg-white/[0.03] border border-white/[0.06] p-4">
+          <p className="text-xs text-blue-200/50 leading-relaxed">
+            <span className="font-semibold text-blue-200/70">For practices &amp; health systems:</span>{" "}
+            Sean partners with hospitals and medical groups to provide
+            homeownership education and lending solutions as an employee
+            benefit — at zero cost to the employer.
+          </p>
         </div>
 
         <p className="text-center text-xs text-blue-200/20 mt-8">
