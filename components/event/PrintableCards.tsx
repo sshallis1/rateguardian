@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 /**
  * Printable CTA Cards — 4 cards per 8.5×11 sheet, double-sided
  *
@@ -56,18 +58,17 @@ function CardFront() {
         Let Rosie the Rate Guardian find out — free.
       </div>
 
-      {/* QR placeholder */}
-      <div
-        className="mb-3 rounded-xl flex items-center justify-center bg-white text-[#002855]"
-        style={{ width: "120px", height: "120px" }}
-      >
-        <div className="text-center">
-          <div className="text-[10px] font-bold uppercase tracking-wider opacity-40">
-            QR Code
-          </div>
-          <div className="text-[8px] opacity-30 mt-1">myrateguardian.com</div>
-        </div>
+      {/* QR code */}
+      <div className="mb-3 rounded-xl overflow-hidden bg-white p-2" style={{ width: "130px", height: "130px" }}>
+        <Image
+          src="/qr/accom-scan.png"
+          alt="Scan to let Rosie check your rate"
+          width={114}
+          height={114}
+          className="w-full h-full object-contain"
+        />
       </div>
+      <div className="text-[8px] opacity-40 mb-1">myrateguardian.com</div>
 
       <div className="text-xs font-semibold text-[#14a8ab]">
         SCAN &middot; CHECK &middot; MONITOR
