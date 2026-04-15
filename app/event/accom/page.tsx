@@ -4,6 +4,7 @@ import { RosieStory } from "@/components/event/RosieStory";
 import { TestimonialStreamer } from "@/components/event/TestimonialStreamer";
 import { BRAND } from "@/lib/brand";
 import { Shield, Star, Award, Zap } from "lucide-react";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Private Wealth Strategy for Medical Professionals — Sean Shallis",
@@ -60,9 +61,16 @@ export default function ACCOMPage() {
             Welcome, ACCOM Members.
           </p>
 
-          {/* Rosie avatar */}
-          <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-gradient-to-br from-[#14a8ab] to-[#0e6b6d] flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-[#0e6b6d]/30 ring-2 ring-[#14a8ab]/20 ring-offset-2 ring-offset-[#002855]">
-            R
+          {/* Rosie logo */}
+          <div className="w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-5 relative">
+            <Image
+              src="/rosie/rate-guardian-logo.png"
+              alt="Rosie the Rate Guardian"
+              fill
+              className="object-contain drop-shadow-2xl"
+              sizes="160px"
+              priority
+            />
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.05] tracking-tight mb-5">

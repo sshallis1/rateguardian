@@ -10,18 +10,21 @@ const SLIDES = [
     title: "When we rescued Rosie...",
     body: "She was exhausted, uncertain, and needed protection. We welcomed her into our family and gave her a safe place to heal and grow.",
     cta: null,
+    bgColor: "#f0ebe3",
   },
   {
     image: "/rosie/rosie-flock.jpg",
-    title: "She had a routine — protect the flock.",
-    body: "Every morning, Rosie would circle the property, checking on every chicken, duck, and goat. Not because we asked her to, but because it's who she became.",
+    title: "She found her purpose.",
+    body: "Every morning, Rosie circles the property — checking on every chicken, duck, and goat. Not because we asked her to, but because it's who she became.",
     cta: null,
+    bgColor: "#e8efe3",
   },
   {
-    image: "/rosie/rosie-protects.jpg",
+    image: "/rosie/rate-guardian-logo.png",
     title: "Now she protects your mortgage.",
     body: "Just like Rosie guards our family, we guard yours — watching rates, spotting opportunities, and making sure you never overpay.",
     cta: "Meet Rosie",
+    bgColor: "#f5f0e8",
   },
 ];
 
@@ -50,19 +53,26 @@ export function RosieStory() {
           onTouchStart={() => setPaused(true)}
           onTouchEnd={() => setPaused(false)}
         >
-          {/* Image — triptych style */}
-          <div className="relative w-full aspect-[4/3] overflow-hidden">
+          {/* Image */}
+          <div
+            className="relative w-full aspect-[4/3] overflow-hidden transition-colors duration-700"
+            style={{ backgroundColor: SLIDES[active].bgColor }}
+          >
             {SLIDES.map((s, i) => (
               <div
                 key={s.title}
-                className="absolute inset-0 transition-opacity duration-700"
+                className="absolute inset-0 transition-opacity duration-700 flex items-center justify-center"
                 style={{ opacity: i === active ? 1 : 0 }}
               >
                 <Image
                   src={s.image}
                   alt={s.title}
                   fill
-                  className="object-cover"
+                  className={
+                    s.image.endsWith(".png")
+                      ? "object-contain p-6"
+                      : "object-cover"
+                  }
                   sizes="(max-width: 448px) 100vw, 448px"
                   priority={i === 0}
                 />
