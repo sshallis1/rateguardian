@@ -22,6 +22,7 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
+import { ACCOMNav } from "@/components/event/ACCOMNav";
 import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = {
@@ -214,9 +215,7 @@ const TESTIMONIALS = [
 export default function ACCOMResourcesPage() {
   return (
     <main className="min-h-screen bg-[#f6f2eb] text-[#002855]">
-      <div className="bg-[#D71E28] py-2 px-5 text-center text-xs font-semibold tracking-wide text-white/90">
-        ACCOM 2026 &middot; Conference Resource Hub
-      </div>
+      <ACCOMNav />
       <section className="border-b border-[#002855]/10 bg-white">
         <div className="max-w-6xl mx-auto px-5 py-14">
           <div className="max-w-4xl">

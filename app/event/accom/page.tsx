@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ACCOMFunnel } from "@/components/event/ACCOMFunnel";
+import { ACCOMNav } from "@/components/event/ACCOMNav";
 import { RosieStory } from "@/components/event/RosieStory";
 import { TestimonialStreamer } from "@/components/event/TestimonialStreamer";
 import { BRAND } from "@/lib/brand";
@@ -15,17 +16,7 @@ export const metadata: Metadata = {
 export default function ACCOMPage() {
   return (
     <main className="min-h-screen bg-[#002855] text-white">
-      {/* U.S. Bank branded header bar */}
-      <div className="bg-[#D71E28] py-2 px-5">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <span className="text-xs font-semibold tracking-wide text-white/90">
-            U.S. Bank &middot; Private Wealth Mortgage Division
-          </span>
-          <span className="text-xs text-white/70 hidden sm:block">
-            ACCOM 2026 &middot; Exclusive Event Access
-          </span>
-        </div>
-      </div>
+      <ACCOMNav />
 
       {/* Hero */}
       <section className="relative overflow-hidden">

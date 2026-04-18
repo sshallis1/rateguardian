@@ -10,6 +10,7 @@ import {
   Headphones,
   Calendar,
 } from "lucide-react";
+import { ACCOMNav } from "./ACCOMNav";
 
 export function ACCOMScan() {
   const [step, setStep] = React.useState<"form" | "thanks">("form");
@@ -47,14 +48,7 @@ export function ACCOMScan() {
   if (step === "thanks") {
     return (
       <main className="min-h-screen bg-[#002855] text-white">
-        {/* Header */}
-        <div className="bg-[#D71E28] py-2 px-5">
-          <div className="max-w-lg mx-auto text-center">
-            <span className="text-xs font-semibold tracking-wide text-white/90">
-              U.S. Bank &middot; Private Wealth Mortgage Division
-            </span>
-          </div>
-        </div>
+        <ACCOMNav />
 
         <div className="max-w-lg mx-auto px-5 py-12 text-center">
           {/* Rosie logo */}
@@ -144,14 +138,7 @@ export function ACCOMScan() {
   // Form step
   return (
     <main className="min-h-screen bg-[#002855] text-white">
-      {/* Header */}
-      <div className="bg-[#D71E28] py-2 px-5">
-        <div className="max-w-lg mx-auto text-center">
-          <span className="text-xs font-semibold tracking-wide text-white/90">
-            U.S. Bank &middot; Private Wealth Mortgage Division
-          </span>
-        </div>
-      </div>
+      <ACCOMNav />
 
       <div className="max-w-md mx-auto px-5 py-10">
         {/* Rosie logo */}
