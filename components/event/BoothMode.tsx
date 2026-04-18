@@ -14,11 +14,11 @@ export function BoothMode() {
   const [listening, setListening] = React.useState(false);
   const [ttsEnabled, setTtsEnabled] = React.useState(true);
   const [speaking, setSpeaking] = React.useState(false);
-  const [ttsUnlocked, setTtsUnlocked] = React.useState(false);
   const recognitionRef = React.useRef<SpeechRecognitionInstance>(null);
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const lastSpokenRef = React.useRef<string>("");
-  const voicesRef = React.useRef<SpeechSynthesisVoice[]>([]);
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+  const abortRef = React.useRef<AbortController | null>(null);
 
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: "/api/rosie/booth" }),
@@ -26,86 +26,90 @@ export function BoothMode() {
 
   const isStreaming = status === "streaming" || status === "submitted";
 
-  // Unlock TTS on first user gesture (required by mobile browsers)
-  function unlockTTS() {
-    if (ttsUnlocked) return;
-    const silent = new SpeechSynthesisUtterance("");
-    silent.volume = 0;
-    window.speechSynthesis.speak(silent);
-    setTtsUnlocked(true);
+  // Speak text via ElevenLabs with fallback to browser TTS
+  async function speakText(text: string) {
+    // Cancel any in-progress speech
+    stopSpeaking();
+
+    setSpeaking(true);
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    try {
+      const res = await fetch("/api/rosie/speak", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+        signal: controller.signal,
+      });
+
+      if (!res.ok) throw new Error(`speak failed: ${res.status}`);
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audioRef.current = audio;
+
+      audio.onended = () => {
+        setSpeaking(false);
+        URL.revokeObjectURL(url);
+        audioRef.current = null;
+      };
+
+      audio.onerror = () => {
+        setSpeaking(false);
+        URL.revokeObjectURL(url);
+        audioRef.current = null;
+      };
+
+      await audio.play();
+    } catch (err) {
+      if ((err as Error).name === "AbortError") return;
+      console.warn("[BoothMode] ElevenLabs failed, falling back to browser TTS:", err);
+      fallbackSpeak(text);
+    }
   }
 
-  // Load voices (they load async, especially on mobile)
-  React.useEffect(() => {
-    function loadVoices() {
-      const v = window.speechSynthesis.getVoices();
-      if (v.length > 0) voicesRef.current = v;
+  // Browser SpeechSynthesis fallback
+  function fallbackSpeak(text: string) {
+    if (!window.speechSynthesis) {
+      setSpeaking(false);
+      return;
     }
-    loadVoices();
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-    // Some browsers need a delay
-    const t = setTimeout(loadVoices, 500);
-    return () => clearTimeout(t);
-  }, []);
-
-  // Pick the best available voice
-  function pickVoice(): SpeechSynthesisVoice | undefined {
-    const voices = voicesRef.current.length > 0 ? voicesRef.current : window.speechSynthesis.getVoices();
-    // Prefer natural/enhanced female voices
+    window.speechSynthesis.cancel();
+    const voices = window.speechSynthesis.getVoices();
     const priorities = [
       "Samantha", "Karen", "Zira", "Moira", "Tessa", "Fiona",
       "Google US English", "Microsoft Zira", "Female",
     ];
+    let voice: SpeechSynthesisVoice | undefined;
     for (const name of priorities) {
-      const match = voices.find((v) => v.name.includes(name) && v.lang.startsWith("en"));
-      if (match) return match;
+      voice = voices.find((v) => v.name.includes(name) && v.lang.startsWith("en"));
+      if (voice) break;
     }
-    return voices.find((v) => v.lang.startsWith("en"));
+    if (!voice) voice = voices.find((v) => v.lang.startsWith("en"));
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1.0;
+    utterance.pitch = 1.05;
+    if (voice) utterance.voice = voice;
+    utterance.onend = () => setSpeaking(false);
+    utterance.onerror = () => setSpeaking(false);
+    window.speechSynthesis.speak(utterance);
   }
 
-  // Speak text, splitting long text into chunks for iOS compatibility
-  function speakText(text: string) {
-    window.speechSynthesis.cancel();
-    const voice = pickVoice();
-
-    // Split into sentences to avoid iOS 15-second cutoff
-    const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
-    // Group into chunks of ~2-3 sentences
-    const chunks: string[] = [];
-    let current = "";
-    for (const s of sentences) {
-      if (current.length + s.length > 200 && current.length > 0) {
-        chunks.push(current.trim());
-        current = s;
-      } else {
-        current += s;
-      }
+  function stopSpeaking() {
+    // Stop ElevenLabs audio
+    abortRef.current?.abort();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
     }
-    if (current.trim()) chunks.push(current.trim());
-
-    setSpeaking(true);
-    let i = 0;
-
-    function speakNext() {
-      if (i >= chunks.length) {
-        setSpeaking(false);
-        return;
-      }
-      const utterance = new SpeechSynthesisUtterance(chunks[i]);
-      utterance.rate = 1.0;
-      utterance.pitch = 1.05;
-      if (voice) utterance.voice = voice;
-      utterance.onend = () => {
-        i++;
-        speakNext();
-      };
-      utterance.onerror = () => {
-        setSpeaking(false);
-      };
-      window.speechSynthesis.speak(utterance);
+    // Stop browser TTS fallback
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
     }
-
-    speakNext();
+    setSpeaking(false);
   }
 
   // Auto-scroll
@@ -127,7 +131,6 @@ export function BoothMode() {
   }, [messages, isStreaming, ttsEnabled]);
 
   function startListening() {
-    unlockTTS(); // Unlock audio on first user gesture
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const w = window as any;
     const SpeechRecognitionCtor = w.SpeechRecognition || w.webkitSpeechRecognition;
@@ -173,7 +176,6 @@ export function BoothMode() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    unlockTTS(); // Unlock audio on first user gesture
     const trimmed = input.trim();
     if (!trimmed || isStreaming) return;
     sendMessage({ text: trimmed });
@@ -200,8 +202,9 @@ export function BoothMode() {
         </div>
         <button
           onClick={() => {
-            setTtsEnabled(!ttsEnabled);
-            if (ttsEnabled) window.speechSynthesis.cancel();
+            const next = !ttsEnabled;
+            setTtsEnabled(next);
+            if (!next) stopSpeaking();
           }}
           className="flex items-center gap-1.5 text-xs text-white/80 hover:text-white transition-colors"
         >

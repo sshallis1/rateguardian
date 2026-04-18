@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.148",
+    "@elevenlabs/elevenlabs-js": "^2.43.0",
     "@supabase/supabase-js": "^2.100.1",
     "ai": "^6.0.134",
     "class-variance-authority": "^0.7.1",
