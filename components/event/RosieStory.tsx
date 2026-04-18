@@ -31,6 +31,7 @@ const SLIDES = [
 export function RosieStory() {
   const [active, setActive] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
+  const lastSlideTaps = React.useRef(0);
 
   // Auto-advance every 5 seconds
   React.useEffect(() => {
@@ -112,12 +113,18 @@ export function RosieStory() {
             <button
               onClick={() => {
                 if (active < SLIDES.length - 1) {
+                  lastSlideTaps.current = 0;
                   setActive(active + 1);
                 } else {
-                  // Scroll down to funnel
-                  document
-                    .getElementById("accom-funnel")
-                    ?.scrollIntoView({ behavior: "smooth" });
+                  lastSlideTaps.current += 1;
+                  if (lastSlideTaps.current >= 2) {
+                    lastSlideTaps.current = 0;
+                    setActive(0);
+                  } else {
+                    document
+                      .getElementById("accom-funnel")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }
                 }
               }}
               className="w-full flex items-center justify-center gap-2 rounded-xl font-semibold py-3.5 transition-all"
