@@ -6,6 +6,7 @@ import {
   BookOpen,
   Building2,
   Calendar,
+  Download,
   ExternalLink,
   FileText,
   HardHat,
@@ -18,6 +19,7 @@ import {
   Star,
   Stethoscope,
   TrendingDown,
+  Users,
   Wallet,
 } from "lucide-react";
 import { BRAND } from "@/lib/brand";
@@ -127,6 +129,39 @@ const USB_PROGRAMS = [
     title: "Medical Practice Loans",
     body: "Business lending for practice acquisition, equipment financing, and commercial real estate for medical offices.",
     href: "https://www.usbank.com/business-banking/business-lending/practice-financing/medical-practice-loans.html",
+  },
+];
+
+const BROCHURES = [
+  {
+    title: "Stop Overpaying. Start Building Wealth.",
+    body: "The core value proposition — why most physicians overpay $50K-$200K+ and how we fix it.",
+    href: "/brochures/stop-overpaying.pdf",
+    icon: TrendingDown,
+  },
+  {
+    title: "Strategic Lending for Medical Professionals",
+    body: "Full breakdown of physician-specific programs, Rate Guardian monitoring, and who we serve.",
+    href: "/brochures/strategic-lending.pdf",
+    icon: Stethoscope,
+  },
+  {
+    title: "Your Competitive Advantage",
+    body: "The U.S. Bank + Sean Shallis combined value proposition — enterprise banking with boutique strategy.",
+    href: "/brochures/competitive-advantage.pdf",
+    icon: Shield,
+  },
+  {
+    title: "What Medical Professionals Are Saying",
+    body: "Testimonials from physicians, residents, practice owners, and veterans who've worked with Sean.",
+    href: "/brochures/testimonials.pdf",
+    icon: Users,
+  },
+  {
+    title: "Connect With Sean Shallis",
+    body: "QR codes and direct links — book a call, apply, listen to the podcast, read reviews.",
+    href: "/brochures/connect-with-sean.pdf",
+    icon: MessageCircle,
   },
 ];
 
@@ -254,6 +289,40 @@ export default function ACCOMResourcesPage() {
         </div>
       </section>
       <section className="bg-white border-y border-[#002855]/10">
+        <div className="max-w-6xl mx-auto px-5 py-14">
+          <div className="mb-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#D71E28] mb-3">
+              Presentation Materials
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-bold">
+              Your conference packet — downloadable.
+            </h2>
+            <p className="text-[#002855]/65 mt-3 max-w-2xl">
+              Everything from the printed folder, available as a PDF you can save, share, or forward to a colleague.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {BROCHURES.map(({ icon: Icon, title, body, href }) => (
+              <a
+                key={title}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-3xl border border-[#002855]/10 bg-[#fcfcfb] p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md group"
+              >
+                <Icon size={20} className="text-[#0e6b6d] mb-4" />
+                <div className="font-semibold text-lg mb-2">{title}</div>
+                <p className="text-sm text-[#002855]/65 leading-relaxed mb-4">{body}</p>
+                <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#0e6b6d] group-hover:gap-3 transition-all">
+                  Download PDF
+                  <Download size={14} />
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="bg-[#f6f2eb] border-b border-[#002855]/10">
         <div className="max-w-6xl mx-auto px-5 py-14">
           <div className="mb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#D71E28] mb-3">
