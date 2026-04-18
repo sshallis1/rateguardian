@@ -14,15 +14,99 @@ export function BoothMode() {
   const [listening, setListening] = React.useState(false);
   const [ttsEnabled, setTtsEnabled] = React.useState(true);
   const [speaking, setSpeaking] = React.useState(false);
+  const [ttsUnlocked, setTtsUnlocked] = React.useState(false);
   const recognitionRef = React.useRef<SpeechRecognitionInstance>(null);
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const lastSpokenRef = React.useRef<string>("");
+  const voicesRef = React.useRef<SpeechSynthesisVoice[]>([]);
 
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: "/api/rosie/booth" }),
   });
 
   const isStreaming = status === "streaming" || status === "submitted";
+
+  // Unlock TTS on first user gesture (required by mobile browsers)
+  function unlockTTS() {
+    if (ttsUnlocked) return;
+    const silent = new SpeechSynthesisUtterance("");
+    silent.volume = 0;
+    window.speechSynthesis.speak(silent);
+    setTtsUnlocked(true);
+  }
+
+  // Load voices (they load async, especially on mobile)
+  React.useEffect(() => {
+    function loadVoices() {
+      const v = window.speechSynthesis.getVoices();
+      if (v.length > 0) voicesRef.current = v;
+    }
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+    // Some browsers need a delay
+    const t = setTimeout(loadVoices, 500);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Pick the best available voice
+  function pickVoice(): SpeechSynthesisVoice | undefined {
+    const voices = voicesRef.current.length > 0 ? voicesRef.current : window.speechSynthesis.getVoices();
+    // Prefer natural/enhanced female voices
+    const priorities = [
+      "Samantha", "Karen", "Zira", "Moira", "Tessa", "Fiona",
+      "Google US English", "Microsoft Zira", "Female",
+    ];
+    for (const name of priorities) {
+      const match = voices.find((v) => v.name.includes(name) && v.lang.startsWith("en"));
+      if (match) return match;
+    }
+    return voices.find((v) => v.lang.startsWith("en"));
+  }
+
+  // Speak text, splitting long text into chunks for iOS compatibility
+  function speakText(text: string) {
+    window.speechSynthesis.cancel();
+    const voice = pickVoice();
+
+    // Split into sentences to avoid iOS 15-second cutoff
+    const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+    // Group into chunks of ~2-3 sentences
+    const chunks: string[] = [];
+    let current = "";
+    for (const s of sentences) {
+      if (current.length + s.length > 200 && current.length > 0) {
+        chunks.push(current.trim());
+        current = s;
+      } else {
+        current += s;
+      }
+    }
+    if (current.trim()) chunks.push(current.trim());
+
+    setSpeaking(true);
+    let i = 0;
+
+    function speakNext() {
+      if (i >= chunks.length) {
+        setSpeaking(false);
+        return;
+      }
+      const utterance = new SpeechSynthesisUtterance(chunks[i]);
+      utterance.rate = 1.0;
+      utterance.pitch = 1.05;
+      if (voice) utterance.voice = voice;
+      utterance.onend = () => {
+        i++;
+        speakNext();
+      };
+      utterance.onerror = () => {
+        setSpeaking(false);
+      };
+      window.speechSynthesis.speak(utterance);
+    }
+
+    speakNext();
+  }
 
   // Auto-scroll
   React.useEffect(() => {
@@ -39,36 +123,11 @@ export function BoothMode() {
     const text = last.parts?.map((p) => (p.type === "text" ? p.text : "")).join("") ?? "";
     if (!text || text === lastSpokenRef.current) return;
     lastSpokenRef.current = text;
-
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 1.0;
-    utterance.pitch = 1.1;
-    // Try to pick a female voice
-    const voices = window.speechSynthesis.getVoices();
-    const preferred = voices.find(
-      (v) =>
-        v.name.includes("Samantha") ||
-        v.name.includes("Karen") ||
-        v.name.includes("Zira") ||
-        v.name.includes("Female")
-    ) ?? voices.find((v) => v.lang.startsWith("en"));
-    if (preferred) utterance.voice = preferred;
-    utterance.onstart = () => setSpeaking(true);
-    utterance.onend = () => setSpeaking(false);
-    utterance.onerror = () => setSpeaking(false);
-    window.speechSynthesis.speak(utterance);
+    speakText(text);
   }, [messages, isStreaming, ttsEnabled]);
 
-  // Load voices
-  React.useEffect(() => {
-    window.speechSynthesis.getVoices();
-    window.speechSynthesis.onvoiceschanged = () => {
-      window.speechSynthesis.getVoices();
-    };
-  }, []);
-
   function startListening() {
+    unlockTTS(); // Unlock audio on first user gesture
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const w = window as any;
     const SpeechRecognitionCtor = w.SpeechRecognition || w.webkitSpeechRecognition;
@@ -114,6 +173,7 @@ export function BoothMode() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    unlockTTS(); // Unlock audio on first user gesture
     const trimmed = input.trim();
     if (!trimmed || isStreaming) return;
     sendMessage({ text: trimmed });
@@ -165,8 +225,7 @@ export function BoothMode() {
             <div>
               <h1 className="text-3xl font-bold mb-3">Hey Rosie...</h1>
               <p className="text-blue-200/60 text-lg max-w-sm">
-                Tap the mic and introduce your prospect. Rosie will take it from
-                there.
+                Tap the mic and introduce your prospect. Rosie will reply out loud.
               </p>
             </div>
             <div className="text-sm text-blue-200/40 max-w-md leading-relaxed">
