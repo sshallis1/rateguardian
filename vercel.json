@@ -2,8 +2,8 @@
   "version": 2,
   "crons": [
     {
-      "path": "/api/fetch-alerts",
-      "schedule": "*/15 * * * *"
+      "path": "/api/rg/ops/rate-scan",
+      "schedule": "30 15,19 * * 1-5"
     },
     {
       "path": "/api/rg/ops/heartbeat",

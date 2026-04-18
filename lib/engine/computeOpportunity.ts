@@ -14,10 +14,39 @@ export interface OpportunityResult {
   opportunityId?: string;
 }
 
-export function getCurrentMarketRate(): number {
-  const base = 6.25;
-  const variance = (Math.random() - 0.5) * 0.2;
-  return Number((base + variance).toFixed(3));
+// Fetch the latest 30yr conventional rate from Supabase market_rates table.
+// Falls back to a hardcoded rate ONLY if no scraped data exists yet.
+let _cachedRate: { rate: number; fetchedAt: number } | null = null;
+const CACHE_TTL_MS = 15 * 60 * 1000; // 15 min cache
+
+export async function getCurrentMarketRate(): Promise<number> {
+  // Return cached if fresh
+  if (_cachedRate && Date.now() - _cachedRate.fetchedAt < CACHE_TTL_MS) {
+    return _cachedRate.rate;
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("market_rates" as any)
+      .select("rate_30yr_conventional" as any)
+      .order("scraped_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (!error && data) {
+      const rate = parseFloat((data as any).rate_30yr_conventional);
+      if (Number.isFinite(rate) && rate > 0) {
+        _cachedRate = { rate, fetchedAt: Date.now() };
+        return rate;
+      }
+    }
+  } catch (err) {
+    log({ stage: "market-rate:error", message: "Failed to fetch market rate from Supabase", meta: { error: err } });
+  }
+
+  // Fallback: last known rate or a conservative default
+  log({ stage: "market-rate:fallback", message: "Using fallback market rate — no scraped data available" });
+  return _cachedRate?.rate ?? 6.75;
 }
 
 function deriveTier(score: number, monthlySavings: number): string {
@@ -28,14 +57,16 @@ function deriveTier(score: number, monthlySavings: number): string {
 }
 
 export async function computeOpportunity(contact: ContactRow): Promise<OpportunityResult | null> {
-  const marketRate = getCurrentMarketRate();
+  const marketRate = await getCurrentMarketRate();
   const existingRateRaw = Number(contact.rg_existing_rate ?? marketRate + 0.5);
   const existingRate = Number.isFinite(existingRateRaw) ? existingRateRaw : marketRate + 0.5;
   const loanAmountRaw = Number(contact.rg_loan_amount ?? 350000);
   const loanAmount = Number.isFinite(loanAmountRaw) && loanAmountRaw > 0 ? loanAmountRaw : 350000;
 
   const rateDelta = existingRate - marketRate;
-  const rateDeltaBps = Math.round(rateDelta * 10000);
+  // Rates are stored as percentage points (e.g. 6.25), not decimals (0.0625)
+  // 1 percentage point = 100 basis points, so multiply by 100
+  const rateDeltaBps = Math.round(rateDelta * 100);
   if (!loanAmount || rateDeltaBps <= 25) {
     log({
       stage: "opportunity:skip",

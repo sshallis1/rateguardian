@@ -135,7 +135,9 @@ export async function POST(req: NextRequest) {
 
           // Trigger the Master Dispatcher for re-evaluation
           await triggerWorkflow(MASTER_DISPATCHER_WF_ID, contact.id);
-          await updateCustomField(contact.id, RG_FIELDS.LAST_RUN_AT, new Date().toISOString());
+          const ts = new Date().toISOString();
+          await updateCustomField(contact.id, RG_FIELDS.LAST_RUN_AT, ts);
+          await updateCustomField(contact.id, RG_FIELDS.HEARTBEAT_LAST_RUN, ts);
 
           results.triggered++;
           processed++;

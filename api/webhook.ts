@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { supabase } from "../lib/supabase";
 
-const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET ?? "WGHSkjfQwkjnWQEkjbFEFNjkerbkjbDSVVjhbW2JDDbck";
+const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET ?? "";
 
 interface RateRow {
     term: string;
