@@ -6,6 +6,7 @@ import {
   ChevronDown,
   FileText,
   Home,
+  Mic,
   MessageCircle,
   Scan,
   Star,
@@ -13,6 +14,7 @@ import {
 
 const NAV_ITEMS = [
   { label: "Event Home", href: "/event/accom", icon: Home },
+  { label: "Rosie Live Demo", href: "/event/accom/booth", icon: Mic },
   { label: "Free Rate Check", href: "/event/accom/scan", icon: Scan },
   { label: "Ask Rosie", href: "/rate-guardian/ask-rosie", icon: MessageCircle },
   { label: "Resources & Downloads", href: "/event/accom/resources", icon: FileText },
