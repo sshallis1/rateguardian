@@ -2,47 +2,47 @@
 
 import { Star } from "lucide-react";
 
-// Replace these with real Google reviews — keep them short and punchy
+// Real Google reviews — 4.9 stars, 31 reviews on Google
 const TESTIMONIALS = [
   {
-    text: "Sean made the entire process seamless. Knowing Rosie is watching my rate gives me peace of mind.",
-    name: "Dr. Sarah K.",
-    detail: "Cardiologist, NJ",
+    text: "Sean was referred to us and we are so glad we had the chance to work with him! He was available via text, email, and phone from start to finish and was one of the most responsive professionals we've ever worked with.",
+    name: "Vic N.",
+    detail: "Homebuyer, NJ",
   },
   {
-    text: "I had no idea I was overpaying until Sean ran the numbers. Saved $312/month within two weeks.",
-    name: "Dr. Michael R.",
-    detail: "Orthopedic Surgeon, NY",
+    text: "I cannot recommend Sean Shallis and his team at U.S. Bank highly enough. Sean was an invaluable partner who exceeded every expectation. No matter the time of day or the complexity of the question, he was always incredibly responsive and ready to help.",
+    name: "Michael R.",
+    detail: "Homebuyer, Brooklyn",
   },
   {
-    text: "Best mortgage experience I've ever had. Sean understands physician finances in a way no other lender does.",
-    name: "Dr. Priya L.",
-    detail: "Dermatologist, CT",
+    text: "Sean is amazing!! He is the physician loan expert and has great communication skills and was fantastic to work with!!!",
+    name: "Ashley M.",
+    detail: "Physician Client",
   },
   {
-    text: "The Rate Guardian system is brilliant. I get alerts without having to think about it.",
-    name: "Dr. James T.",
-    detail: "Emergency Medicine, PA",
+    text: "Sean is by far the most knowledgeable loan officer I've ever talked with. He made the convoluted process of home loan very smooth and ensured that we got the best deal. Easily available and responsive to our needs. Overall terrific experience.",
+    name: "Verified Client",
+    detail: "Google Review",
   },
   {
-    text: "Sean helped us close on our dream home with $0 down. His physician loan expertise is unmatched.",
-    name: "Dr. Amanda W.",
-    detail: "Pediatrician, NJ",
+    text: "Sean took a buyer of mine that no other lender could close, and made it happen! He went the extra mile to make sure the buyers were able to purchase their first home.",
+    name: "Verified Agent",
+    detail: "Real Estate Partner",
   },
   {
-    text: "I refinanced at exactly the right time thanks to Rosie. Saved over $200K over the life of the loan.",
-    name: "Dr. David H.",
-    detail: "Anesthesiologist, MA",
+    text: "We just closed our house today. It has been an amazing experience working with Sean. The process was long and challenging, but he made us feel at ease every step of the way. Whenever there was a challenge, he had solutions.",
+    name: "Verified Client",
+    detail: "Google Review",
   },
   {
-    text: "Finally, someone who speaks both medicine and finance. Sean is a true strategic partner.",
-    name: "Dr. Lisa C.",
-    detail: "OB/GYN, NY",
+    text: "Our experience with Sean and his team was amazing! Right from the start he was on top of his game. Everything was smooth and easy. By far the best home buying experience!!",
+    name: "Verified Client",
+    detail: "Google Review",
   },
   {
-    text: "I've referred three colleagues to Sean. Every one of them thanked me within a month.",
-    name: "Dr. Robert M.",
-    detail: "Internal Medicine, NJ",
+    text: "Sean closed a loan in 21 days for a difficult second home property, had great resources, was communicative, a consummate professional, and appeared to work at any hour when needed.",
+    name: "Verified Client",
+    detail: "Google Review",
   },
 ];
 
