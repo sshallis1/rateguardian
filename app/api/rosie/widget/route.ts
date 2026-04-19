@@ -9,14 +9,14 @@ export async function POST(req: Request) {
 
     const result = streamText({
       model: "anthropic/claude-sonnet-4.6",
-      system: getRosieSystemPrompt("booth"),
+      system: getRosieSystemPrompt("widget"),
       messages: await convertToModelMessages(messages),
-      temperature: 0.8,
+      temperature: 0.75,
     });
 
     return result.toUIMessageStreamResponse();
   } catch (error) {
-    console.error("[rosie/booth] error:", error);
+    console.error("[rosie/widget] error:", error);
     return new Response(
       JSON.stringify({
         error: "Rosie is taking a nap. Try again in a moment.",

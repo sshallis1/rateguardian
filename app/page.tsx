@@ -6,6 +6,7 @@ import { GuardianCard } from "@/components/brand/GuardianCard";
 import { GearVisualization } from "@/components/brand/GearVisualization";
 import { SavingsScore } from "@/components/brand/SavingsScore";
 import { Footer } from "@/components/brand/Footer";
+import { RosieChatWidget } from "@/components/chat/RosieChatWidget";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { BRAND, GUARDIANS } from "@/lib/brand";
@@ -463,6 +464,7 @@ export default function Home() {
       </section>
 
       <Footer />
+      <RosieChatWidget />
     </main>
   );
 }
