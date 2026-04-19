@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 const GHL_API_BASE = "https://services.leadconnectorhq.com";
 
 const STAGE_TAGS: Record<string, string[]> = {
-  buyer: ["rg_stage_buyer", "rg_lifecycle_shopping"],
-  shopper: ["rg_stage_shopper", "rg_lifecycle_shopping"],
-  optimizer: ["rg_stage_optimizer", "rg_lifecycle_monitoring"],
+  buyer: ["rg_stage_buyer"],
+  shopper: ["rg_stage_shopper"],
+  optimizer: ["rg_stage_optimizer"],
 };
 
 const STAGE_TO_PATH: Record<string, string> = {
