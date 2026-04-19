@@ -139,7 +139,7 @@ export default function Home() {
       </section>
 
       {/* ========= WHAT WE DO — Physician Programs ========= */}
-      <section className="py-20 md:py-28 bg-white">
+      <section id="lending" className="py-20 md:py-28 bg-white scroll-mt-20">
         <Container>
           <div className="text-center max-w-2xl mx-auto mb-14">
             <div className="text-[color:var(--brand-teal)] uppercase tracking-widest text-xs font-bold mb-3">
@@ -246,7 +246,7 @@ export default function Home() {
       </section>
 
       {/* ========= SAVINGS SCORE — The Credit Karma Moment ========= */}
-      <section className="py-20 md:py-28 bg-white">
+      <section id="savings-score" className="py-20 md:py-28 bg-white scroll-mt-20">
         <Container>
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -303,7 +303,7 @@ export default function Home() {
       </section>
 
       {/* ========= RATE GUARDIAN / ROSIE — The USP ========= */}
-      <section className="py-20 md:py-28 bg-[color:var(--surface-dark)] text-white relative overflow-hidden">
+      <section id="rate-guardian" className="py-20 md:py-28 bg-[color:var(--surface-dark)] text-white relative overflow-hidden scroll-mt-20">
         <div
           className="absolute inset-0 opacity-20"
           style={{
@@ -427,7 +427,7 @@ export default function Home() {
       </section>
 
       {/* ========= ENTERPRISE — Health System Partnerships ========= */}
-      <section className="py-20 md:py-28 bg-[color:var(--surface-dark)] text-white border-t border-white/5">
+      <section id="enterprise" className="py-20 md:py-28 bg-[color:var(--surface-dark)] text-white border-t border-white/5 scroll-mt-20">
         <Container>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
