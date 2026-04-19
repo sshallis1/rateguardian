@@ -1,11 +1,13 @@
 BEGIN:VCARD
 VERSION:3.0
-FN:Sean Shallis
+FN:Sean Shallis — U.S. Bank Private Wealth
 N:Shallis;Sean;;;
-ORG:Rate Guardian
-TITLE:Founder / Mortgage Advisor
+ORG:U.S. Bank Home Mortgage
+TITLE:Private Wealth Mortgage Strategist | National Physician Loan Expert
+TEL;TYPE=WORK,VOICE:+19734572278
 TEL;TYPE=CELL,VOICE:+19734616955
-EMAIL;TYPE=INTERNET,WORK:sean@rateguardian.com
-URL:https://rateguardian.com
-NOTE:Helping physicians and families beat the bank on their mortgage. Free rate monitoring at rateguardian.com.
+EMAIL;TYPE=INTERNET,WORK:sean.shallis@usbank.com
+URL:https://seanshallis.com/connect
+ADR;TYPE=WORK:;;1 Main St STE 203;Chatham;NJ;07928;US
+NOTE:Private Wealth Mortgage Strategist at U.S. Bank. National Physician Loan Expert. 30+ years | $1B+ in transactions. Creator of Rate Guardian AI — free mortgage monitoring. Amazon #1 best-selling author. Host of The Loan Doctor Podcast. NMLS #2362814
 END:VCARD
