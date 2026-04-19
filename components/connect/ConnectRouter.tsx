@@ -61,8 +61,15 @@ export function ConnectRouter() {
       {/* Header */}
       <div className="max-w-lg mx-auto px-5 pt-10 pb-6 text-center">
         {/* Identity */}
-        <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-white/20 to-white/5 border-2 border-white/20 flex items-center justify-center">
-          <span className="text-2xl font-bold text-white/90">SS</span>
+        <div className="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden border-2 border-white/20 relative">
+          <Image
+            src="/sean-shallis-headshot.jpg"
+            alt="Sean Shallis"
+            fill
+            className="object-cover"
+            sizes="80px"
+            priority
+          />
         </div>
 
         <h1 className="text-2xl sm:text-3xl font-bold mb-1">Sean Shallis</h1>

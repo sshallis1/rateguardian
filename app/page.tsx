@@ -113,13 +113,15 @@ export default function Home() {
             {/* Visual — Headshot placeholder + credentials */}
             <div className="lg:col-span-5">
               <div className="relative max-w-sm mx-auto">
-                <div className="aspect-square rounded-3xl bg-gradient-to-br from-[color:var(--brand-teal)] to-[color:var(--brand-navy)] flex items-center justify-center text-white shadow-2xl">
-                  <div className="text-center">
-                    <div className="text-7xl font-bold mb-2">SS</div>
-                    <div className="text-sm uppercase tracking-widest opacity-80">
-                      Sean Shallis
-                    </div>
-                  </div>
+                <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl">
+                  <Image
+                    src="/sean-shallis-headshot.jpg"
+                    alt="Sean Shallis — Private Wealth Mortgage Strategist"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 384px"
+                    priority
+                  />
                 </div>
                 {/* Media logos badge */}
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-5 py-2.5 rounded-full bg-white shadow-lg border border-neutral-200">
@@ -495,13 +497,14 @@ export default function Home() {
         <Container>
           <div className="grid md:grid-cols-12 gap-12 items-center">
             <div className="md:col-span-5">
-              <div className="relative aspect-square max-w-sm mx-auto rounded-3xl bg-gradient-to-br from-[color:var(--brand-teal)] to-[color:var(--brand-navy)] flex items-center justify-center text-white shadow-xl">
-                <div className="text-center">
-                  <div className="text-7xl font-bold mb-2">SS</div>
-                  <div className="text-sm uppercase tracking-widest opacity-80">
-                    Sean Shallis
-                  </div>
-                </div>
+              <div className="relative aspect-square max-w-sm mx-auto rounded-3xl overflow-hidden shadow-xl">
+                <Image
+                  src="/sean-shallis-headshot.jpg"
+                  alt="Sean Shallis"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 384px"
+                />
               </div>
             </div>
             <div className="md:col-span-7">

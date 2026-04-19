@@ -67,11 +67,15 @@ export default function ACCOMPage() {
               U.S. Bank &middot; Private Wealth
             </p>
 
-            {/* Headshot placeholder — initials */}
-            <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-4 rounded-full bg-gradient-to-br from-white/20 to-white/5 border-2 border-white/20 flex items-center justify-center">
-              <span className="text-3xl sm:text-4xl font-bold text-white/90">
-                SS
-              </span>
+            <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-4 rounded-full overflow-hidden border-2 border-white/20 relative">
+              <Image
+                src="/sean-shallis-headshot.jpg"
+                alt="Sean Shallis"
+                fill
+                className="object-cover"
+                sizes="112px"
+                priority
+              />
             </div>
           </div>
 
