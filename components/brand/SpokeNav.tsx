@@ -60,7 +60,7 @@ const NAV_ITEMS = [
     label: "About",
     children: [
       { label: "Sean's Story", desc: "30+ years, $1B+ in transactions", href: "/about", icon: Award },
-      { label: "The Loan Doctor Podcast", desc: "Helping doctors build wealth", href: "https://link.seanshallis.com/widget/bookings/usb_20m", icon: Mic, external: true },
+      { label: "The Loan Doctor Podcast", desc: "Helping doctors build wealth", href: "https://podcasts.apple.com/us/podcast/the-loan-doctor/id1800582767", icon: Mic, external: true },
       { label: "Connect", desc: "Save contact, book a call", href: "/connect", icon: Phone },
     ],
   },

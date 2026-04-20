@@ -71,14 +71,34 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/content" className="hover:text-white transition-colors">
+                <a
+                  href="https://www.linkedin.com/in/seantshallis/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
                   Media &amp; Press
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="/book" className="hover:text-white transition-colors">
+                <a
+                  href="https://a.co/d/0aP6arT9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
                   The Book
-                </Link>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://podcasts.apple.com/us/podcast/the-loan-doctor/id1800582767"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  The Loan Doctor Podcast
+                </a>
               </li>
               <li>
                 <a

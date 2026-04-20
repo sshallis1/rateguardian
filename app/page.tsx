@@ -19,6 +19,7 @@ import {
 import { SpokeNav } from "@/components/brand/SpokeNav";
 import { GuardianCard } from "@/components/brand/GuardianCard";
 import { SavingsScore } from "@/components/brand/SavingsScore";
+import { BeyondMortgageSection } from "@/components/brand/BeyondMortgageSection";
 import { Footer } from "@/components/brand/Footer";
 import { RosieChatWidget } from "@/components/chat/RosieChatWidget";
 import { TestimonialStreamer } from "@/components/event/TestimonialStreamer";
@@ -545,6 +546,9 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      {/* ========= BEYOND THE MORTGAGE — Wealth, Growth, 10X Formula ========= */}
+      <BeyondMortgageSection />
 
       {/* ========= TESTIMONIALS ========= */}
       <TestimonialStreamer />

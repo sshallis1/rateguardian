@@ -84,7 +84,9 @@ export function ACCOMScan() {
               difference.
             </p>
             <a
-              href="https://link.seanshallis.com/widget/bookings/usb_20m"
+              href="https://podcasts.apple.com/us/podcast/the-loan-doctor/id1800582767"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[#14a8ab] hover:text-[#14a8ab]/80 transition-colors"
             >
               Listen to The Loan Doctor Podcast
