@@ -6,13 +6,14 @@
 
 ---
 
-## Before You Paste — 3 things to swap
+## Before You Paste — 1 thing to swap
 
-1. `[MEDIA_URL]` → the direct link to the PDF in GHL Media (upload → right-click → "Copy URL")
-2. `[NURTURE_TAG]` → pick which nurture this routes into at the end:
+PDF URL is already wired in (GHL Media: `https://assets.cdn.filesafe.space/Mymg9zFjvZ8ognhb9J1Q/media/69e6bea0774ef96b9bde1e87.pdf`).
+
+1. `[NURTURE_TAG]` → pick which nurture this routes into at the end:
    - `rg_accom_nurtured` (existing 7-day physician nurture — works if audience is mostly medical)
    - `rg_10x_nurtured` (create new, if you want a dedicated agent/investor/personal-dev soap opera)
-3. That's it. Everything else is ready to paste.
+2. That's it. Everything else is ready to paste.
 
 ---
 
@@ -41,7 +42,7 @@ Step 3: Send SMS with this exact message:
 
 Thanks for grabbing the 10X Personal Success Formula™.
 
-Here's your download link: [MEDIA_URL]
+Here's your download link: https://assets.cdn.filesafe.space/Mymg9zFjvZ8ognhb9J1Q/media/69e6bea0774ef96b9bde1e87.pdf
 
 Save it, read it, and DM me back with the one habit you're committing to first. That's where it starts.
 
@@ -56,7 +57,7 @@ Step 5: Send Email
 
 Thanks for grabbing the 10X Personal Success Formula™ — here's your copy:
 
-👉 Download: [MEDIA_URL]
+👉 Download: https://assets.cdn.filesafe.space/Mymg9zFjvZ8ognhb9J1Q/media/69e6bea0774ef96b9bde1e87.pdf
 
 A quick note on why I built this.
 
@@ -101,7 +102,7 @@ Step 10: Add tag "[NURTURE_TAG]" to the contact (this hands them off to the long
 
 Step 11: Remove tag "rg_new_lead_submitted" from the contact (so the dispatcher knows they're handed off)
 
-Save as DRAFT — do not publish until [MEDIA_URL] and [NURTURE_TAG] are both filled in.
+Save as DRAFT — do not publish until [NURTURE_TAG] is filled in.
 
 ---
 

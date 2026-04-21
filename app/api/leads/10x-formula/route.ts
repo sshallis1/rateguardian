@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 const GHL_API_BASE = "https://services.leadconnectorhq.com";
-const PDF_URL = "/downloads/10x-personal-success-formula.pdf";
+const PDF_URL = "https://assets.cdn.filesafe.space/Mymg9zFjvZ8ognhb9J1Q/media/69e6bea0774ef96b9bde1e87.pdf";
 
 function getHeaders() {
   const apiKey = process.env.GHL_API_KEY;
