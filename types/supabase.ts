@@ -128,6 +128,88 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["rg_run_ledger"]["Row"]>;
         Relationships: [];
       };
+      pg_projects: {
+        Row: {
+          id: string;
+          name: string;
+          address: string | null;
+          city: string | null;
+          state: string | null;
+          county: string | null;
+          zip: string | null;
+          status: string;
+          phase: string | null;
+          project_type: string | null;
+          purchase_price: number | null;
+          resale_target_low: number | null;
+          resale_target_high: number | null;
+          total_budget: number | null;
+          notes: string | null;
+          meta: any;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["pg_projects"]["Row"]>;
+        Update: Partial<Database["public"]["Tables"]["pg_projects"]["Row"]>;
+        Relationships: [];
+      };
+      pg_payments: {
+        Row: {
+          id: string;
+          project_id: string;
+          contractor_id: string | null;
+          amount: number;
+          category: string;
+          vendor: string;
+          payment_method: string | null;
+          payment_date: string | null;
+          invoice_ref: string | null;
+          bucket: string;
+          notes: string | null;
+          meta: any;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["pg_payments"]["Row"]>;
+        Update: Partial<Database["public"]["Tables"]["pg_payments"]["Row"]>;
+        Relationships: [];
+      };
+      pg_contractors: {
+        Row: {
+          id: string;
+          project_id: string;
+          name: string;
+          trade: string | null;
+          phone: string | null;
+          email: string | null;
+          rating: number | null;
+          notes: string | null;
+          meta: any;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["pg_contractors"]["Row"]>;
+        Update: Partial<Database["public"]["Tables"]["pg_contractors"]["Row"]>;
+        Relationships: [];
+      };
+      pg_milestones: {
+        Row: {
+          id: string;
+          project_id: string;
+          name: string;
+          phase: string | null;
+          status: string;
+          target_date: string | null;
+          completed_date: string | null;
+          sort_order: number;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["pg_milestones"]["Row"]>;
+        Update: Partial<Database["public"]["Tables"]["pg_milestones"]["Row"]>;
+        Relationships: [];
+      };
       rg_webhook_dead_letter: {
         Row: {
           id: string;

@@ -43,6 +43,7 @@
   --spoke-time: #9333ea;      /* purple */
   --spoke-wealth: #f59e0b;    /* amber */
   --spoke-risk: #dc2626;      /* red */
+  --spoke-project: #c2410c;   /* burnt orange — LIVE */
 
   /* Defaults wired for layout */
   --background: var(--surface-base);
@@ -78,6 +79,7 @@
   --color-spoke-time: var(--spoke-time);
   --color-spoke-wealth: var(--spoke-wealth);
   --color-spoke-risk: var(--spoke-risk);
+  --color-spoke-project: var(--spoke-project);
   --color-status-success: var(--status-success);
   --color-status-warning: var(--status-warning);
   --color-status-error: var(--status-error);

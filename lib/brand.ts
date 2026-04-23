@@ -94,6 +94,21 @@ export const GUARDIANS: Guardian[] = [
     href: "/wealth-guardian",
     icon: "Gem",
   },
+  {
+    id: "project",
+    name: "Project Guardian",
+    shortName: "Project",
+    tagline: "Your reno. Your budget. Your rules.",
+    description:
+      "AI project management for your renovation — from first-walkthrough cost estimate to resale prep. Keep the 15–20% general-contractor markup in your pocket, not someone else's.",
+    status: "live",
+    color: "#c2410c",
+    colorClass: "text-spoke-project",
+    borderClass: "border-spoke-project",
+    textClass: "text-spoke-project",
+    href: "/project-guardian",
+    icon: "Hammer",
+  },
 ];
 
 export const BRAND = {
