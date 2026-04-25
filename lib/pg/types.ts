@@ -2,6 +2,7 @@
 
 export interface PGProject {
   id: string;
+  user_id: string | null;
   name: string;
   address: string | null;
   city: string | null;

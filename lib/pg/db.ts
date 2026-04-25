@@ -6,11 +6,13 @@ import type { PGProject, PGPayment, PGContractor, PGMilestone } from "./types";
 
 // ─── Projects ──────────────────────────────────────────────
 
-export async function getProjects(): Promise<PGProject[]> {
-  const { data, error } = await supabase
+export async function getProjects(userId?: string): Promise<PGProject[]> {
+  let query = supabase
     .from("pg_projects")
     .select("*")
     .order("updated_at", { ascending: false });
+  if (userId) query = query.eq("user_id" as any, userId);
+  const { data, error } = await query;
   if (error) throw error;
   return data as PGProject[];
 }
