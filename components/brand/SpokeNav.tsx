@@ -22,7 +22,9 @@ import {
   ArrowRight,
   Phone,
   MessageCircle,
+  LogIn,
 } from "lucide-react";
+import { useAuth } from "@clerk/nextjs";
 
 interface SpokeNavProps {
   variant?: "light" | "dark";
@@ -71,6 +73,7 @@ export function SpokeNav({ variant = "light" }: SpokeNavProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openDropdown, setOpenDropdown] = React.useState<string | null>(null);
   const dropdownTimeout = React.useRef<NodeJS.Timeout | null>(null);
+  const { isSignedIn } = useAuth();
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -218,8 +221,29 @@ export function SpokeNav({ variant = "light" }: SpokeNavProps) {
               ))}
             </div>
 
-            {/* CTA + mobile menu */}
+            {/* CTA + auth + mobile menu */}
             <div className="flex items-center gap-2 shrink-0">
+              {isSignedIn ? (
+                <Link
+                  href="/portal"
+                  className="hidden sm:inline-flex items-center gap-2 h-10 px-4 rounded-full border-2 border-[color:var(--brand-teal)] text-[color:var(--brand-teal)] font-semibold text-sm hover:bg-[color:var(--brand-teal)]/5 transition-colors"
+                >
+                  Portal
+                </Link>
+              ) : (
+                <Link
+                  href="/sign-in"
+                  className={cn(
+                    "hidden sm:inline-flex items-center gap-1.5 h-10 px-4 rounded-full text-sm font-medium transition-colors",
+                    isDark
+                      ? "text-neutral-300 hover:text-white"
+                      : "text-neutral-600 hover:text-neutral-900"
+                  )}
+                >
+                  <LogIn size={14} />
+                  Sign In
+                </Link>
+              )}
               <a
                 href="https://link.seanshallis.com/widget/bookings/usb_20m"
                 target="_blank"

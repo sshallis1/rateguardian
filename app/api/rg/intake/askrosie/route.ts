@@ -84,6 +84,44 @@ export async function POST(req: Request) {
       contactId = createData?.contact?.id;
     }
 
+    // Trigger routing agent on this contact
+    try {
+      const baseUrl = process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "https://shallis-site.vercel.app";
+
+      await fetch(`${baseUrl}/api/rg/webhook`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contactId,
+          locationId: getLocationId(),
+          event_type: "askrosie_intake",
+        }),
+      });
+    } catch (webhookErr) {
+      console.warn("[askrosie intake] webhook trigger failed:", webhookErr);
+    }
+
+    // Notify Sean of new Ask Rosie lead
+    try {
+      const baseUrl = process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "https://shallis-site.vercel.app";
+
+      await fetch(`${baseUrl}/api/rg/ops/notify`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contactId,
+          source: "askrosie_intake",
+          context: `New Ask Rosie lead: ${firstName || ""} ${lastName || ""} (${email})`.trim(),
+        }),
+      });
+    } catch (notifyErr) {
+      console.warn("[askrosie intake] notify failed:", notifyErr);
+    }
+
     return NextResponse.json({ ok: true, contactId });
   } catch (error) {
     console.error("[askrosie intake] error:", error);
