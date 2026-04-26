@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ComingSoonLayout } from "@/components/brand/ComingSoonLayout";
-import { GUARDIANS } from "@/lib/brand";
+import { FUTURE_GUARDIANS } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "Health Guardian — Coming Soon",
@@ -9,14 +9,17 @@ export const metadata: Metadata = {
 };
 
 export default function HealthGuardianPage() {
-  const guardian = GUARDIANS.find((g) => g.id === "health")!;
+  const guardian = FUTURE_GUARDIANS.find((g) => g.id === "health")!;
   return (
     <ComingSoonLayout
       guardian={guardian}
+      previewLabel="How Health Guardian Will Protect You"
       highlights={[
-        "Continuously monitor vitals, labs, and wearable data in one place",
-        "Pattern-match across years to catch early warning signs no single doctor would see",
-        "Surface preventative opportunities — not just react to problems",
+        "Continuously monitor vitals, labs, and wearable data in one unified view",
+        "Pattern-match across years of data to catch early warning signs no single doctor would see",
+        "Surface preventative opportunities — act before problems become diagnoses",
+        "Medication interaction tracking and appointment coordination",
+        "Family health dashboard — track spouse, kids, aging parents",
         "Private by design — your health data never leaves your control",
       ]}
     />
