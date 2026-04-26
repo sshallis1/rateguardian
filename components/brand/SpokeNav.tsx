@@ -23,6 +23,11 @@ import {
   Phone,
   MessageCircle,
   LogIn,
+  Heart,
+  TrendingUp,
+  Hammer,
+  LayoutDashboard,
+  User,
 } from "lucide-react";
 import { useAuth } from "@clerk/nextjs";
 
@@ -32,30 +37,31 @@ interface SpokeNavProps {
 
 const NAV_ITEMS = [
   {
-    label: "Lending Programs",
+    label: "Guardians",
+    children: [
+      { label: "Rate Guardian", desc: "Protects the financing", href: "/rate-guardian", icon: Shield },
+      { label: "Project Guardian", desc: "Protects the project", href: "/project-guardian", icon: Hammer },
+      { label: "Trade Guardian", desc: "Protects the capital", href: "/trade-guardian", icon: TrendingUp },
+      { label: "Health Guardian", desc: "Protects the family", href: "https://myhealthguardian.vercel.app", icon: Heart, external: true },
+      { label: "Home Guardian", desc: "Protects the homeowner", href: "/home-guardian", icon: Home },
+    ],
+  },
+  {
+    label: "Tools",
+    children: [
+      { label: "Ask Rosie", desc: "Free rate check in 90 seconds", href: "/rate-guardian/ask-rosie", icon: MessageCircle },
+      { label: "Savings Score", desc: "Your mortgage health number", href: "/#rate-guardian", icon: Award },
+      { label: "Cost Estimator", desc: "What will your reno really cost?", href: "/project-guardian", icon: Hammer },
+    ],
+  },
+  {
+    label: "Lending",
     children: [
       { label: "Physician Loans", desc: "100% financing, no PMI", href: "/#lending", icon: Stethoscope },
       { label: "Construction-to-Permanent", desc: "Single close builds", href: "/#lending", icon: Building2 },
       { label: "Jumbo & Portfolio", desc: "High-balance financing", href: "/#lending", icon: Landmark },
       { label: "VA Loans", desc: "Veteran benefit strategies", href: "/#lending", icon: Shield },
-      { label: "Private Wealth Banking", desc: "Full-service U.S. Bank access", href: "/#lending", icon: Home },
-      { label: "Student Loan Strategies", desc: "Income-based qualification", href: "/#lending", icon: GraduationCap },
-    ],
-  },
-  {
-    label: "Enterprise",
-    children: [
-      { label: "Health System Partnerships", desc: "Zero cost to employer", href: "/#enterprise", icon: Building2 },
-      { label: "Financial Literacy Programs", desc: "Lunch & learns for staff", href: "/#enterprise", icon: BookOpen },
-      { label: "Relocation Support", desc: "New hire onboarding", href: "/#enterprise", icon: Users },
-    ],
-  },
-  {
-    label: "Rate Guardian",
-    children: [
-      { label: "How It Works", desc: "AI rate monitoring — free forever", href: "/#rate-guardian", icon: Shield },
-      { label: "Ask Rosie", desc: "Free rate check in 90 seconds", href: "/rate-guardian/ask-rosie", icon: MessageCircle },
-      { label: "Savings Score", desc: "Your mortgage health number", href: "/#savings-score", icon: Award },
+      { label: "Enterprise Programs", desc: "Health system partnerships", href: "/#enterprise", icon: Users },
     ],
   },
   {
@@ -226,33 +232,34 @@ export function SpokeNav({ variant = "light" }: SpokeNavProps) {
               {isSignedIn ? (
                 <Link
                   href="/portal"
-                  className="hidden sm:inline-flex items-center gap-2 h-10 px-4 rounded-full border-2 border-[color:var(--brand-teal)] text-[color:var(--brand-teal)] font-semibold text-sm hover:bg-[color:var(--brand-teal)]/5 transition-colors"
+                  className="hidden sm:inline-flex items-center gap-2 h-10 px-5 rounded-full bg-[color:var(--brand-teal)] text-white font-semibold text-sm hover:bg-[color:var(--brand-teal-dark)] transition-colors shadow-md"
                 >
-                  Portal
+                  <LayoutDashboard size={14} />
+                  Member Portal
                 </Link>
               ) : (
-                <Link
-                  href="/sign-in"
-                  className={cn(
-                    "hidden sm:inline-flex items-center gap-1.5 h-10 px-4 rounded-full text-sm font-medium transition-colors",
-                    isDark
-                      ? "text-neutral-300 hover:text-white"
-                      : "text-neutral-600 hover:text-neutral-900"
-                  )}
-                >
-                  <LogIn size={14} />
-                  Sign In
-                </Link>
+                <>
+                  <Link
+                    href="/sign-in"
+                    className={cn(
+                      "hidden sm:inline-flex items-center gap-1.5 h-10 px-4 rounded-full text-sm font-medium transition-colors",
+                      isDark
+                        ? "text-neutral-300 hover:text-white"
+                        : "text-neutral-600 hover:text-neutral-900"
+                    )}
+                  >
+                    <LogIn size={14} />
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/rate-guardian/ask-rosie"
+                    className="hidden sm:inline-flex items-center gap-2 h-10 px-5 rounded-full bg-[color:var(--brand-teal)] text-white font-semibold text-sm hover:bg-[color:var(--brand-teal-dark)] transition-colors shadow-md"
+                  >
+                    Check My Rate
+                    <ArrowRight size={14} />
+                  </Link>
+                </>
               )}
-              <a
-                href="https://link.seanshallis.com/widget/bookings/usb_20m"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden sm:inline-flex items-center gap-2 h-10 px-5 rounded-full bg-[color:var(--brand-teal)] text-white font-semibold text-sm hover:bg-[color:var(--brand-teal-dark)] transition-colors shadow-md"
-              >
-                <Calendar size={14} />
-                Book a Call
-              </a>
               <button
                 aria-label="Menu"
                 onClick={() => setMobileOpen((v) => !v)}
@@ -354,17 +361,38 @@ export function SpokeNav({ variant = "light" }: SpokeNavProps) {
                 </div>
               ))}
 
-              {/* Mobile CTA */}
-              <a
-                href="https://link.seanshallis.com/widget/bookings/usb_20m"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full rounded-xl bg-[color:var(--brand-teal)] text-white font-semibold py-3 text-sm"
-                onClick={() => setMobileOpen(false)}
-              >
-                <Calendar size={16} />
-                Book a Free Strategy Call
-              </a>
+              {/* Mobile CTAs */}
+              <div className="space-y-2">
+                {isSignedIn ? (
+                  <Link
+                    href="/portal"
+                    className="flex items-center justify-center gap-2 w-full rounded-xl bg-[color:var(--brand-teal)] text-white font-semibold py-3 text-sm"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <LayoutDashboard size={16} />
+                    Member Portal
+                  </Link>
+                ) : (
+                  <>
+                    <Link
+                      href="/rate-guardian/ask-rosie"
+                      className="flex items-center justify-center gap-2 w-full rounded-xl bg-[color:var(--brand-teal)] text-white font-semibold py-3 text-sm"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      Check My Rate — Free
+                      <ArrowRight size={14} />
+                    </Link>
+                    <Link
+                      href="/sign-in"
+                      className="flex items-center justify-center gap-2 w-full rounded-xl border-2 border-neutral-200 text-neutral-700 font-semibold py-3 text-sm"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <LogIn size={14} />
+                      Sign In / Member Portal
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         )}
