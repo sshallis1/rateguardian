@@ -13,11 +13,14 @@ export default function TradeGuardianPage() {
   return (
     <ComingSoonLayout
       guardian={guardian}
+      previewLabel="How Trade Guardian Will Work"
       highlights={[
         "Filter market noise from real signal across 45+ trusted sources",
-        "Quantitative 4-lens conviction scoring on every position",
-        "Position-sizing and decay modeling built into every alert",
-        "Built on Sean's 30 years of market cycle experience",
+        "Quantitative 4-lens conviction scoring on every position idea",
+        "Position-sizing recommendations with built-in risk management",
+        "Decay modeling — conviction fades if thesis doesn't play out",
+        "Sector rotation detection and macro regime classification",
+        "Built on Sean's 30 years of market cycle experience and CIO-level methodology",
       ]}
     />
   );
