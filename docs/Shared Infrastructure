@@ -1,0 +1,7 @@
+## Shared Infrastructure
+
+- Clerk (auth)
+- Supabase (data)
+- GHL (CRM + workflows)
+- Rosie AI (decision layer)
+- Notification system (SMS/email)
