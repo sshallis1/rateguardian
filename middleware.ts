@@ -1,5 +1,8 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
+// Use Node.js runtime instead of Edge — Clerk requires Node.js APIs
+export const runtime = "nodejs";
+
 const isProtectedRoute = createRouteMatcher(["/portal(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
