@@ -66,7 +66,7 @@ export default function HealthGuardianPage() {
 
             <div className="flex flex-wrap gap-3">
               <a
-                href="https://myhealthguardian.lovable.app"
+                href="https://myhealthguardian.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 h-14 px-8 rounded-full bg-emerald-600 text-white font-semibold text-base hover:bg-emerald-700 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
@@ -294,7 +294,7 @@ export default function HealthGuardianPage() {
               ))}
             </div>
             <a
-              href="https://myhealthguardian.lovable.app"
+              href="https://myhealthguardian.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 h-14 px-8 rounded-full bg-emerald-600 text-white font-semibold text-base hover:bg-emerald-700 transition-all shadow-lg"
@@ -357,7 +357,7 @@ export default function HealthGuardianPage() {
               2 minutes.
             </p>
             <a
-              href="https://myhealthguardian.lovable.app"
+              href="https://myhealthguardian.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 h-14 px-8 rounded-full bg-white text-emerald-700 font-semibold text-base hover:bg-emerald-50 transition-all shadow-xl hover:-translate-y-0.5"

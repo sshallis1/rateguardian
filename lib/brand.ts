@@ -88,7 +88,7 @@ export const GUARDIANS: Guardian[] = [
     textClass: "text-spoke-health",
     href: "/health-guardian",
     icon: "Heart",
-    cta: { label: "Try It Free", href: "https://myhealthguardian.lovable.app" },
+    cta: { label: "Try It Free", href: "https://myhealthguardian.vercel.app" },
   },
   {
     id: "home",
