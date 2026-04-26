@@ -11,9 +11,10 @@ import * as Icons from "lucide-react";
 interface ComingSoonLayoutProps {
   guardian: Guardian;
   highlights: string[];
+  previewLabel?: string;
 }
 
-export function ComingSoonLayout({ guardian, highlights }: ComingSoonLayoutProps) {
+export function ComingSoonLayout({ guardian, highlights, previewLabel }: ComingSoonLayoutProps) {
   const Icon = (Icons as unknown as Record<string, React.ComponentType<{ size?: number }>>)[
     guardian.icon
   ];
@@ -73,25 +74,32 @@ export function ComingSoonLayout({ guardian, highlights }: ComingSoonLayoutProps
               {guardian.description}
             </p>
 
-            {/* Highlights */}
+            {/* Feature Preview Cards */}
             <div className="mb-12">
-              <div className="text-xs uppercase tracking-widest font-bold text-neutral-500 mb-4">
-                What {guardian.shortName} Guardian Will Do
+              <div className="text-xs uppercase tracking-widest font-bold text-neutral-500 mb-6">
+                {previewLabel || `What ${guardian.shortName} Guardian Will Do`}
               </div>
-              <ul className="space-y-3">
-                {highlights.map((h) => (
-                  <li
+              <div className="grid sm:grid-cols-2 gap-3">
+                {highlights.map((h, i) => (
+                  <div
                     key={h}
-                    className="flex items-start gap-3 text-neutral-300"
+                    className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 hover:bg-white/[0.05] transition-colors"
                   >
                     <div
-                      className="w-1.5 h-1.5 rounded-full mt-2.5 flex-shrink-0"
-                      style={{ background: guardian.color }}
-                    />
-                    <span>{h}</span>
-                  </li>
+                      className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-xs font-bold mt-0.5"
+                      style={{
+                        background: `${guardian.color}25`,
+                        color: guardian.color,
+                      }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
+                    <span className="text-sm text-neutral-300 leading-relaxed">
+                      {h}
+                    </span>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
 
             {/* Waitlist */}
