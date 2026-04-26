@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Plus, FolderKanban } from "lucide-react";
 import { requireAuth } from "@/lib/auth";
-import { getProjects } from "@/lib/pg/db";
+import { getLegacyProjects as getProjects } from "@/lib/pg/db";
 import { getUserTier } from "@/lib/auth";
 import { getTierFeatures } from "@/lib/membership";
 import { Card, CardContent } from "@/components/ui/card";

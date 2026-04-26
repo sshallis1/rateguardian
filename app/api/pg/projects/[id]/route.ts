@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { authenticatePG } from "@/lib/pg/auth";
-import { getProject, updateProject } from "@/lib/pg/db";
+import { getLegacyProject as getProject, updateLegacyProject as updateProject } from "@/lib/pg/db";
 
 export async function GET(
   req: NextRequest,

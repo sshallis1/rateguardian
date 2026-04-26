@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { authenticatePG } from "@/lib/pg/auth";
-import { getProjects, createProject } from "@/lib/pg/db";
+import { getLegacyProjects as getProjects, createLegacyProject as createProject } from "@/lib/pg/db";
 
 export async function GET(req: NextRequest) {
   const auth = await authenticatePG(req);
