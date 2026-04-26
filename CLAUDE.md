@@ -17,16 +17,13 @@ GHL Webhook → /api/rg/webhook → Claude routing agent (routeLead)
 Crons:
   /api/rg/ops/heartbeat     — every 6h, re-evaluates due contacts
   /api/rg/ops/health-check  — every 12h, detects stuck/stale records
-  /api/fetch-alerts          — every 15m, relays Supabase alerts (legacy)
 ```
 
 ## Key Directories
 - `lib/rg/` — Rate Guardian core (router-agent, ghl-client, field-map, types)
 - `lib/engine/` — Legacy Rosie engine (being retired)
 - `app/api/rg/` — Next.js API routes (webhook, egress, ops, health)
-- `api/` — Legacy Vercel Functions (fetch-alerts, webhook, intake, engine)
 - `sql/` — Database migrations (rg_* canonical tables)
-- `supabase/` — Legacy edge functions (deprecated)
 
 ## Stack
 - Next.js 16 + React 19 + TypeScript + Tailwind

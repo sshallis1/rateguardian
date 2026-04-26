@@ -162,7 +162,7 @@ export async function POST(req: NextRequest) {
         {
           action: "rate_scan_skipped",
           reason: "no_market_rate",
-          hint: "Apify scraper may not have run yet — check /api/webhook",
+          hint: "Apify scraper may not have run yet — check /api/rg/webhook",
         },
         { status: 200 }
       );
