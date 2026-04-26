@@ -20,13 +20,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://seanshallis.com"),
   title: {
-    default: "Sean Shallis — Rosie Watches Your Rate So You Don't Have To",
+    default:
+      "Sean Shallis — Eliminate Financial Blind Spots. Automatically.",
     template: "%s | Sean Shallis",
   },
   description:
-    "Rosie the Rate Guardian monitors your mortgage multiple times a day — so you never overpay and never get stuck with the wrong strategy. Backed by 30 years of mortgage wisdom and the 5th largest bank in the world.",
+    "AI-powered systems that watch your money, your rate, and your opportunities — so you don't have to. Rate Guardian. Project Guardian. Trade Guardian. Home Guardian. 30+ years of mortgage wisdom. $1B+ in transactions.",
   keywords: [
     "rate guardian",
+    "guardian family",
     "mortgage monitoring",
     "physician loans",
     "refinance",
@@ -34,25 +36,48 @@ export const metadata: Metadata = {
     "private wealth mortgage",
     "AI mortgage",
     "NJ mortgage",
+    "project guardian",
+    "trade guardian",
+    "home guardian",
+    "financial blind spots",
+    "rosie AI",
   ],
   authors: [{ name: "Sean T. Shallis" }],
+  creator: "Sean T. Shallis",
+  publisher: "Guardian Family",
   openGraph: {
-    title: "Sean Shallis — Guardian Family",
+    title: "Eliminate Financial Blind Spots. Automatically.",
     description:
-      "Rosie watches your rate so you don't have to. Clarity, confidence, and comfort — backed by 30 years of mortgage wisdom.",
+      "AI-powered systems that watch your money, your rate, and your opportunities — so you don't have to. Built by Sean Shallis, backed by 30+ years of mortgage wisdom.",
     type: "website",
     locale: "en_US",
     siteName: "Sean Shallis | Guardian Family",
+    url: "https://seanshallis.com",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rosie Watches Your Rate So You Don't Have To",
+    title: "Eliminate Financial Blind Spots. Automatically.",
     description:
-      "Guardian Family — AI that monitors the financial blind spots most people never see.",
+      "Rate Guardian protects the financing. Project Guardian protects the project. Trade Guardian protects the capital. Home Guardian protects the homeowner.",
+    creator: "@seanshallis",
+    site: "@seanshallis",
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "https://seanshallis.com",
+  },
+  other: {
+    "apple-mobile-web-app-title": "Guardian Family",
   },
 };
 
