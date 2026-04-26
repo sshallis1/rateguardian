@@ -14,6 +14,7 @@ import {
   Zap,
   TrendingUp,
   Hammer,
+  Heart,
 } from "lucide-react";
 import { SpokeNav } from "@/components/brand/SpokeNav";
 import { SavingsScore } from "@/components/brand/SavingsScore";
@@ -115,7 +116,7 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ========= THE FOUR GUARDIANS ========= */}
+      {/* ========= THE GUARDIAN ECOSYSTEM ========= */}
       <section id="guardians" className="py-20 md:py-28 bg-[color:var(--surface-dark)] text-white scroll-mt-20">
         <Container>
           <div className="max-w-3xl mx-auto text-center mb-16">
@@ -123,7 +124,7 @@ export default function Home() {
               The Guardian Ecosystem
             </div>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
-              Four systems.{" "}
+              Five guardians.{" "}
               <span className="text-neutral-400">Every blind spot.</span>
             </h2>
             <p className="text-lg text-neutral-400 leading-relaxed">
@@ -132,10 +133,16 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {GUARDIANS.map((g) => (
-              <Link
+            {GUARDIANS.map((g) => {
+              const href = g.cta?.href ?? g.href;
+              const isExternal = href.startsWith("http");
+              const Tag = isExternal ? "a" : Link;
+              const extraProps = isExternal ? { target: "_blank" as const, rel: "noopener noreferrer" } : {};
+              return (
+              <Tag
                 key={g.id}
-                href={g.cta?.href ?? g.href}
+                href={href}
+                {...extraProps}
                 className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-8 hover:bg-white/[0.06] hover:-translate-y-1 transition-all"
                 style={{ borderLeftWidth: 4, borderLeftColor: g.color }}
               >
@@ -153,6 +160,7 @@ export default function Home() {
                       {g.id === "rate" && <Shield size={24} />}
                       {g.id === "project" && <Hammer size={24} />}
                       {g.id === "trade" && <TrendingUp size={24} />}
+                      {g.id === "health" && <Heart size={24} />}
                       {g.id === "home" && <HomeIcon size={24} />}
                     </div>
                     <div>
@@ -175,8 +183,9 @@ export default function Home() {
                     <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </Link>
-            ))}
+              </Tag>
+              );
+            })}
           </div>
         </Container>
       </section>

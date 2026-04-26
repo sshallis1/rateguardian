@@ -74,6 +74,23 @@ export const GUARDIANS: Guardian[] = [
     cta: { label: "Get the Free Brief", href: "/trade-guardian" },
   },
   {
+    id: "health",
+    name: "Health Guardian",
+    shortName: "Health",
+    protects: "Protects the family.",
+    tagline: "Because health blind spots cost more than money.",
+    description:
+      "AI-powered meal planning, family health tracking, and wellness monitoring. Rosie handles dinner tonight — and watches your family's health signals over time.",
+    status: "live",
+    color: "#059669",
+    colorClass: "text-spoke-health",
+    borderClass: "border-spoke-health",
+    textClass: "text-spoke-health",
+    href: "/health-guardian",
+    icon: "Heart",
+    cta: { label: "Try It Free", href: "https://myhealthguardian.lovable.app" },
+  },
+  {
     id: "home",
     name: "Home Guardian",
     shortName: "Home",
@@ -94,22 +111,6 @@ export const GUARDIANS: Guardian[] = [
 
 // Future spokes — not shown on homepage, available for dedicated pages
 export const FUTURE_GUARDIANS: Guardian[] = [
-  {
-    id: "health",
-    name: "Health Guardian",
-    shortName: "Health",
-    protects: "Protects your health.",
-    tagline: "Your health signals, decoded.",
-    description:
-      "AI that watches your vitals, catches patterns early, and keeps you one step ahead of the curve.",
-    status: "future",
-    color: "#059669",
-    colorClass: "text-spoke-health",
-    borderClass: "border-spoke-health",
-    textClass: "text-spoke-health",
-    href: "/health-guardian",
-    icon: "Heart",
-  },
   {
     id: "time",
     name: "Time Guardian",
@@ -152,7 +153,7 @@ export const BRAND = {
     "AI-powered systems that watch your money, your rate, and your opportunities — so you don't have to.",
   tagline: "Guardians watch what you can't.",
   ecosystemLine:
-    "Project Guardian protects the project. Rate Guardian protects the financing. Home Guardian protects the homeowner. Trade Guardian protects the capital.",
+    "Rate Guardian protects the financing. Project Guardian protects the project. Trade Guardian protects the capital. Health Guardian protects the family. Home Guardian protects the homeowner.",
   rosieTagline: "Rosie watches your rate so you don't have to.",
   nmls: "NMLS #2362814",
   bank: "U.S. Bank",
