@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { STATES } from "@/lib/states";
+import { StateSelector } from "@/components/ui/state-selector";
 import {
   ArrowRight,
   Shield,
@@ -520,25 +521,11 @@ export default function VALoansPage() {
       {/* State Directory — Internal Linking + SEO */}
       <section className="py-16 md:py-20 bg-[color:var(--brand-cream)] border-t border-neutral-200">
         <Container>
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold mb-2">
-              VA Loans — Available in All 50 States
-            </h2>
-            <p className="text-neutral-600">
-              Sean is licensed nationwide. Click your state for local VA loan details and military base info.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 max-w-5xl mx-auto">
-            {STATES.map((s) => (
-              <Link
-                key={s.slug}
-                href={`/va-loans/${s.slug}`}
-                className="px-4 py-2.5 rounded-lg border border-neutral-200 bg-white text-sm font-medium text-neutral-700 hover:border-[color:var(--brand-teal)] hover:text-[color:var(--brand-teal)] transition-colors text-center"
-              >
-                {s.name}
-              </Link>
-            ))}
-          </div>
+          <StateSelector
+            basePath="/va-loans"
+            heading="VA Loans — Available in All 50 States"
+            subheading="Sean is licensed nationwide. Select your state for local VA loan details and military base info."
+          />
         </Container>
       </section>
 
