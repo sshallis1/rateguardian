@@ -23,8 +23,8 @@ export function ProgressiveCapture({
   const [phone, setPhone] = React.useState("");
   const [submitting, setSubmitting] = React.useState(false);
 
-  // Don't show until threshold met
-  const shouldShow = intentScore > 60 || messageCount >= 4;
+  // Don't show until threshold met — or if savings teaser already captured email
+  const shouldShow = intentScore > 50 || messageCount >= 3;
   if (!shouldShow || stage === "done") return null;
 
   // After email captured + 2 more messages, show name
@@ -99,8 +99,8 @@ export function ProgressiveCapture({
         {stage === "email" && (
           <>
             <p className="text-neutral-800 text-sm font-medium mb-3">
-              Want Rosie to keep watching your rate? Drop your email and
-              she'll start monitoring today.
+              Your Savings Score is almost ready. Drop your email and
+              Rosie will send it — plus start monitoring your rate daily.
             </p>
             <form onSubmit={submitEmail} className="flex gap-2">
               <input

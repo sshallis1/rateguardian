@@ -42,8 +42,9 @@ export function AskRosieChat() {
   // Determine value injection points
   const valueInjectionType = getValueInjectionType(userMsgCount, signals);
 
-  // Show savings teaser after capture + strong intent
-  const showSavingsTeaser = captured && intentScore > 50;
+  // Show savings teaser when intent is strong enough — the teaser itself
+  // gates the score behind email capture, so it can appear pre-capture
+  const showSavingsTeaser = intentScore > 40 && userMsgCount >= 3;
 
   // Auto-scroll to latest message
   React.useEffect(() => {
@@ -238,8 +239,21 @@ export function AskRosieChat() {
             <CapturedConfirmation firstName={capturedName} />
           )}
 
-          {/* Savings score teaser — post-capture engagement */}
-          {showSavingsTeaser && <SavingsScoreTeaser captured={captured} />}
+          {/* Savings score teaser — gates score behind email capture */}
+          {showSavingsTeaser && (
+            <SavingsScoreTeaser
+              captured={captured}
+              onEmailGate={(email) => {
+                setCaptured(true);
+                // Also submit to intake
+                fetch("/api/rg/intake/askrosie", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ email, source: "savings_score_gate" }),
+                }).catch(() => {});
+              }}
+            />
+          )}
 
           {error && (
             <div className="flex gap-3">

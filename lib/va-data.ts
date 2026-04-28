@@ -1,0 +1,61 @@
+// VA Loan state-specific data — military bases, VA medical centers
+
+export interface VAStateData {
+  slug: string;
+  abbr: string;
+  militaryBases: string[];
+  vaMedicalCenters: string[];
+}
+
+export const VA_STATE_DATA: Record<string, VAStateData> = {
+  "alabama": { slug: "alabama", abbr: "AL", militaryBases: ["Fort Novosel", "Maxwell AFB", "Redstone Arsenal"], vaMedicalCenters: ["Birmingham VA Medical Center", "Central Alabama Veterans HCS"] },
+  "alaska": { slug: "alaska", abbr: "AK", militaryBases: ["Joint Base Elmendorf-Richardson", "Fort Wainwright", "Eielson AFB"], vaMedicalCenters: ["Alaska VA Healthcare System"] },
+  "arizona": { slug: "arizona", abbr: "AZ", militaryBases: ["Fort Huachuca", "Davis-Monthan AFB", "Luke AFB"], vaMedicalCenters: ["Phoenix VA Health Care System", "Southern Arizona VA HCS"] },
+  "arkansas": { slug: "arkansas", abbr: "AR", militaryBases: ["Little Rock AFB", "Fort Chaffee"], vaMedicalCenters: ["Central Arkansas Veterans HCS"] },
+  "california": { slug: "california", abbr: "CA", militaryBases: ["Camp Pendleton", "Fort Irwin", "Edwards AFB", "Naval Base San Diego", "Travis AFB"], vaMedicalCenters: ["VA Greater Los Angeles", "VA San Diego", "San Francisco VA", "VA Palo Alto"] },
+  "colorado": { slug: "colorado", abbr: "CO", militaryBases: ["Fort Carson", "Peterson SFB", "Buckley SFB", "USAFA"], vaMedicalCenters: ["Rocky Mountain Regional VA Medical Center"] },
+  "connecticut": { slug: "connecticut", abbr: "CT", militaryBases: ["Naval Submarine Base New London"], vaMedicalCenters: ["VA Connecticut Healthcare System"] },
+  "delaware": { slug: "delaware", abbr: "DE", militaryBases: ["Dover AFB"], vaMedicalCenters: ["Wilmington VA Medical Center"] },
+  "florida": { slug: "florida", abbr: "FL", militaryBases: ["NAS Jacksonville", "Eglin AFB", "MacDill AFB", "Patrick SFB", "NAS Pensacola"], vaMedicalCenters: ["James A. Haley Veterans' Hospital", "Miami VA Medical Center", "North Florida/South Georgia VHS"] },
+  "georgia": { slug: "georgia", abbr: "GA", militaryBases: ["Fort Moore", "Fort Eisenhower", "Robins AFB", "Fort Stewart"], vaMedicalCenters: ["Atlanta VA Medical Center", "Augusta VA Medical Center"] },
+  "hawaii": { slug: "hawaii", abbr: "HI", militaryBases: ["Joint Base Pearl Harbor-Hickam", "Schofield Barracks", "Marine Corps Base Hawaii"], vaMedicalCenters: ["VA Pacific Islands Health Care System"] },
+  "idaho": { slug: "idaho", abbr: "ID", militaryBases: ["Mountain Home AFB", "Gowen Field"], vaMedicalCenters: ["Boise VA Medical Center"] },
+  "illinois": { slug: "illinois", abbr: "IL", militaryBases: ["Scott AFB", "Naval Station Great Lakes", "Rock Island Arsenal"], vaMedicalCenters: ["Jesse Brown VA Medical Center", "Edward Hines Jr. VA Hospital"] },
+  "indiana": { slug: "indiana", abbr: "IN", militaryBases: ["Grissom ARB", "Camp Atterbury"], vaMedicalCenters: ["Richard L. Roudebush VA Medical Center"] },
+  "iowa": { slug: "iowa", abbr: "IA", militaryBases: ["Camp Dodge"], vaMedicalCenters: ["Iowa City VA Health Care System", "VA Central Iowa HCS"] },
+  "kansas": { slug: "kansas", abbr: "KS", militaryBases: ["Fort Leavenworth", "Fort Riley", "McConnell AFB"], vaMedicalCenters: ["Robert J. Dole VA Medical Center"] },
+  "kentucky": { slug: "kentucky", abbr: "KY", militaryBases: ["Fort Knox", "Fort Campbell"], vaMedicalCenters: ["Robley Rex VA Medical Center"] },
+  "louisiana": { slug: "louisiana", abbr: "LA", militaryBases: ["Barksdale AFB", "Fort Johnson", "Naval Air Station JRB New Orleans"], vaMedicalCenters: ["Southeast Louisiana Veterans HCS", "Overton Brooks VA Medical Center"] },
+  "maine": { slug: "maine", abbr: "ME", militaryBases: ["Portsmouth Naval Shipyard", "NAS Brunswick (closed)"], vaMedicalCenters: ["Togus VA Medical Center"] },
+  "maryland": { slug: "maryland", abbr: "MD", militaryBases: ["Fort Meade", "Joint Base Andrews", "Aberdeen Proving Ground", "Naval Academy"], vaMedicalCenters: ["Baltimore VA Medical Center", "Perry Point VA Medical Center"] },
+  "massachusetts": { slug: "massachusetts", abbr: "MA", militaryBases: ["Hanscom AFB", "Joint Base Cape Cod", "Natick Soldier Systems Center"], vaMedicalCenters: ["VA Boston Healthcare System", "VA Central Western Massachusetts"] },
+  "michigan": { slug: "michigan", abbr: "MI", militaryBases: ["Selfridge ANGB", "Camp Grayling"], vaMedicalCenters: ["VA Ann Arbor Healthcare System", "John D. Dingell VA Medical Center"] },
+  "minnesota": { slug: "minnesota", abbr: "MN", militaryBases: ["Camp Ripley"], vaMedicalCenters: ["Minneapolis VA Health Care System", "St. Cloud VA Health Care System"] },
+  "mississippi": { slug: "mississippi", abbr: "MS", militaryBases: ["Keesler AFB", "Columbus AFB", "NAS Meridian", "Camp Shelby"], vaMedicalCenters: ["G.V. Sonny Montgomery VA Medical Center", "Gulf Coast Veterans HCS"] },
+  "missouri": { slug: "missouri", abbr: "MO", militaryBases: ["Fort Leonard Wood", "Whiteman AFB"], vaMedicalCenters: ["John Cochran VA Medical Center", "Kansas City VA Medical Center"] },
+  "montana": { slug: "montana", abbr: "MT", militaryBases: ["Malmstrom AFB"], vaMedicalCenters: ["VA Montana Health Care System"] },
+  "nebraska": { slug: "nebraska", abbr: "NE", militaryBases: ["Offutt AFB"], vaMedicalCenters: ["VA Nebraska-Western Iowa HCS"] },
+  "nevada": { slug: "nevada", abbr: "NV", militaryBases: ["Nellis AFB", "Creech AFB", "Naval Air Station Fallon"], vaMedicalCenters: ["VA Southern Nevada Healthcare System", "VA Sierra Nevada HCS"] },
+  "new-hampshire": { slug: "new-hampshire", abbr: "NH", militaryBases: ["New Hampshire National Guard"], vaMedicalCenters: ["Manchester VA Medical Center"] },
+  "new-jersey": { slug: "new-jersey", abbr: "NJ", militaryBases: ["Joint Base McGuire-Dix-Lakehurst", "Picatinny Arsenal", "Naval Weapons Station Earle"], vaMedicalCenters: ["East Orange VA Medical Center", "Lyons VA Medical Center"] },
+  "new-mexico": { slug: "new-mexico", abbr: "NM", militaryBases: ["Kirtland AFB", "Holloman AFB", "White Sands Missile Range", "Cannon AFB"], vaMedicalCenters: ["New Mexico VA Health Care System"] },
+  "new-york": { slug: "new-york", abbr: "NY", militaryBases: ["Fort Drum", "West Point", "Fort Hamilton"], vaMedicalCenters: ["VA NY Harbor Healthcare System", "Albany VA Medical Center", "Buffalo VA Medical Center"] },
+  "north-carolina": { slug: "north-carolina", abbr: "NC", militaryBases: ["Fort Liberty", "Camp Lejeune", "Seymour Johnson AFB", "Cherry Point MCAS"], vaMedicalCenters: ["Durham VA Medical Center", "W.G. Hefner VA Medical Center", "Fayetteville VA Medical Center"] },
+  "north-dakota": { slug: "north-dakota", abbr: "ND", militaryBases: ["Minot AFB", "Grand Forks AFB"], vaMedicalCenters: ["Fargo VA Health Care System"] },
+  "ohio": { slug: "ohio", abbr: "OH", militaryBases: ["Wright-Patterson AFB"], vaMedicalCenters: ["Louis Stokes Cleveland VA Medical Center", "Cincinnati VA Medical Center", "Chillicothe VA Medical Center"] },
+  "oklahoma": { slug: "oklahoma", abbr: "OK", militaryBases: ["Fort Sill", "Tinker AFB", "Altus AFB", "Vance AFB"], vaMedicalCenters: ["Oklahoma City VA Health Care System", "Jack C. Montgomery VA Medical Center"] },
+  "oregon": { slug: "oregon", abbr: "OR", militaryBases: ["Kingsley Field ANGB"], vaMedicalCenters: ["VA Portland Health Care System", "VA Roseburg Healthcare System"] },
+  "pennsylvania": { slug: "pennsylvania", abbr: "PA", militaryBases: ["Carlisle Barracks", "Naval Support Activity Philadelphia", "Tobyhanna Army Depot"], vaMedicalCenters: ["Philadelphia VA Medical Center", "VA Pittsburgh Healthcare System", "Lebanon VA Medical Center"] },
+  "rhode-island": { slug: "rhode-island", abbr: "RI", militaryBases: ["Naval Station Newport"], vaMedicalCenters: ["Providence VA Medical Center"] },
+  "south-carolina": { slug: "south-carolina", abbr: "SC", militaryBases: ["Fort Jackson", "Joint Base Charleston", "Shaw AFB", "MCAS Beaufort"], vaMedicalCenters: ["Ralph H. Johnson VA Medical Center", "Dorn VA Medical Center"] },
+  "south-dakota": { slug: "south-dakota", abbr: "SD", militaryBases: ["Ellsworth AFB"], vaMedicalCenters: ["VA Black Hills Health Care System", "Sioux Falls VA Health Care System"] },
+  "tennessee": { slug: "tennessee", abbr: "TN", militaryBases: ["Fort Campbell (KY/TN)", "Arnold AFB"], vaMedicalCenters: ["Tennessee Valley Healthcare System", "Memphis VA Medical Center"] },
+  "texas": { slug: "texas", abbr: "TX", militaryBases: ["Fort Cavazos", "Fort Bliss", "Joint Base San Antonio", "Fort Worth NAS JRB"], vaMedicalCenters: ["Michael E. DeBakey VA Medical Center", "South Texas Veterans HCS", "VA North Texas Health Care System"] },
+  "utah": { slug: "utah", abbr: "UT", militaryBases: ["Hill AFB", "Dugway Proving Ground", "Camp Williams"], vaMedicalCenters: ["VA Salt Lake City Health Care System"] },
+  "vermont": { slug: "vermont", abbr: "VT", militaryBases: ["Vermont National Guard"], vaMedicalCenters: ["White River Junction VA Medical Center"] },
+  "virginia": { slug: "virginia", abbr: "VA", militaryBases: ["Fort Barfoot", "Naval Station Norfolk", "Joint Base Langley-Eustis", "Quantico", "Pentagon"], vaMedicalCenters: ["Hunter Holmes McGuire VA Medical Center", "Hampton VA Medical Center", "Salem VA Medical Center"] },
+  "washington": { slug: "washington", abbr: "WA", militaryBases: ["Joint Base Lewis-McChord", "Naval Base Kitsap", "Fairchild AFB"], vaMedicalCenters: ["VA Puget Sound Health Care System", "Mann-Grandstaff VA Medical Center"] },
+  "west-virginia": { slug: "west-virginia", abbr: "WV", militaryBases: ["West Virginia National Guard"], vaMedicalCenters: ["Martinsburg VA Medical Center", "Huntington VA Medical Center"] },
+  "wisconsin": { slug: "wisconsin", abbr: "WI", militaryBases: ["Fort McCoy"], vaMedicalCenters: ["Clement J. Zablocki VA Medical Center", "William S. Middleton Memorial Veterans Hospital"] },
+  "wyoming": { slug: "wyoming", abbr: "WY", militaryBases: ["F.E. Warren AFB"], vaMedicalCenters: ["Cheyenne VA Medical Center", "Sheridan VA Medical Center"] },
+};
