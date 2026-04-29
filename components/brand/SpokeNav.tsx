@@ -138,7 +138,7 @@ export function SpokeNav({ variant = "light" }: SpokeNavProps) {
                     isDark ? "text-neutral-400" : "text-neutral-500"
                   )}
                 >
-                  U.S. Bank &middot; Private Wealth
+                  Mortgage Expert &middot; NMLS #2362814
                 </span>
               </div>
             </Link>

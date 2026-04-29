@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const cities = data.majorCities.slice(0, 3).join(", ");
   return {
     title: `Private Wealth Mortgage in ${data.name} — Jumbo Loans Up to $20M+`,
-    description: `Jumbo and portfolio mortgage solutions in ${data.name} (${cities}) for high-net-worth borrowers. Complex income, trust purchases, foreign nationals, multi-property portfolios. Sean structures what others can't. U.S. Bank Private Wealth.`,
+    description: `Jumbo and portfolio mortgage solutions in ${data.name} (${cities}) for high-net-worth borrowers. Complex income, trust purchases, foreign nationals, multi-property portfolios. Sean structures what others can't. U.S. Bank.`,
     keywords: [
       `jumbo mortgage ${data.name}`,
       `jumbo mortgage ${data.abbr}`,
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ],
     openGraph: {
       title: `Private Wealth Mortgage in ${data.name} — Jumbo Loans Up to $20M+`,
-      description: `Jumbo and portfolio lending for high-net-worth borrowers in ${data.name}. Complex income, trust-held assets, foreign nationals. U.S. Bank Private Wealth.`,
+      description: `Jumbo and portfolio lending for high-net-worth borrowers in ${data.name}. Complex income, trust-held assets, foreign nationals. U.S. Bank.`,
       type: "website",
       url: `https://seanshallis.com/private-wealth-mortgage/${data.slug}`,
     },
@@ -120,7 +120,7 @@ export default async function PrivateWealthMortgageStatePage({ params }: PagePro
             </p>
             <p className="text-lg text-neutral-500 mb-8 max-w-2xl">
               Portfolio lending. Complex income. Trust and LLC vesting. No PMI.
-              Backed by U.S. Bank Private Wealth.
+              Loans originated through U.S. Bank.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
@@ -179,7 +179,7 @@ export default async function PrivateWealthMortgageStatePage({ params }: PagePro
                 Whether you&apos;re an executive purchasing in {cities[0]}, a
                 business owner building in{" "}
                 {cities[1] || cities[0]}, or a foreign national investing in{" "}
-                {data.name} real estate — U.S. Bank Private Wealth offers
+                {data.name} real estate — U.S. Bank offers
                 portfolio lending solutions unavailable through retail channels.
               </p>
 
@@ -323,7 +323,7 @@ export default async function PrivateWealthMortgageStatePage({ params }: PagePro
               {[
                 {
                   q: `What are the jumbo loan limits in ${data.name}?`,
-                  a: `Conforming loan limits vary by county in ${data.name}, but U.S. Bank Private Wealth portfolio loans start above conforming limits and go up to $20M+. There is no arbitrary cap — your loan amount is structured around your financial picture, not a government guideline.`,
+                  a: `Conforming loan limits vary by county in ${data.name}, but U.S. Bank portfolio loans start above conforming limits and go up to $20M+. There is no arbitrary cap — your loan amount is structured around your financial picture, not a government guideline.`,
                 },
                 {
                   q: `Can I use asset depletion to qualify in ${data.name}?`,
@@ -331,7 +331,7 @@ export default async function PrivateWealthMortgageStatePage({ params }: PagePro
                 },
                 {
                   q: `Can I purchase a ${data.name} property in a trust or LLC?`,
-                  a: `Absolutely. U.S. Bank Private Wealth regularly closes loans vested in revocable trusts, irrevocable trusts, and LLCs in ${data.name}. No need to close in personal name and transfer after — we close directly into the entity.`,
+                  a: `Absolutely. U.S. Bank regularly closes loans vested in revocable trusts, irrevocable trusts, and LLCs in ${data.name}. No need to close in personal name and transfer after — we close directly into the entity.`,
                 },
                 {
                   q: `Does Sean work with foreign nationals buying in ${data.name}?`,
@@ -339,7 +339,7 @@ export default async function PrivateWealthMortgageStatePage({ params }: PagePro
                 },
                 {
                   q: `Can RSU and stock income qualify me for a ${data.name} jumbo loan?`,
-                  a: `Yes. U.S. Bank Private Wealth counts vested RSUs, stock options, and deferred compensation as qualifying income. We analyze your vesting schedule and historical grants — unlike retail lenders who often ignore non-cash compensation entirely.`,
+                  a: `Yes. U.S. Bank counts vested RSUs, stock options, and deferred compensation as qualifying income. We analyze your vesting schedule and historical grants — unlike retail lenders who often ignore non-cash compensation entirely.`,
                 },
                 {
                   q: `Are interest-only jumbo loans available in ${data.name}?`,

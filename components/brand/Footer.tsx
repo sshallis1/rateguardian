@@ -15,19 +15,23 @@ export function Footer() {
               <div>
                 <div className="font-bold text-lg">Sean Shallis</div>
                 <div className="text-xs uppercase tracking-widest text-neutral-400">
-                  Guardian Family
+                  {BRAND.company}
                 </div>
               </div>
             </div>
             <p className="text-neutral-400 text-sm leading-relaxed max-w-md mb-6">
-              30+ years helping families build wealth through smart loan
-              strategies. Now, Rosie watches your rate 24/7 — so you don't have
-              to.
+              30+ years helping over 2,000 families build wealth through smart
+              mortgage strategies. The Guardian Family of products are proprietary
+              technology tools built by Sean to help you eliminate financial blind spots.
             </p>
             <div className="space-y-1.5 text-sm text-neutral-400">
+              <div className="font-semibold text-neutral-300">Mortgage Lending:</div>
+              <div>Sean Shallis, Mortgage Loan Originator</div>
               <div>{BRAND.bank} · {BRAND.nmls}</div>
-              <div>{BRAND.contact.location}</div>
+              <div>{BRAND.contact.address}</div>
+              <div>{BRAND.contact.city}, {BRAND.contact.state} {BRAND.contact.zip}</div>
               <div className="font-mono">{BRAND.contact.phone}</div>
+              <div className="font-mono text-xs">{BRAND.contact.email}</div>
             </div>
           </div>
 
@@ -67,28 +71,13 @@ export function Footer() {
             <ul className="space-y-2.5 text-sm text-neutral-300">
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
-                  Sean's Story
+                  Sean&apos;s Story
                 </Link>
               </li>
               <li>
-                <a
-                  href="https://www.linkedin.com/in/seantshallis/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  Media &amp; Press
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://a.co/d/0aP6arT9"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  The Book
-                </a>
+                <Link href="/reviews" className="hover:text-white transition-colors">
+                  Reviews &amp; Testimonials
+                </Link>
               </li>
               <li>
                 <a
@@ -110,17 +99,38 @@ export function Footer() {
                   LinkedIn
                 </a>
               </li>
+              <li>
+                <Link href="/connect" className="hover:text-white transition-colors">
+                  Connect with Sean
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap justify-between gap-4 text-xs text-neutral-500">
-          <div>
-            © {new Date().getFullYear()} Sean T. Shallis · Guardian Family™. All rights reserved.
+        {/* Disclosures */}
+        <div className="mt-12 pt-8 border-t border-white/10 space-y-4">
+          <div className="text-[11px] text-neutral-500 leading-relaxed max-w-4xl">
+            <p className="mb-3">
+              {BRAND.disclosure.site}
+            </p>
+            <p className="mb-3">
+              {BRAND.disclosure.mortgage}
+            </p>
+            <p>
+              {BRAND.disclosure.approval}
+            </p>
           </div>
-          <div className="flex gap-4">
-            <span>{BRAND.nmls}</span>
-            <span>Equal Housing Lender</span>
+
+          <div className="flex flex-wrap justify-between items-center gap-4 pt-4 border-t border-white/5">
+            <div className="text-xs text-neutral-500">
+              &copy; {new Date().getFullYear()} {BRAND.entity} · {BRAND.company}&trade;. All rights reserved.
+            </div>
+            <div className="flex items-center gap-4 text-xs text-neutral-500">
+              <span>{BRAND.nmls}</span>
+              <span>Equal Housing Lender</span>
+              <span>Member FDIC</span>
+            </div>
           </div>
         </div>
       </div>

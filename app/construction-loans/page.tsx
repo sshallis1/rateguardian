@@ -24,7 +24,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
   title: "Construction Loans — Single Close, Zero Surprises | Sean Shallis",
   description:
-    "Construction-to-permanent financing that combines your build loan and mortgage into a single close. No double closing costs. Interest-only during construction. Sean manages the draw schedule so you can focus on the build. U.S. Bank Private Wealth.",
+    "Construction-to-permanent financing that combines your build loan and mortgage into a single close. No double closing costs. Interest-only during construction. Sean manages the draw schedule so you can focus on the build. U.S. Bank.",
   keywords: [
     "construction loan",
     "construction to permanent loan",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Construction Loans — Single Close, Zero Surprises",
     description:
-      "Construction-to-permanent financing. One close. Interest-only during build. Draw schedule managed by Sean. Backed by U.S. Bank.",
+      "Construction-to-permanent financing. One close. Interest-only during build. Draw schedule managed by Sean. Loans originated through U.S. Bank.",
     type: "website",
     url: "https://seanshallis.com/construction-loans",
   },
@@ -103,7 +103,7 @@ export default function ConstructionLoansPage() {
           <div className="max-w-3xl">
             <Badge variant="teal" className="mb-6">
               <Hammer size={12} />
-              Construction Loan Specialist &middot; U.S. Bank Private Wealth
+              Construction Loan Specialist &middot; U.S. Bank
             </Badge>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight mb-6">
               One Close. One Expert. Zero Surprises.

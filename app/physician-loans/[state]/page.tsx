@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const cities = data.majorCities.slice(0, 3).join(", ");
   return {
     title: `Physician Mortgage Loans in ${data.name} — $0 Down, No PMI`,
-    description: `Physician loan programs in ${data.name} (${cities}) up to $3M with zero down and no PMI. For MDs, DOs, residents, and fellows. Student loan-friendly. AI rate monitoring included free. Backed by U.S. Bank Private Wealth.`,
+    description: `Physician loan programs in ${data.name} (${cities}) up to $3M with zero down and no PMI. For MDs, DOs, residents, and fellows. Student loan-friendly. AI rate monitoring included free. Loans originated through U.S. Bank.`,
     keywords: [
       `physician mortgage ${data.name}`,
       `physician mortgage ${data.abbr}`,
@@ -117,7 +117,7 @@ export default async function PhysicianLoansStatePage({ params }: PageProps) {
             </p>
             <p className="text-lg text-neutral-500 mb-8 max-w-2xl">
               Up to $3M. Zero down. No PMI. Student loan-friendly. Backed by
-              U.S. Bank Private Wealth.
+              U.S. Bank.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
@@ -167,7 +167,7 @@ export default async function PhysicianLoansStatePage({ params }: PageProps) {
               </h2>
               <p className="text-lg text-neutral-600 leading-relaxed mb-6">
                 Sean Shallis is a national physician loan specialist backed by
-                U.S. Bank Private Wealth. He&apos;s married to a physician — he
+                U.S. Bank. He&apos;s married to a physician — he
                 understands the student debt, the relocations, the delayed
                 gratification, and the earning curve that makes physicians
                 uniquely qualified borrowers.
@@ -184,7 +184,7 @@ export default async function PhysicianLoansStatePage({ params }: PageProps) {
                 {[
                   { n: "01", title: "Talk to Rosie", body: `Tell Rosie about your ${data.name} home search or current mortgage. 90 seconds, no forms, no credit impact.` },
                   { n: "02", title: "Rosie Watches", body: `Rosie monitors ${data.name} rates multiple times a day. She knows your loan structure and alerts you when savings windows open.` },
-                  { n: "03", title: "Sean Closes It", body: "When the window opens, Sean calls you personally. One phone call. White glove. Backed by U.S. Bank." },
+                  { n: "03", title: "Sean Closes It", body: "When the window opens, Sean calls you personally. One phone call. White glove. Loans originated through U.S. Bank." },
                 ].map((s) => (
                   <div key={s.n} className="flex gap-4">
                     <div className="text-2xl font-mono font-bold text-[color:var(--brand-teal)] w-10 shrink-0">
@@ -347,7 +347,7 @@ export default async function PhysicianLoansStatePage({ params }: PageProps) {
                 },
                 {
                   q: `Does Sean work with physicians in ${cities[0]} and ${cities[1] || 'across ' + data.name}?`,
-                  a: `Sean is licensed nationwide and works with physicians in every ${data.name} city. U.S. Bank Private Wealth provides the same physician loan programs regardless of location.`,
+                  a: `Sean is licensed nationwide and works with physicians in every ${data.name} city. U.S. Bank provides the same physician loan programs regardless of location.`,
                 },
                 {
                   q: "What's the catch with zero down and no PMI?",

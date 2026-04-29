@@ -25,7 +25,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
   title: "Renovation Loans — Purchase + Reno in One Close | Sean Shallis",
   description:
-    "Renovation-to-permanent loans that roll your purchase + renovation costs into one mortgage. Finance up to 90% of after-renovation value. Single close, no HELOC needed. AI budget tracking with Project Guardian. Backed by U.S. Bank Private Wealth.",
+    "Renovation-to-permanent loans that roll your purchase + renovation costs into one mortgage. Finance up to 90% of after-renovation value. Single close, no HELOC needed. AI budget tracking with Project Guardian. Loans originated through U.S. Bank.",
   keywords: [
     "renovation loan",
     "renovation to permanent loan",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Renovation Loans — Purchase + Reno in One Close",
     description:
-      "Roll your purchase + renovation costs into one mortgage. Finance up to 90% of after-renovation value. Single close. AI budget tracking included. Backed by U.S. Bank.",
+      "Roll your purchase + renovation costs into one mortgage. Finance up to 90% of after-renovation value. Single close. AI budget tracking included. Loans originated through U.S. Bank.",
     type: "website",
     url: "https://seanshallis.com/renovation-loans",
   },
@@ -109,7 +109,7 @@ export default function RenovationLoansPage() {
           <div className="max-w-3xl">
             <Badge variant="teal" className="mb-6">
               <Paintbrush size={12} />
-              Renovation Loan Specialist &middot; U.S. Bank Private Wealth
+              Renovation Loan Specialist &middot; U.S. Bank
             </Badge>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight mb-6">
               Renovate Smart. Finance Smarter.

@@ -23,7 +23,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
   title: "VA Loans — $0 Down, No PMI, No Minimum Credit Score | Sean Shallis",
   description:
-    "VA loan programs with zero down payment, no PMI, and no minimum credit score requirement. Sean Shallis is a U.S. Army Veteran and VA loan specialist with 30+ years experience and $1B+ in transactions. AI rate monitoring included free. Backed by U.S. Bank.",
+    "VA loan programs with zero down payment, no PMI, and no minimum credit score requirement. Sean Shallis is a U.S. Army Veteran and VA loan specialist with 30+ years experience and $1B+ in transactions. AI rate monitoring included free. Loans originated through U.S. Bank.",
   keywords: [
     "VA loan",
     "VA mortgage",
@@ -339,7 +339,7 @@ export default function VALoansPage() {
                 {
                   n: "03",
                   title: "Sean Closes It",
-                  body: "When the window opens, Sean calls you personally. Veteran to veteran. One phone call. White glove. Backed by U.S. Bank.",
+                  body: "When the window opens, Sean calls you personally. Veteran to veteran. One phone call. White glove. Loans originated through U.S. Bank.",
                 },
               ].map((step) => (
                 <div key={step.n} className="text-center">

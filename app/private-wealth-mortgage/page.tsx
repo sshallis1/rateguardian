@@ -25,7 +25,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
   title: "Private Wealth Mortgage — Jumbo Loans Up to $20M+ | Sean Shallis",
   description:
-    "Jumbo and portfolio mortgage solutions for high-net-worth borrowers. Complex income, multiple properties, foreign nationals, trust-held assets — Sean structures what others can't. Backed by U.S. Bank Private Wealth.",
+    "Jumbo and portfolio mortgage solutions for high-net-worth borrowers. Complex income, multiple properties, foreign nationals, trust-held assets — Sean structures what others can't. Loans originated through U.S. Bank.",
   keywords: [
     "jumbo mortgage",
     "private wealth mortgage",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Private Wealth Mortgage — Jumbo Loans Up to $20M+",
     description:
-      "Portfolio lending for high-net-worth borrowers. Complex income, trust-held assets, foreign nationals. Sean structures what others can't. U.S. Bank Private Wealth.",
+      "Portfolio lending for high-net-worth borrowers. Complex income, trust-held assets, foreign nationals. Sean structures what others can't. U.S. Bank.",
     type: "website",
     url: "https://seanshallis.com/private-wealth-mortgage",
   },
@@ -98,7 +98,7 @@ const DIFFERENCES = [
   { title: "Your Loan Stays In-House", desc: "U.S. Bank portfolios private wealth mortgages. That means rate renegotiation, low-cost recasting, and a real relationship — not a servicing transfer to a random company 90 days after closing." },
   { title: "One Human. Not a Team.", desc: "Sean personally handles every private wealth client from application to close. No hand-off to a junior processor. No 1-800 number. His cell phone. His expertise. Every time." },
   { title: "Income Flexibility Others Can't Match", desc: "Rental income from 20 properties? RSUs vesting quarterly? K-1 losses that suppress taxable income? Asset depletion for retired borrowers? We structure around your actual financial picture." },
-  { title: "Private Banking Access", desc: "Your mortgage relationship unlocks U.S. Bank Private Wealth banking — dedicated private banker, preferred rates on deposits, and concierge treasury services." },
+  { title: "Private Banking Access", desc: "Your mortgage relationship unlocks U.S. Bank banking — dedicated private banker, preferred rates on deposits, and concierge treasury services." },
 ];
 
 export default function PrivateWealthMortgagePage() {
@@ -120,7 +120,7 @@ export default function PrivateWealthMortgagePage() {
           <div className="max-w-3xl">
             <Badge variant="teal" className="mb-6">
               <Landmark size={12} />
-              Private Wealth Mortgage &middot; U.S. Bank Private Wealth Division
+              Private Wealth Mortgage &middot; U.S. Bank Division
             </Badge>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight mb-6">
               When Your Loan Doesn&apos;t Fit the Box, You Need Someone Who Builds Custom.
@@ -266,7 +266,7 @@ export default function PrivateWealthMortgagePage() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
-                Sean + U.S. Bank Private Wealth vs. Everyone Else
+                Sean + U.S. Bank vs. Everyone Else
               </h2>
               <p className="text-lg text-neutral-600">
                 Not all jumbo lending is created equal.
@@ -366,7 +366,7 @@ export default function PrivateWealthMortgagePage() {
               {[
                 {
                   q: "What are the jumbo loan limits?",
-                  a: "Conforming loan limits (currently $766,550 in most areas) don't apply here. U.S. Bank Private Wealth offers jumbo portfolio loans from $766,551 to $20M+ with no arbitrary cap. Your loan amount is structured around your financial picture, not a government guideline.",
+                  a: "Conforming loan limits (currently $766,550 in most areas) don't apply here. U.S. Bank offers jumbo portfolio loans from $766,551 to $20M+ with no arbitrary cap. Your loan amount is structured around your financial picture, not a government guideline.",
                 },
                 {
                   q: "How does asset-based qualification work?",
@@ -374,7 +374,7 @@ export default function PrivateWealthMortgagePage() {
                 },
                 {
                   q: "Can RSU and stock compensation count as income?",
-                  a: "Yes. U.S. Bank Private Wealth counts vested RSUs, stock options, and deferred compensation as qualifying income. We analyze your vesting schedule and historical grants to determine sustainable income — unlike retail lenders who ignore it entirely.",
+                  a: "Yes. U.S. Bank counts vested RSUs, stock options, and deferred compensation as qualifying income. We analyze your vesting schedule and historical grants to determine sustainable income — unlike retail lenders who ignore it entirely.",
                 },
                 {
                   q: "Can I finance multiple investment properties?",
@@ -382,7 +382,7 @@ export default function PrivateWealthMortgagePage() {
                 },
                 {
                   q: "Can I purchase in a trust or LLC?",
-                  a: "Yes. U.S. Bank Private Wealth regularly closes loans vested in revocable trusts, irrevocable trusts, and LLCs. No need to close in personal name and transfer after — we close directly into the entity.",
+                  a: "Yes. U.S. Bank regularly closes loans vested in revocable trusts, irrevocable trusts, and LLCs. No need to close in personal name and transfer after — we close directly into the entity.",
                 },
                 {
                   q: "Are foreign nationals eligible?",

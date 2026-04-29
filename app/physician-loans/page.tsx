@@ -22,7 +22,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
   title: "Physician Mortgage Loans — $0 Down, No PMI | Sean Shallis",
   description:
-    "Physician loan programs up to $3M with zero down payment and no PMI. Designed for MDs, DOs, DMDs, residents, and fellows. Flexible student loan qualification. Compare rates, skip the marketplace — get white-glove service backed by U.S. Bank Private Wealth.",
+    "Physician loan programs up to $3M with zero down payment and no PMI. Designed for MDs, DOs, DMDs, residents, and fellows. Flexible student loan qualification. Compare rates, skip the marketplace — get white-glove service backed by U.S. Bank.",
   keywords: [
     "physician mortgage loan",
     "physician mortgage",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Physician Mortgage Loans — $0 Down, No PMI",
     description:
-      "Up to $3M, zero down, no PMI. Designed for physicians at every career stage. AI rate monitoring included free. Backed by U.S. Bank.",
+      "Up to $3M, zero down, no PMI. Designed for physicians at every career stage. AI rate monitoring included free. Loans originated through U.S. Bank.",
     type: "website",
     url: "https://seanshallis.com/physician-loans",
   },
@@ -124,7 +124,7 @@ export default function PhysicianLoansPage() {
           <div className="max-w-3xl">
             <Badge variant="teal" className="mb-6">
               <Stethoscope size={12} />
-              Physician Loan Specialist &middot; U.S. Bank Private Wealth
+              Physician Loan Specialist &middot; U.S. Bank
             </Badge>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight mb-6">
               The Loan Program Your Residency Director Never Told You About.
@@ -303,7 +303,7 @@ export default function PhysicianLoansPage() {
                 {
                   n: "03",
                   title: "Sean Closes It",
-                  body: "When the window opens, Sean calls you personally. One phone call. White glove. Backed by U.S. Bank's physician lending team.",
+                  body: "When the window opens, Sean calls you personally. One phone call. White glove. Loans originated through U.S. Bank's physician lending team.",
                 },
               ].map((step) => (
                 <div key={step.n} className="text-center">
@@ -375,7 +375,7 @@ export default function PhysicianLoansPage() {
                 "Married to a physician",
                 "Amazon #1 best-selling author",
                 "WSJ, NYT, Bloomberg, CNBC featured",
-                "U.S. Bank Private Wealth division",
+                "Mortgage Loan Originator, U.S. Bank",
                 "Creator of Rate Guardian AI (Rosie)",
                 "NLP Practitioner, U.S. Army Veteran",
                 "Host: The Loan Doctor Podcast",

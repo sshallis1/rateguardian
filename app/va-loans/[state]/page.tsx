@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `VA Loans in ${data.name} — $0 Down, No PMI | Sean Shallis`,
-    description: `VA loan programs in ${data.name} (${cities}) with zero down payment, no PMI, and no minimum credit score. Sean Shallis is a U.S. Army Veteran and VA loan specialist. AI rate monitoring included free. Backed by U.S. Bank.`,
+    description: `VA loan programs in ${data.name} (${cities}) with zero down payment, no PMI, and no minimum credit score. Sean Shallis is a U.S. Army Veteran and VA loan specialist. AI rate monitoring included free. Loans originated through U.S. Bank.`,
     keywords: [
       `VA loan ${data.name}`,
       `VA mortgage ${data.name}`,
@@ -120,7 +120,7 @@ export default async function VALoansStatePage({ params }: PageProps) {
               and VA loan specialist licensed nationwide.
             </p>
             <p className="text-lg text-neutral-500 mb-8 max-w-2xl">
-              $0 down. No PMI. No minimum credit score. Backed by U.S. Bank.
+              $0 down. No PMI. No minimum credit score. Loans originated through U.S. Bank.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
@@ -191,7 +191,7 @@ export default async function VALoansStatePage({ params }: PageProps) {
                 {[
                   { n: "01", title: "Talk to Rosie", body: `Tell Rosie about your ${data.name} home search, refinance, or IRRRL. 90 seconds, no forms, no credit impact.` },
                   { n: "02", title: "Rosie Watches", body: `Rosie monitors ${data.name} VA rates multiple times a day. She knows your entitlement status and alerts you when savings windows open.` },
-                  { n: "03", title: "Sean Closes It", body: "When the window opens, Sean calls you personally. Veteran to veteran. One phone call. White glove. Backed by U.S. Bank." },
+                  { n: "03", title: "Sean Closes It", body: "When the window opens, Sean calls you personally. Veteran to veteran. One phone call. White glove. Loans originated through U.S. Bank." },
                 ].map((s) => (
                   <div key={s.n} className="flex gap-4">
                     <div className="text-2xl font-mono font-bold text-[color:var(--brand-teal)] w-10 shrink-0">

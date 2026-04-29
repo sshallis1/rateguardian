@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const cities = data.majorCities.slice(0, 3).join(", ");
   return {
     title: `Construction Loans in ${data.name} — Single Close, Zero Surprises`,
-    description: `Construction-to-permanent financing in ${data.name} (${cities}). Single close saves $5-15K. Interest-only during build. One rate lock. Draw schedule managed by Sean. Backed by U.S. Bank Private Wealth.`,
+    description: `Construction-to-permanent financing in ${data.name} (${cities}). Single close saves $5-15K. Interest-only during build. One rate lock. Draw schedule managed by Sean. Loans originated through U.S. Bank.`,
     keywords: [
       `construction loan ${data.name}`,
       `construction loan ${data.abbr}`,
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ],
     openGraph: {
       title: `Construction Loans in ${data.name} — Single Close, Zero Surprises`,
-      description: `Construction-to-permanent financing in ${data.name}. One close. Interest-only during build. Backed by U.S. Bank.`,
+      description: `Construction-to-permanent financing in ${data.name}. One close. Interest-only during build. Loans originated through U.S. Bank.`,
       type: "website",
       url: `https://seanshallis.com/construction-loans/${data.slug}`,
     },
@@ -119,7 +119,7 @@ export default async function ConstructionLoansStatePage({ params }: PageProps) 
             </p>
             <p className="text-lg text-neutral-500 mb-8 max-w-2xl">
               Single close. Interest-only during build. One rate lock. Draw
-              schedule managed. Backed by U.S. Bank Private Wealth.
+              schedule managed. Loans originated through U.S. Bank.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
@@ -169,7 +169,7 @@ export default async function ConstructionLoansStatePage({ params }: PageProps) 
               </h2>
               <p className="text-lg text-neutral-600 leading-relaxed mb-6">
                 Sean Shallis is a national construction loan specialist backed by
-                U.S. Bank Private Wealth. He structures single-close
+                U.S. Bank. He structures single-close
                 construction-to-permanent loans that eliminate double closing
                 costs, lock your rate before you break ground, and keep the draw
                 schedule on track so your builder gets paid on time.

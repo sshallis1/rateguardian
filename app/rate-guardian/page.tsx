@@ -41,9 +41,9 @@ export default function RateGuardianPage() {
               <span className="text-gradient-brand">So you don't have to.</span>
             </h1>
             <p className="text-xl md:text-2xl text-neutral-700 leading-relaxed mb-8 max-w-2xl">
-              The Credit Karma of mortgages. Free rate monitoring, backed by
-              the 5th largest bank in the world and 30 years of mortgage
-              wisdom.
+              The Credit Karma of mortgages. Free rate monitoring, powered by
+              30 years of mortgage wisdom. When you&apos;re ready to act, Sean
+              originates your loan through U.S. Bank.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-6">

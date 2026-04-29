@@ -75,7 +75,7 @@ export default function Home() {
                 {[
                   { value: "30+", label: "Years" },
                   { value: "$1B+", label: "Transactions" },
-                  { value: "1,000+", label: "Families" },
+                  { value: "2,000+", label: "Families" },
                   { value: "#1", label: "Amazon Author" },
                 ].map((s) => (
                   <div key={s.label} className="text-center">
@@ -218,7 +218,7 @@ export default function Home() {
                 {[
                   { n: "01", title: "Free Rate Check", body: "Tell Rosie about your mortgage. No credit impact, no forms." },
                   { n: "02", title: "Rosie Stands Watch", body: "She monitors rates multiple times per day. She never sleeps." },
-                  { n: "03", title: "Sean Closes It", body: "When the window opens, Sean picks up the phone. Backed by U.S. Bank." },
+                  { n: "03", title: "Sean Closes It", body: "When the window opens, Sean picks up the phone. Your mortgage is originated through U.S. Bank." },
                 ].map((s) => (
                   <div key={s.n} className="flex gap-4">
                     <div className="text-2xl font-mono font-bold text-[color:var(--brand-teal)] w-10 shrink-0">
@@ -421,8 +421,9 @@ export default function Home() {
               Lending Designed for Medical Professionals
             </h2>
             <p className="text-lg text-neutral-600">
-              Every Guardian is powered by the same engine — 30+ years of
-              mortgage expertise, backed by U.S. Bank Private Wealth.
+              Sean Shallis is a Mortgage Loan Originator at U.S. Bank with
+              30+ years of expertise. When you&apos;re ready to finance, you
+              work directly with Sean through U.S. Bank.
             </p>
           </div>
 
@@ -432,7 +433,7 @@ export default function Home() {
               { icon: Building2, title: "Construction-to-Permanent", desc: "Build your dream home or practice facility with a single close loan" },
               { icon: Landmark, title: "Jumbo & Portfolio Loans", desc: "High-balance financing for luxury properties and complex transactions" },
               { icon: Shield, title: "VA Loans for Veterans", desc: "Military service + medical career = maximum benefit strategies" },
-              { icon: HomeIcon, title: "Private Wealth Banking", desc: "Full-service access through U.S. Bank's Private Wealth division" },
+              { icon: HomeIcon, title: "Private Client Solutions", desc: "Sean originates through U.S. Bank — full product suite available" },
               { icon: GraduationCap, title: "Student Loan Strategies", desc: "Income-based qualification that accounts for your real earning trajectory" },
             ].map((item) => (
               <div
@@ -532,7 +533,7 @@ export default function Home() {
                   "Host of The Loan Doctor Podcast",
                   "HousingWire contributing writer",
                   "Creator of Rate Guardian AI + Rosie",
-                  "U.S. Bank Private Wealth division",
+                  "Mortgage Loan Originator, U.S. Bank",
                 ].map((point) => (
                   <div key={point} className="flex items-start gap-2">
                     <CheckCircle

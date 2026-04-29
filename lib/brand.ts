@@ -147,7 +147,8 @@ export const FUTURE_GUARDIANS: Guardian[] = [
 
 export const BRAND = {
   name: "Sean Shallis",
-  company: "Guardian Family",
+  company: "The Guardian Family of Products",
+  entity: "iMarketingGuru LLC",
   headline: "Eliminate Financial Blind Spots. Automatically.",
   subheadline:
     "AI-powered systems that watch your money, your rate, and your opportunities — so you don't have to.",
@@ -156,12 +157,22 @@ export const BRAND = {
     "Rate Guardian protects the financing. Project Guardian protects the project. Trade Guardian protects the capital. Health Guardian protects the family. Home Guardian protects the homeowner.",
   rosieTagline: "Rosie watches your rate so you don't have to.",
   nmls: "NMLS #2362814",
-  bank: "U.S. Bank",
+  bank: "U.S. Bank National Association",
+  bankShort: "U.S. Bank",
   contact: {
     phone: "(973) 457-2278",
     mobile: "(973) 461-6955",
     email: "sean.shallis@usbank.com",
+    address: "1 Main St, STE 203",
+    city: "Chatham",
+    state: "NJ",
+    zip: "07928",
     location: "Chatham, NJ",
+  },
+  disclosure: {
+    mortgage: "Mortgage, home equity and credit products are offered through U.S. Bank National Association. Member FDIC. Equal Housing Lender.",
+    approval: "Loan approval is subject to credit approval and program guidelines. Not all loan programs are available in all states for all loan amounts. Interest rate and program terms are subject to change without notice.",
+    site: "This website is owned and operated by Sean Shallis / iMarketingGuru LLC. The Guardian Family of products (Rate Guardian, Project Guardian, Trade Guardian, Health Guardian, Home Guardian) are proprietary technology products of iMarketingGuru LLC and are not products or services of U.S. Bank. Sean Shallis is a Mortgage Loan Originator (NMLS #2362814) employed by U.S. Bank National Association. When you choose to pursue mortgage financing, you will work directly with Sean Shallis in his capacity as a U.S. Bank Mortgage Loan Originator.",
   },
   mediaLogos: [
     "The Wall Street Journal",
@@ -173,7 +184,7 @@ export const BRAND = {
   stats: {
     years: "30+",
     transactions: "$1B+",
-    families: "1,000+",
+    families: "2,000+",
     book: "#1 Best Seller",
   },
   threeCs: [
@@ -193,9 +204,9 @@ export const BRAND = {
         "Three decades of market cycles, deal structures, and physician lending expertise.",
     },
     {
-      title: "Backed by U.S. Bank",
+      title: "Mortgage Expert at U.S. Bank",
       description:
-        "The 5th largest bank in the world. Products, services, and speed of execution.",
+        "Sean originates loans through U.S. Bank National Association — strength, stability, and execution.",
     },
     {
       title: "Private Wealth Expert on Speed Dial",

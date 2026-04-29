@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const cities = data.majorCities.slice(0, 3).join(", ");
   return {
     title: `Renovation Loans in ${data.name} — Purchase + Reno in One Close`,
-    description: `Renovation-to-permanent loans in ${data.name} (${cities}). Finance up to 90% of after-renovation value. Single close, no HELOC needed. AI budget tracking with Project Guardian. Backed by U.S. Bank Private Wealth.`,
+    description: `Renovation-to-permanent loans in ${data.name} (${cities}). Finance up to 90% of after-renovation value. Single close, no HELOC needed. AI budget tracking with Project Guardian. Loans originated through U.S. Bank.`,
     keywords: [
       `renovation loan ${data.name}`,
       `renovation loan ${data.abbr}`,
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ],
     openGraph: {
       title: `Renovation Loans in ${data.name} — Purchase + Reno in One Close`,
-      description: `Finance up to 90% of after-renovation value in ${data.name}. Single close. AI budget tracking included. Backed by U.S. Bank.`,
+      description: `Finance up to 90% of after-renovation value in ${data.name}. Single close. AI budget tracking included. Loans originated through U.S. Bank.`,
       type: "website",
       url: `https://seanshallis.com/renovation-loans/${data.slug}`,
     },
@@ -124,7 +124,7 @@ export default async function RenovationLoansStatePage({ params }: PageProps) {
             </p>
             <p className="text-lg text-neutral-500 mb-8 max-w-2xl">
               Finance up to 90% of after-renovation value. Single close. No
-              HELOC needed. AI budget tracking included. Backed by U.S. Bank
+              HELOC needed. AI budget tracking included. Loans originated through U.S. Bank
               Private Wealth.
             </p>
 
@@ -175,7 +175,7 @@ export default async function RenovationLoansStatePage({ params }: PageProps) {
               </h2>
               <p className="text-lg text-neutral-600 leading-relaxed mb-6">
                 Sean Shallis is a national renovation loan specialist backed by
-                U.S. Bank Private Wealth. He structures renovation-to-permanent
+                U.S. Bank. He structures renovation-to-permanent
                 loans that combine your purchase and renovation into a single
                 close — financed against what the home will be worth after the
                 work is done, not what it looks like today.
