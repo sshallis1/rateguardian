@@ -127,6 +127,12 @@ export function Footer() {
               &copy; {new Date().getFullYear()} {BRAND.entity} · {BRAND.company}&trade;. All rights reserved.
             </div>
             <div className="flex items-center gap-4 text-xs text-neutral-500">
+              <Link href="/privacy" className="hover:text-neutral-300 transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="hover:text-neutral-300 transition-colors">
+                Terms &amp; Conditions
+              </Link>
               <span>{BRAND.nmls}</span>
               <span>Equal Housing Lender</span>
               <span>Member FDIC</span>
