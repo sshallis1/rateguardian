@@ -33,6 +33,7 @@ export default function NewProjectPage() {
       const res = await fetch(`${API}/projects`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           name: name.trim(),
           address: address || null,

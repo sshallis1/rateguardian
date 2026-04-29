@@ -72,11 +72,12 @@ export default function PortalProjectDetailPage({
   const fetchAll = useCallback(async () => {
     if (!projectId) return;
     try {
+      const opts = { credentials: "include" as RequestCredentials };
       const [projRes, payRes, conRes, msRes] = await Promise.all([
-        fetch(`${API}/projects/${projectId}`),
-        fetch(`${API}/payments?project_id=${projectId}`),
-        fetch(`${API}/contractors?project_id=${projectId}`),
-        fetch(`${API}/milestones?project_id=${projectId}`),
+        fetch(`${API}/projects/${projectId}`, opts),
+        fetch(`${API}/payments?project_id=${projectId}`, opts),
+        fetch(`${API}/contractors?project_id=${projectId}`, opts),
+        fetch(`${API}/milestones?project_id=${projectId}`, opts),
       ]);
       if (!projRes.ok) {
         setLoading(false);
@@ -109,6 +110,7 @@ export default function PortalProjectDetailPage({
     await fetch(`${API}/milestones/${ms.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         status: next,
         completed_date:
@@ -404,6 +406,7 @@ function AddPaymentForm({
     await fetch(`${API}/payments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         project_id: projectId,
         vendor,
