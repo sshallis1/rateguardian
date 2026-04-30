@@ -116,6 +116,36 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* ========= QUICK JUMP — What Are You Looking For? ========= */}
+      <section className="py-12 md:py-16 bg-white border-y border-neutral-200">
+        <Container>
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">
+              What are you looking for?
+            </h2>
+            <p className="text-neutral-500">Tap to get started.</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+            {[
+              { label: "I'm a Physician", href: "/physician-loans" },
+              { label: "I'm a Veteran", href: "/va-loans" },
+              { label: "I'm Building a Home", href: "/construction-loans" },
+              { label: "I'm Renovating", href: "/renovation-loans" },
+              { label: "I Need a Jumbo Loan", href: "/private-wealth-mortgage" },
+              { label: "Just Check My Rate", href: "/rate-guardian/ask-rosie" },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="px-6 py-3 rounded-full border-2 border-neutral-200 bg-white text-sm font-semibold text-neutral-800 hover:border-[color:var(--brand-teal)] hover:text-[color:var(--brand-teal)] hover:-translate-y-0.5 transition-all shadow-sm"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       {/* ========= THE GUARDIAN ECOSYSTEM ========= */}
       <section id="guardians" className="py-20 md:py-28 bg-[color:var(--surface-dark)] text-white scroll-mt-20">
         <Container>
@@ -429,23 +459,27 @@ export default function Home() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { icon: Stethoscope, title: "Physician Loan Programs", desc: "Up to 100% financing, no PMI — designed for MDs, DOs, DMDs, and residents" },
-              { icon: Building2, title: "Construction-to-Permanent", desc: "Build your dream home or practice facility with a single close loan" },
-              { icon: Landmark, title: "Jumbo & Portfolio Loans", desc: "High-balance financing for luxury properties and complex transactions" },
-              { icon: Shield, title: "VA Loans for Veterans", desc: "Military service + medical career = maximum benefit strategies" },
-              { icon: HomeIcon, title: "Private Client Solutions", desc: "Sean originates through U.S. Bank — full product suite available" },
-              { icon: GraduationCap, title: "Student Loan Strategies", desc: "Income-based qualification that accounts for your real earning trajectory" },
+              { icon: Stethoscope, title: "Physician Loan Programs", desc: "Up to 100% financing, no PMI — designed for MDs, DOs, DMDs, and residents", href: "/physician-loans" },
+              { icon: Shield, title: "VA Loans for Veterans", desc: "You served — now let someone serve you. $0 down, no PMI", href: "/va-loans" },
+              { icon: Building2, title: "Construction-to-Permanent", desc: "Build your dream home with a single close loan", href: "/construction-loans" },
+              { icon: Hammer, title: "Renovation Loans", desc: "Buy the fixer, fund the reno — one mortgage", href: "/renovation-loans" },
+              { icon: Landmark, title: "Jumbo & Private Wealth", desc: "High-balance financing for complex transactions", href: "/private-wealth-mortgage" },
+              { icon: GraduationCap, title: "Student Loan Strategies", desc: "Income-based qualification that accounts for your real earning trajectory", href: "/physician-loans" },
             ].map((item) => (
-              <div
+              <Link
                 key={item.title}
-                className="bg-[color:var(--brand-cream)] rounded-2xl p-6 border border-neutral-200 hover:border-[color:var(--brand-teal)] hover:-translate-y-1 transition-all"
+                href={item.href}
+                className="group bg-[color:var(--brand-cream)] rounded-2xl p-6 border border-neutral-200 hover:border-[color:var(--brand-teal)] hover:-translate-y-1 transition-all"
               >
                 <div className="w-12 h-12 rounded-xl bg-[color:var(--brand-teal)]/10 flex items-center justify-center mb-4">
                   <item.icon size={24} className="text-[color:var(--brand-teal)]" />
                 </div>
-                <h3 className="font-bold text-lg mb-2">{item.title}</h3>
+                <h3 className="font-bold text-lg mb-2 group-hover:text-[color:var(--brand-teal)] transition-colors">{item.title}</h3>
                 <p className="text-sm text-neutral-600 leading-relaxed">{item.desc}</p>
-              </div>
+                <span className="inline-flex items-center gap-1 text-sm font-semibold text-[color:var(--brand-teal)] mt-3">
+                  Learn More <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
             ))}
           </div>
         </Container>

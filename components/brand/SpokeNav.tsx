@@ -57,10 +57,11 @@ const NAV_ITEMS = [
   {
     label: "Lending",
     children: [
-      { label: "Physician Loans", desc: "100% financing, no PMI", href: "/#lending", icon: Stethoscope },
-      { label: "Construction-to-Permanent", desc: "Single close builds", href: "/#lending", icon: Building2 },
-      { label: "Jumbo & Portfolio", desc: "High-balance financing", href: "/#lending", icon: Landmark },
-      { label: "VA Loans", desc: "Veteran benefit strategies", href: "/#lending", icon: Shield },
+      { label: "Physician Loans", desc: "$0 down, no PMI for doctors", href: "/physician-loans", icon: Stethoscope },
+      { label: "VA Loans", desc: "Veteran home loan programs", href: "/va-loans", icon: Shield },
+      { label: "Construction Loans", desc: "Single-close build financing", href: "/construction-loans", icon: Building2 },
+      { label: "Renovation Loans", desc: "Buy + renovate in one close", href: "/renovation-loans", icon: Hammer },
+      { label: "Jumbo & Private Wealth", desc: "High-balance, complex income", href: "/private-wealth-mortgage", icon: Landmark },
       { label: "Enterprise Programs", desc: "Health system partnerships", href: "/#enterprise", icon: Users },
     ],
   },
