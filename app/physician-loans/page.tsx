@@ -20,16 +20,16 @@ import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
-  title: "Physician Mortgage Loans — $0 Down, No PMI | Sean Shallis",
+  title: "Physician Mortgage Loans — Low Down Payment, No PMI | Sean Shallis",
   description:
-    "Physician loan programs up to $3M with zero down payment and no PMI. Designed for MDs, DOs, DMDs, residents, and fellows. Flexible student loan qualification. Compare rates, skip the marketplace — get white-glove service backed by U.S. Bank.",
+    "Physician loan programs up to $2.5M with as little as 5% down and no PMI. Designed for MDs, DOs, and JDs. Flexible qualification. Compare rates, skip the marketplace — get white-glove service. Loans originated through U.S. Bank.",
   keywords: [
     "physician mortgage loan",
     "physician mortgage",
     "doctor home loan",
     "physician loan no PMI",
     "physician mortgage NJ",
-    "doctor mortgage zero down",
+    "doctor mortgage low down payment",
     "resident physician home loan",
     "medical professional mortgage",
     "physician relocation loan",
@@ -51,9 +51,9 @@ export const metadata: Metadata = {
     "attending physician mortgage",
   ],
   openGraph: {
-    title: "Physician Mortgage Loans — $0 Down, No PMI",
+    title: "Physician Mortgage Loans — Low Down Payment, No PMI",
     description:
-      "Up to $3M, zero down, no PMI. Designed for physicians at every career stage. AI rate monitoring included free. Loans originated through U.S. Bank.",
+      "Up to $2.5M, as little as 5% down, no PMI. Designed for physicians at every career stage. AI rate monitoring included free. Loans originated through U.S. Bank.",
     type: "website",
     url: "https://seanshallis.com/physician-loans",
   },
@@ -63,21 +63,21 @@ export const metadata: Metadata = {
 };
 
 const PHYSICIAN_TYPES = [
-  { icon: Stethoscope, title: "Attending Physicians", desc: "MDs, DOs, DMDs — established or relocating. Up to $3M, zero down." },
+  { icon: Stethoscope, title: "Attending Physicians", desc: "MDs, DOs, JDs — established or relocating. Up to $2.5M, as little as 5% down, no PMI." },
   { icon: GraduationCap, title: "Residents & Fellows", desc: "Qualify on your signed contract, not your current salary. We understand the trajectory." },
   { icon: Building2, title: "Group Practice Owners", desc: "Buying your first practice space? Commercial and residential lending under one roof." },
   { icon: Home, title: "Relocating Physicians", desc: "Moving for a new role? Close before you start. We move at physician speed." },
 ];
 
 const ADVANTAGES = [
-  { stat: "$0", label: "Down Payment", desc: "Up to 100% financing on homes up to $3M" },
+  { stat: "5%", label: "Down Payment", desc: "As little as 5% down on loans up to $1M — no PMI" },
   { stat: "$0", label: "PMI — Ever", desc: "No private mortgage insurance, regardless of LTV" },
   { stat: "Flexible", label: "Student Loan DTI", desc: "We underwrite based on your earning trajectory, not your current IBR payment" },
   { stat: "30 Days", label: "Average Close", desc: "Sean's team moves fast — physician-specific processing lane" },
 ];
 
 const COMPARISON = [
-  { feature: "Zero down up to $3M", us: true, them: false },
+  { feature: "As little as 5% down, no PMI", us: true, them: false },
   { feature: "No PMI at any LTV", us: true, them: false },
   { feature: "Student loan-friendly DTI", us: true, them: false },
   { feature: "Portfolio lender (keeps your loan)", us: true, them: false },
@@ -130,7 +130,7 @@ export default function PhysicianLoansPage() {
               The Loan Program Your Residency Director Never Told You About.
             </h1>
             <p className="text-xl md:text-2xl text-neutral-700 leading-relaxed mb-8 max-w-2xl">
-              $0 down. No PMI. Student loan-friendly. Up to $3M. Designed
+              As little as 5% down. No PMI. Student loan-friendly. Up to $2.5M. Designed
               exclusively for physicians — and backed by 30 years of mortgage
               wisdom you won&apos;t find at a big-box lender.
             </p>
@@ -411,8 +411,8 @@ export default function PhysicianLoansPage() {
                   a: "Absolutely. With a signed employment contract, you can qualify based on your attending salary — not your resident income. Many physicians buy 60-90 days before starting their new role.",
                 },
                 {
-                  q: "What's the catch with zero down and no PMI?",
-                  a: "No catch. Physician loan programs exist because banks know doctors are low-risk borrowers with high earning trajectories. U.S. Bank portfolios these loans — they want the long-term relationship.",
+                  q: "What are the down payment requirements?",
+                  a: "U.S. Bank physician loans require as little as 5% down on loans up to $1M, 10% on loans up to $1.5M, and 15% on loans up to $2M. Maximum loan amount is $2.5M. No PMI on any tier. Down payment can be gifted.",
                 },
                 {
                   q: "How is this different from other physician lenders?",

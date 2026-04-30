@@ -36,8 +36,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const cities = data.majorCities.slice(0, 3).join(", ");
   return {
-    title: `Physician Mortgage Loans in ${data.name} — $0 Down, No PMI`,
-    description: `Physician loan programs in ${data.name} (${cities}) up to $3M with zero down and no PMI. For MDs, DOs, residents, and fellows. Student loan-friendly. AI rate monitoring included free. Loans originated through U.S. Bank.`,
+    title: `Physician Mortgage Loans in ${data.name} — Low Down Payment, No PMI`,
+    description: `Physician loan programs in ${data.name} (${cities}) up to $2.5M with as little as 5% down and no PMI. For MDs, DOs, and JDs. Student loan-friendly. AI rate monitoring included free. Loans originated through U.S. Bank.`,
     keywords: [
       `physician mortgage ${data.name}`,
       `physician mortgage ${data.abbr}`,
@@ -47,13 +47,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `physician mortgage no PMI ${data.abbr}`,
       `medical professional mortgage ${data.name}`,
       `resident physician home loan ${data.name}`,
-      `physician loan zero down ${data.abbr}`,
+      `physician loan low down payment ${data.abbr}`,
       ...data.majorCities.map((c) => `physician mortgage ${c}`),
       ...data.majorCities.map((c) => `doctor home loan ${c}`),
     ],
     openGraph: {
-      title: `Physician Mortgage Loans in ${data.name} — $0 Down, No PMI`,
-      description: `Up to $3M, zero down, no PMI for physicians in ${data.name}. AI rate monitoring included free.`,
+      title: `Physician Mortgage Loans in ${data.name} — Low Down Payment, No PMI`,
+      description: `Up to $2.5M, as little as 5% down, no PMI for physicians in ${data.name}. AI rate monitoring included free.`,
       type: "website",
       url: `https://seanshallis.com/physician-loans/${data.slug}`,
     },
@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 const COMPARISON = [
-  { feature: "Zero down up to $3M", us: true, them: false },
+  { feature: "As little as 5% down, no PMI", us: true, them: false },
   { feature: "No PMI at any LTV", us: true, them: false },
   { feature: "Student loan-friendly DTI", us: true, them: false },
   { feature: "Portfolio lender (keeps your loan)", us: true, them: false },
@@ -106,7 +106,7 @@ export default async function PhysicianLoansStatePage({ params }: PageProps) {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-tight mb-6">
               Physician Mortgage Loans in {data.name} —{" "}
               <span className="text-[color:var(--brand-teal)]">
-                $0 Down, No PMI.
+                Low Down Payment, No PMI.
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-neutral-700 leading-relaxed mb-4 max-w-2xl">
@@ -116,8 +116,8 @@ export default async function PhysicianLoansStatePage({ params }: PageProps) {
               specializes in physician lending nationwide.
             </p>
             <p className="text-lg text-neutral-500 mb-8 max-w-2xl">
-              Up to $3M. Zero down. No PMI. Student loan-friendly. Backed by
-              U.S. Bank.
+              Up to $2.5M. As little as 5% down. No PMI. Student loan-friendly.
+              Loans originated through U.S. Bank.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
@@ -202,7 +202,7 @@ export default async function PhysicianLoansStatePage({ params }: PageProps) {
             <div className="space-y-6">
               {/* Program cards */}
               {[
-                { icon: Stethoscope, title: "Attending Physicians", desc: `MDs, DOs, DMDs practicing in ${data.name}. Up to $3M, zero down, no PMI.` },
+                { icon: Stethoscope, title: "Attending Physicians", desc: `MDs, DOs, JDs in ${data.name}. Up to $2.5M, as little as 5% down, no PMI.` },
                 { icon: GraduationCap, title: "Residents & Fellows", desc: `Training at ${schools[0] || data.name + ' programs'}? Qualify on your signed contract, not current salary.` },
                 { icon: Home, title: "Relocating to " + data.name, desc: `Moving to ${cities[0]} or ${cities[1] || cities[0]} for a new role? Close before you start.` },
                 { icon: Building2, title: "Construction & Renovation", desc: `Building or renovating in ${data.name}? Single-close construction-to-permanent loans available.` },
@@ -232,7 +232,7 @@ export default async function PhysicianLoansStatePage({ params }: PageProps) {
         <Container>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              { stat: "$0", label: "Down Payment", desc: "Up to 100% financing on homes up to $3M" },
+              { stat: "5%", label: "Down Payment", desc: "As little as 5% down on loans up to $1M — no PMI" },
               { stat: "$0", label: "PMI — Ever", desc: "No private mortgage insurance, regardless of LTV" },
               { stat: "Flexible", label: "Student Loan DTI", desc: "Underwritten on earning trajectory, not current IBR" },
               { stat: "30 Days", label: "Average Close", desc: "Physician-specific processing lane" },
@@ -350,7 +350,7 @@ export default async function PhysicianLoansStatePage({ params }: PageProps) {
                   a: `Sean is licensed nationwide and works with physicians in every ${data.name} city. U.S. Bank provides the same physician loan programs regardless of location.`,
                 },
                 {
-                  q: "What's the catch with zero down and no PMI?",
+                  q: "What are the down payment requirements?",
                   a: "No catch. Physician loan programs exist because banks recognize doctors as low-risk borrowers with high earning trajectories. U.S. Bank portfolios these loans — they want the long-term relationship.",
                 },
                 {

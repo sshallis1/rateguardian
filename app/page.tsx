@@ -459,7 +459,7 @@ export default function Home() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { icon: Stethoscope, title: "Physician Loan Programs", desc: "Up to 100% financing, no PMI — designed for MDs, DOs, DMDs, and residents", href: "/physician-loans" },
+              { icon: Stethoscope, title: "Physician Loan Programs", desc: "As little as 5% down, no PMI — designed for MDs, DOs, and JDs", href: "/physician-loans" },
               { icon: Shield, title: "VA Loans for Veterans", desc: "You served — now let someone serve you. $0 down, no PMI", href: "/va-loans" },
               { icon: Building2, title: "Construction-to-Permanent", desc: "Build your dream home with a single close loan", href: "/construction-loans" },
               { icon: Hammer, title: "Renovation Loans", desc: "Buy the fixer, fund the reno — one mortgage", href: "/renovation-loans" },

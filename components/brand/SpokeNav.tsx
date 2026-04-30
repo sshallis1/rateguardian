@@ -57,7 +57,7 @@ const NAV_ITEMS = [
   {
     label: "Lending",
     children: [
-      { label: "Physician Loans", desc: "$0 down, no PMI for doctors", href: "/physician-loans", icon: Stethoscope },
+      { label: "Physician Loans", desc: "Low down payment, no PMI", href: "/physician-loans", icon: Stethoscope },
       { label: "VA Loans", desc: "Veteran home loan programs", href: "/va-loans", icon: Shield },
       { label: "Construction Loans", desc: "Single-close build financing", href: "/construction-loans", icon: Building2 },
       { label: "Renovation Loans", desc: "Buy + renovate in one close", href: "/renovation-loans", icon: Hammer },
